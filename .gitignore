@@ -45,7 +45,7 @@ jspm_packages/
 typings/
 
 #media files
-media/
+Frontend/media/
 
 # TypeScript cache
 *.tsbuildinfo
