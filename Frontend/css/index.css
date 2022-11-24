@@ -16,7 +16,7 @@ header {
 }
 
 .container {
-    min-height: 1000vh;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -46,10 +46,11 @@ header {
     flex-grow: 0;
     width: 600px;
     height: 100%;
+    padding-top: 20px;
     background-color: aquamarine;
 }
 .viesti {
-    max-width: 600px;
+    max-width: 560px;
     width: 100%;
     min-height: 300px;
     background-color: brown;
@@ -68,7 +69,7 @@ header {
     max-width: 300px;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 600px) {
     .container {
         justify-content: flex-start;
         flex-direction: column;
@@ -82,6 +83,7 @@ header {
         max-width: 600px;
     }
     #keski {
+        padding-top: 70px;
     }
 
     #oikea {
