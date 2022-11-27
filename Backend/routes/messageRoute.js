@@ -13,25 +13,25 @@ const fileFilter = (req, file, cb) => {
 }
 
 const upload = multer({dest: 'uploads/', fileFilter});
-const {cat_list_get, cat_get, cat_post, cat_put, cat_delete} = require(
-    '../controllers/catController');
+const {message_list_get, message_get, message_post, message_put, message_delete} = require(
+    '../controllers/messageController');
 const router = express.Router();
 
 
 router.route('/').
-    get(cat_list_get).
+    get(message_list_get).
     post(upload.single('cat'),
         body('name').isLength({min: 1}).escape(),
         body('birthdate').isDate(),
         body('weight').isNumeric(),
-        cat_post);
+        message_post);
 
 router.route('/:id').
-    get(cat_get).
-    delete(cat_delete).
+    get(message_get).
+    delete(message_delete).
     put(body('name').isLength({min: 1}).escape(),
         body('birthdate').isDate(),
         body('weight').isNumeric(),
-        cat_put);
+        message_put);
 
 module.exports = router;

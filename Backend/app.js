@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const authRoute = require('./routes/authRoute');
-const catRoute = require('./routes/catRoute');
+const messageRoute = require('./routes/messageRoute');
 const userRoute = require('./routes/userRoute');
 const {httpError} = require('./utils/errors');
 const passport = require('./utils/pass');
@@ -27,7 +27,7 @@ app.use(express.static('uploads'));
 app.use('/thumbnails', express.static('thumbnails'));
 
 app.use('/auth', authRoute);
-app.use('/cat', passport.authenticate('jwt', {session: false}), catRoute);
+app.use('/message', passport.authenticate('jwt', {session: false}), messageRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 
 app.use((req, res, next) => {
