@@ -32,7 +32,7 @@ const getMessage = async (catId, next) => {
 
 const addMessage = async (data, next) => {
   try {
-    const [rows] = await promisePool.execute(`INSERT INTO wop_cat (name, birthdate, weight, owner, filename, coords) VALUES (?, ?, ?, ?, ?, ?);`,
+    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, picture) VALUES (?, now(), ?, ?);`,
         data);
     return rows;
   } catch (e) {

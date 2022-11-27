@@ -5,7 +5,7 @@ const promisePool = pool.promise();
 
 const getAllUsers = async (next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT user_id, name, email, role FROM wop_user;`);
+    const [rows] = await promisePool.execute(`SELECT user_id, name, email, role FROM user;`);
     return rows;
   } catch (e) {
     console.error('getAllUsers', e.message);
@@ -15,7 +15,7 @@ const getAllUsers = async (next) => {
 
 const getUser = async (userId, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT user_id, name, email, role FROM wop_user
+    const [rows] = await promisePool.execute(`SELECT user_id, name, email, role FROM user
                                               WHERE user_id = ?;`, [userId]);
     return rows;
   } catch (e) {
@@ -26,7 +26,7 @@ const getUser = async (userId, next) => {
 
 const addUser = async (data, next) => {
   try {
-    const [rows] = await promisePool.execute(`INSERT INTO wop_user (name, email, password) VALUES (?, ?, ?);`,
+    const [rows] = await promisePool.execute(`INSERT INTO user (name, email, password) VALUES (?, ?, ?);`,
         data);
     return rows;
   } catch (e) {
@@ -37,7 +37,7 @@ const addUser = async (data, next) => {
 
 const updateUser = async (data, next) => {
   try {
-    const [rows] = await promisePool.execute(`UPDATE wop_user set name = ?, email = ?, password = ? WHERE user_id = ?;`,
+    const [rows] = await promisePool.execute(`UPDATE user set name = ?, email = ?, password = ? WHERE user_id = ?;`,
         data);
     return rows;
   } catch (e) {
@@ -48,7 +48,7 @@ const updateUser = async (data, next) => {
 
 const deleteUser = async (userId, next) => {
   try {
-    const [rows] = await promisePool.execute(`DELETE FROM wop_user where user_id = ?;`,
+    const [rows] = await promisePool.execute(`DELETE FROM user where user_id = ?;`,
         [userId]);
     return rows;
   } catch (e) {
@@ -61,7 +61,7 @@ const getUserLogin = async (params, next) => {
   try {
     console.log(params);
     const [rows] = await promisePool.execute(
-        'SELECT * FROM wop_user WHERE email = ?;',
+        'SELECT * FROM user WHERE email = ?;',
         params);
     return rows;
   } catch (e) {

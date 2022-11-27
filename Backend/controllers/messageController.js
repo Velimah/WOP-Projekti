@@ -8,12 +8,12 @@ const {getCoordinates} = require('../utils/imageMeta');
 
 const message_list_get = async (req, res, next) => {
   try {
-    const kissat = await getAllMessages(next);
-    if (kissat.length < 1) {
+    const messages = await getAllMessages(next);
+    if (messages.length < 1) {
       next(httpError('No messages found', 404));
       return;
     }
-    res.json(kissat);
+    res.json(messages);
   } catch (e) {
     console.error('message_list_get', e.message);
     next(httpError('Internal server error', 500));
@@ -54,15 +54,13 @@ const message_post = async (req, res, next) => {
         png().
         toFile('./thumbnails/' + req.file.filename);
 
-    const coords = await getCoordinates(req.file.path);
+    //const coords = await getCoordinates(req.file.path);
 
     const data = [
-      req.body.name,
-      req.body.birthdate,
-      req.body.weight,
+      req.body.message_body,
       req.user.user_id,
       req.file.filename,
-      JSON.stringify(coords),
+      //JSON.stringify(coords),
     ];
 
     const result = await addMessage(data, next);
