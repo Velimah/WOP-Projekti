@@ -91,7 +91,7 @@ const cat_put = async (req, res, next) => {
     if (!errors.isEmpty()) {
       // There are errors.
       // Error messages can be returned in an array using `errors.array()`.
-      console.error('user_post validation', errors.array());
+      console.error('cat_put validation', errors.array());
       next(httpError('Invalid data', 400));
       return;
     }
@@ -104,14 +104,14 @@ const cat_put = async (req, res, next) => {
         req.body.birthdate,
         req.body.weight,
         req.body.owner,
-        req.body.id,
+        req.params.id,
       ];
     } else {
       data = [
         req.body.name,
         req.body.birthdate,
         req.body.weight,
-        req.body.id,
+        req.params.id,
         req.user.user_id,
       ];
     }
