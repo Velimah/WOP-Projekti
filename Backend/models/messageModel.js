@@ -5,10 +5,11 @@ const promisePool = pool.promise();
 
 const getAllMessages = async (next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT cat_id, wop_cat.name, weight, owner, filename, birthdate, wop_user.name as ownername 
-                                              FROM wop_cat 
-                                              JOIN wop_user 
-                                              ON wop_user.user_id = wop_cat.owner;`);
+    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.message_body, message.send_time, message.picture, user.user_id AS sender, user.name, user.email, board.name AS boardname, 
+                                                 (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount                                 
+                                                  FROM message, user, board
+                                                  WHERE user.user_id = message.user_id AND board.board_id = message.board_id
+                                                  ORDER BY send_time DESC;`);
     return rows;
   } catch (e) {
     console.error('getAllMessages', e.message);
@@ -16,13 +17,14 @@ const getAllMessages = async (next) => {
   }
 };
 
-const getMessage = async (catId, next) => {
+
+const getMessage = async (messageId, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT cat_id, wop_cat.name, weight, owner, filename, birthdate, coords, wop_user.name as ownername 
-                                              FROM wop_cat 
-                                              JOIN wop_user 
-                                              ON wop_user.user_id = wop_cat.owner 
-                                              WHERE cat_id = ?;`, [catId]);
+    const [rows] = await promisePool.execute(`SELECT message_id, message.message_body, picture, user.name as sender 
+                                              FROM message
+                                              JOIN user 
+                                              ON user.user_id = message.user_id 
+                                              WHERE message_id = ?;`, [messageId]);
     return rows;
   } catch (e) {
     console.error('getMessage', e.message);
@@ -32,8 +34,8 @@ const getMessage = async (catId, next) => {
 
 const addMessage = async (data, next) => {
   try {
-    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, picture) VALUES (?, now(), ?, ?);`,
-        data);
+    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture) VALUES (?, now(), ?, ?, ?);`,
+      data);
     return rows;
   } catch (e) {
     console.error('addMessage', e.message);
@@ -43,13 +45,13 @@ const addMessage = async (data, next) => {
 
 const updateMessage = async (data, user, next) => {
   try {
-    if(user.role === 0){
-      const [rows] = await promisePool.execute(`UPDATE wop_cat SET name = ?, birthdate = ?, weight = ?, owner = ? WHERE cat_id = ?;`,
-          data);
+    if (user.role === 0) {
+      const [rows] = await promisePool.execute(`UPDATE message SET message_body = ? WHERE message_id = ?;`,
+        data);
       return rows;
     } else {
-      const [rows] = await promisePool.execute(`UPDATE wop_cat SET name = ?, birthdate = ?, weight = ? WHERE cat_id = ? AND owner = ?;`,
-          data);
+      const [rows] = await promisePool.execute(`UPDATE message SET message_body = ? WHERE message_id = ? AND user_id = ?;`,
+        data);
       return rows;
     }
 
@@ -59,21 +61,32 @@ const updateMessage = async (data, user, next) => {
   }
 };
 
-const deleteMessage = async (catId, user, next) => {
+const deleteMessage = async (messageId, user, next) => {
   try {
-    let sql = 'DELETE FROM wop_cat where cat_id = ?';
-    const params = [];
-    if (user.role === 0) {
-      params.push(catId);
-    } else {
-      sql += ' AND owner = ?;';
-      params.push(catId, user.user_id);
+   // if (user.role === 0) {
+      const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ?;`,
+        [messageId]);
+      return rows;
+   /* } else {
+      const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? AND message.user_id = ?;`,
+        [messageId, user]);
+      return rows;
     }
-    const [rows] = await promisePool.execute(sql, params);
-    return rows;
+*/
   } catch (e) {
     console.error('deleteMessage', e.message);
     next(httpError('Database error', 500));
+  }
+};
+
+const likeMessage = async (data, next) => {
+  try {
+    const [rows] = await promisePool.execute(`INSERT INTO likes (user_id, message_id) VALUES (?, ?);`,
+      data);
+    return rows;
+  } catch (e) {
+    console.error('likeMessage', e.message);
+    next(httpError('ALREADY LIKED?', 500));
   }
 };
 
@@ -83,4 +96,5 @@ module.exports = {
   addMessage,
   updateMessage,
   deleteMessage,
+  likeMessage,
 };

@@ -18,6 +18,7 @@ const getUser = async (userId, next) => {
     const [rows] = await promisePool.execute(`SELECT user_id, name, email, role FROM user
                                               WHERE user_id = ?;`, [userId]);
     return rows;
+
   } catch (e) {
     console.error('getUser', e.message);
    // next(httpError('Database error', 500));

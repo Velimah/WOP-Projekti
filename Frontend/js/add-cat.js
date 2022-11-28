@@ -1,4 +1,6 @@
+/*
 'use strict';
+
 const url = 'http://localhost:3000'; // change url when uploading to server
 
 // select existing html elements
@@ -19,5 +21,6 @@ addForm.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/message', fetchOptions);
   const json = await response.json();
   alert(json.message);
-  location.href = 'front.html';
+ // location.href = 'front.html';
 });
+*/

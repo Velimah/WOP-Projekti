@@ -1,5 +1,5 @@
 'use strict';
-const {getAllMessages, getMessage, addMessage, updateMessage, deleteMessage,} = require(
+const {getAllMessages, getMessage, addMessage, updateMessage, deleteMessage,likeMessage} = require(
     '../models/messageModel');
 const {httpError} = require('../utils/errors');
 const {validationResult} = require('express-validator');
@@ -59,6 +59,7 @@ const message_post = async (req, res, next) => {
     const data = [
       req.body.message_body,
       req.user.user_id,
+      req.body.board_id,
       req.file.filename,
       //JSON.stringify(coords),
     ];
@@ -97,17 +98,12 @@ const message_put = async (req, res, next) => {
 
     if (req.user.role === 0) {
       data = [
-        req.body.name,
-        req.body.birthdate,
-        req.body.weight,
-        req.body.owner,
+        req.body.message_body,
         req.params.id,
       ];
     } else {
       data = [
-        req.body.name,
-        req.body.birthdate,
-        req.body.weight,
+        req.body.message_body,
         req.params.id,
         req.user.user_id,
       ];
@@ -131,8 +127,10 @@ const message_put = async (req, res, next) => {
 };
 
 const message_delete = async (req, res, next) => {
+  console.log(req.params.id, req.user);
   try {
-    const result = await deleteMessage(req.params.id, req.user, next);
+    const result = await deleteMessage(req.params.id, req.user.user_id, next);
+    console.log(result);
     if (result.affectedRows < 1) {
       next(httpError('No message deleted', 400));
       return;
@@ -146,10 +144,47 @@ const message_delete = async (req, res, next) => {
   }
 };
 
+const message_like = async (req, res, next) => {
+  try {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // There are errors.
+      // Error messages can be returned in an array using `errors.array()`.
+      console.error('message_like validation', errors.array());
+      next(httpError('Invalid data', 400));
+      return;
+    }
+
+    console.log('message_like',req.user, req.params.id);
+
+    const data = [
+      req.user.user_id,
+      req.params.id,
+    ];
+
+    const result = await likeMessage(data, next);
+    if (result.affectedRows < 1) {
+      next(httpError('Invalid data', 400));
+      return;
+    }
+      res.json({
+        message: 'message liked',
+        cat_id: result.insertId,
+      });
+
+  } catch (e) {
+    console.error('message_like', e.message);
+    next(httpError('Internal server error', 500));
+  }
+};
+
 module.exports = {
   message_list_get,
   message_get,
   message_post,
   message_put,
   message_delete,
+  message_like,
 };

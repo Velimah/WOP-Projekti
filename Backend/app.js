@@ -29,6 +29,7 @@ app.use('/thumbnails', express.static('thumbnails'));
 app.use('/auth', authRoute);
 app.use('/message', passport.authenticate('jwt', {session: false}), messageRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+app.use('/like', passport.authenticate('jwt', {session: false}), messageRoute);
 
 app.use((req, res, next) => {
   const err = httpError('Not found', 404);

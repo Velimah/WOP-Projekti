@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf8">
     <title>Example</title>
-    <link href="./css/ui4.css" rel="stylesheet">
+    <link href="css/ui4.css" rel="stylesheet">
 </head>
 
 <body>
@@ -22,17 +22,17 @@
             <div class="form-wrapper">
                 <h3>Modify user</h3>
                 <form class="light-border" id="modUserForm">
-                    <input class="light-border" type="text" name="name" placeholder="Name">
-                    <input class="light-border" type="email" name="email" placeholder="email">
-                    <input class="light-border" type="password" name="passwd" placeholder="Password">
+                    <input minlength="3" required class="light-border" type="text" name="name" placeholder="Name">
+                    <input required class="light-border" type="email" name="email" placeholder="email">
+                    <input required pattern="(?=.*[\p{Lu}]).{8,}" class="light-border" type="password" name="password" placeholder="Password">
                     <button class="light-border" type="submit">Save</button>
                 </form>
             </div>
         </div>
     </div>
-    <script src="./js/check-login.js"></script>
-    <script src="./js/serialize.js"></script>
-    <script src="./js/modify-user.js"></script>
+    <script src="js/check-login.js"></script>
+    <script src="js/serialize.js"></script>
+    <script src="js/modify-user.js"></script>
 </body>
 
 </html>

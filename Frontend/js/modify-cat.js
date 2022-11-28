@@ -9,7 +9,8 @@ const getQParam = (param) => {
 };
 
 // get id from address
-const cat_id = getQParam('id');
+const message_id = getQParam('id');
+console.log(message_id);
 
 // select existing html elements
 const modForm = document.querySelector('#modCatForm');
@@ -18,11 +19,8 @@ const userList = document.querySelector('.add-owner');
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
 
-// if user is not admin delete owner selection
-if (user.role > 0) userList.remove();
-
 // add existing cat data to form
-const getCat = async (id) => {
+const getMessage = async (id) => {
   const fetchOptions = {
     headers: {
       Authorization: 'Bearer ' + sessionStorage.getItem('token'),
@@ -31,10 +29,7 @@ const getCat = async (id) => {
   const response = await fetch(url + '/message/' + id, fetchOptions);
   const cat = await response.json();
   const inputs = modForm.querySelectorAll('input');
-  inputs[0].value = cat.name;
-  inputs[1].value = cat.birthdate;
-  inputs[2].value = cat.weight;
-  if (user.role === 0) modForm.querySelector('select').value = cat.owner;
+  inputs[0].value = cat.message_body;
 };
 
 // create user options to <select>
@@ -50,7 +45,7 @@ const createUserOptions = (users) => {
     userList.appendChild(option);
   });
   // load cat data after users
-  getCat(cat_id);
+  getMessage(message_id);
 };
 
 // get users to make options
@@ -89,7 +84,7 @@ modForm.addEventListener('submit', async (evt) => {
   };
 
   console.log(fetchOptions);
-  const response = await fetch(url + '/message/' + cat_id, fetchOptions);
+  const response = await fetch(url + '/message/' + message_id, fetchOptions);
   const json = await response.json();
   if (json.error) {
     alert(json.error.message);
@@ -103,5 +98,5 @@ modForm.addEventListener('submit', async (evt) => {
 if (user.role === 0) {
   getUsers(); // if admin
 } else {
-  getCat(cat_id); // if regular user
+  getMessage(message_id); // if regular user
 }

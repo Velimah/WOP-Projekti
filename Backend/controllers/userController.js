@@ -33,13 +33,14 @@ const user_get = async (req, res, next) => {
 };
 
 const user_put = async (req, res, next) => {
+  console.log(req.body, req.user);
   try {
 
     const data = [
       req.body.name,
       req.body.email,
-      req.body.passwd,
-      req.body.id,
+      req.body.password,
+      req.user.user_id,
     ];
 
     const result = await updateUser(data, next);

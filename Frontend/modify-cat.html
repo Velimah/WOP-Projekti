@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf8">
     <title>Example</title>
-    <link href="./css/ui4.css" rel="stylesheet">
+    <link href="css/ui4.css" rel="stylesheet">
 </head>
 
 <body>
@@ -20,19 +20,17 @@
         <hr>
         <div class="forms">
             <div class="form-wrapper">
-                <h3>Add cat</h3>
-                <form action="http://localhost:3000/message" method="post" class="light-border"
-                    enctype="multipart/form-data" id="addCatForm">
+                <h3>Muokkaa viestiä</h3>
+                <form id="modCatForm" class="light-border">
                     <input class="light-border" type="text" name="message_body" placeholder="Name">
-                    <input class="light-border" type="file" name="picture" accept="image/*" placeholder="Choose file">
-                    <button class="light-border" type="submit">Upload</button>
+                    <button class="light-border" type="submit">Save changes</button>
                 </form>
             </div>
         </div>
     </div>
-    <script src="./js/check-login.js"></script>
-    <script src="./js/serialize.js"></script>
-    <script src="./js/add-cat.js"></script>
+    <script src="js/check-login.js"></script>
+    <script src="js/serialize.js"></script>
+    <script src="js/modify-cat.js"></script>
 </body>
 
 </html>

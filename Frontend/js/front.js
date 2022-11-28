@@ -1,0 +1,167 @@
+'use strict';
+const url = 'http://localhost:3000'; // change url when uploading to server
+
+// select existing html elements
+const div = document.querySelector('#viestit');
+
+// get user data for admin check
+const user = JSON.parse(sessionStorage.getItem('user'));
+
+// create cat cards
+const loadMessages = (messages) => {
+  // clear ul
+  document.getElementById('viestit').innerHTML = '';
+  messages.forEach((message) => {
+    // create li with DOM methods
+
+    const img = document.createElement('img');
+    img.src = url + '/thumbnails/' + message.picture;
+    img.alt = "kuva";
+    img.className = 'viesti-kuva';
+
+    img.addEventListener('click', () => {
+      location.href = 'single.html?id=' + message.message_id;
+    });
+
+    const figure = document.createElement('figure').appendChild(img);
+
+    const Lahettaja = document.createElement('h2');
+    Lahettaja.innerHTML ="Lähettäjä: " +message.name;
+
+    const email = document.createElement('p');
+    email.innerHTML = "Email: "+message.email;
+
+    const viesti = document.createElement('p');
+    viesti.innerHTML = "Viesti: "+ message.message_body;
+
+    const aika = document.createElement('p');
+
+    const time1 = new Date(message.send_time);
+    const time2 = new Date();
+    const elapsedTime = time2.getTime() - time1.getTime();
+    const minutes = elapsedTime / (1000 * 60);
+    const hours = elapsedTime / (1000 * 3600);
+
+    if (minutes < 60) {
+      aika.innerHTML = `Lähetetty: ${Math.trunc(minutes)}m`;
+    } else if (hours < 24) {
+      aika.innerHTML = `Lähetetty: ${Math.trunc(hours)}h`;
+    } else {
+      aika.innerHTML = `Lähetetty: ${message.send_time.substring(0, 10)} ${message.send_time.substring(11, 19)}`;
+    }
+
+    const palsta = document.createElement('p');
+    palsta.innerHTML = "Viestialue: "+ message.boardname;
+
+    const tykkaykset = document.createElement('p');
+    tykkaykset.innerHTML = "Tykkäykset: "+ message.likecount;
+
+    let messageId = `viesti-${message.message_id}`;
+    let boardId = `board-${message.board_id}`;
+
+    const div2 = document.createElement('div');
+    div2.setAttribute('id', messageId);
+    div2.setAttribute('class', boardId);
+
+    div2.appendChild(Lahettaja);
+    div2.appendChild(email);
+    div2.appendChild(palsta);
+    div2.appendChild(aika);
+    div2.appendChild(tykkaykset);
+    div2.appendChild(viesti);
+    div2.appendChild(figure);
+    div.appendChild(div2);
+
+    const likeButton = document.createElement('button');
+    likeButton.setAttribute('class', "like-button");
+    likeButton.innerHTML = 'Like';
+
+    likeButton.addEventListener('click', async (evt) => {
+      evt.preventDefault();
+      const fetchOptions = {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+        body: user,
+      };
+      const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
+      const json = await response.json();
+      alert(json.message);
+    });
+
+    div2.appendChild(likeButton);
+
+    if (user.role === 0 || user.user_id === message.sender) {
+      // link to modify form
+      const modButton = document.createElement('a');
+      modButton.innerHTML = 'Modify';
+      modButton.href = `modify-cat.html?id=${message.message_id}`;
+      modButton.classList.add('button');
+
+      // delete selected cat
+      const delButton = document.createElement('button');
+      delButton.innerHTML = 'Delete';
+      delButton.classList.add('button');
+      delButton.addEventListener('click', async () => {
+        const fetchOptions = {
+          method: 'DELETE',
+          headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+          },
+        };
+        try {
+          const response = await fetch(
+            url + '/message/' + message.message_id,
+            fetchOptions
+          );
+          const json = await response.json();
+          console.log('delete response', json);
+          getMessages();
+        } catch (e) {
+          console.log(e.message);
+        }
+      });
+
+      div2.appendChild(modButton);
+      div2.appendChild(delButton);
+    }
+  });
+};
+
+const getMessages = async () => {
+  try {
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + '/message', fetchOptions);
+    const messages = await response.json();
+    loadMessages(messages);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+getMessages();
+
+
+// select existing html elements
+const addForm = document.querySelector('#addMessageForm');
+
+addForm.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  const fd = new FormData(addForm);
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    body: fd,
+  };
+  const response = await fetch(url + '/message', fetchOptions);
+  const json = await response.json();
+  alert(json.message);
+  location.href="front.html";
+});
+

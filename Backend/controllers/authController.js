@@ -7,7 +7,6 @@ const {addUser} = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 
 const login = (req, res, next) => {
-  // TODO: add passport authenticate
   passport.authenticate('local', {session: false}, (err, user, info) => {
     console.log('info: ', info);
     console.log('err1: ', err);
@@ -41,7 +40,7 @@ const user_post = async (req, res, next) => {
     }
 
     const salt = bcrypt.genSaltSync(10);
-    const pwd = bcrypt.hashSync(req.body.passwd, salt);
+    const pwd = bcrypt.hashSync(req.body.password, salt);
 
     const data = [
       req.body.name,
