@@ -20,7 +20,7 @@ const getAllMessages = async (next) => {
 
 const getMessage = async (messageId, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message_id, message.message_body, picture, user.name as sender 
+    const [rows] = await promisePool.execute(`SELECT message_id, message.message_body, picture, user.name as sender, coords 
                                               FROM message
                                               JOIN user 
                                               ON user.user_id = message.user_id 
@@ -34,7 +34,7 @@ const getMessage = async (messageId, next) => {
 
 const addMessage = async (data, next) => {
   try {
-    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture) VALUES (?, now(), ?, ?, ?);`,
+    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords) VALUES (?, now(), ?, ?, ?, ?);`,
       data);
     return rows;
   } catch (e) {
@@ -89,6 +89,18 @@ const likeMessage = async (data, next) => {
     next(httpError('ALREADY LIKED?', 500));
   }
 };
+
+const searchMessage = async (data, next) => {
+  try {
+    const [rows] = await promisePool.execute(`SELECT * FROM message WHERE message.message_body LIKE '%'?'%';`,
+      data);
+    return rows;
+  } catch (e) {
+    console.error('likeMessage', e.message);
+    next(httpError('ALREADY LIKED?', 500));
+  }
+};
+
 
 module.exports = {
   getAllMessages,
