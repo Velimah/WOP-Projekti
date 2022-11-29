@@ -1,14 +1,18 @@
 @font-face {
     font-family: GalanoClassic;
     src: url(GalanoClassic-Regular.woff2);
+//src: url(ProductSans-Regular.ttf);
+
 }
 
 * {
+    font-size: 1rem;
     box-sizing: border-box;
     font-family: GalanoClassic, sans-serif;
     margin: 0;
     padding: 0;
 }
+
 body {
 
 }
@@ -20,8 +24,10 @@ header {
     top: 0;
     max-width: 1200px;
     width: 100%;
-    height: 100px;
-    background-color: #cbcb50;
+    height: 60px;
+    background-color: #ececec;
+    //border-bottom: black solid 1px;
+    box-shadow: 0 5px 5px -5px black;
 }
 
 .container {
@@ -29,22 +35,25 @@ header {
     width: 100%;
     display: flex;
     flex-direction: row;
-    margin-top: 100px;
+    margin-top: 60px;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
 }
 
 #vasen {
+    margin-right: 40px;
+    padding: 20px;
     top: 100px;
     overflow: auto;
     position: sticky;
     flex-shrink: 1;
     flex-grow: 0;
     width: 100%;
-    height: 600px;
-    background: cornflowerblue;
-    max-width: 300px;
+    height: 400px;
+    background: #ececec;
+    max-width: 250px;
+    border-radius: 5px;
 }
 
 #keski {
@@ -56,67 +65,202 @@ header {
     max-width: 600px;
     width: 100%;
     height: 100%;
-    background-color: aquamarine;
 }
-#uusi-viesti {
-    max-width: 600px;
+
+#oikea {
+    margin-left: 40px;
+    padding: 20px;
+    top: 100px;
+    overflow: auto;
+    position: sticky;
+    height: 400px;
+    border-radius: 5px;
+    background-color: #ececec;
+    flex-shrink: 1;
+    flex-grow: 0;
     width: 100%;
+    max-width: 250px;
 }
+
 #addMessageForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #6e8c69;
+    background-color: #ffffff;
     width: 100%;
-    height: 220px;
+    height: 200px;
 }
 
 #tekstikentta {
-    width:90%;
-    height: 150px;
+    width: 90%;
+    height: 100px;
     resize: none;
     font-size: 1.5rem;
-}
-input[type=file] {
-    font-size: 1.2rem;
+    margin-bottom: 20px;
 }
 
 #input-container {
-    margin-top: 5px;
+    max-width: 600px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
-button {
-    width: 100px;
-    height: 50px;
+
+input[type=file] {
+    max-width: 150px;
+    width: 100%;
+    height: 40px;
+    color: #000000;
+    background: #ffffff;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+input[type=file]::file-selector-button {
+    height: 100%;
+    width: 100%;
+    border: none;
+    background: #AF00FA;
+    padding: 10px;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+    background: #61257A;
+}
+
+#board-select {
+    width: 100%;
+    max-width: 150px;
+    height: 40px;
+    border: none;
+    background: #AF00FA;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+#board-select:hover {
+    background: #61257A;
+}
+
+#laheta-nappi {
+    width: 100%;
+    max-width: 150px;
+    height: 40px;
+    border: none;
+    background: #AF00FA;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+#laheta-nappi:hover {
+    background: #61257A;
 }
 
 #viestit {
-    max-width: 560px;
+    max-width: 600px;
     width: 100%;
     min-height: 300px;
+    box-shadow: 0 1px 10px -5px black;
 }
 
-.viesti {
+.viesti-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
     width: 100%;
     height: 100%;
-    background-color: #af6767;
-    margin-top: 20px;
+    background-color: #ffffff;
+    border-top: 1px solid #d0d0d0;
+    transition: background .2s ease-in-out;
 }
 
-#oikea {
-    top: 100px;
-    overflow: auto;
-    position: sticky;
-    height: 600px;
-    background-color: #bdadad;
-    flex-shrink: 1;
-    flex-grow: 0;
-    width: 100%;
-    max-width: 300px;
+.viesti-container:hover {
+    background-color: #f1f1f1;
 }
+
+.lahettaja-kortti {
+    display: flex;
+    flex-direction: column;
+}
+.viesti-kortti {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.viesti {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.viesti-kuva {
+    box-shadow: 0px 0px 5px -3px;
+    border-radius: 10px;
+    width: 100%;
+}
+.napit-kortti {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.like-button {
+    width: 100%;
+    max-width: 100px;
+    height: 30px;
+    border: none;
+    background: #AF00FA;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+.modify-button {
+    width: 100%;
+    max-width: 100px;
+    height: 30px;
+    border: none;
+    background: #AF00FA;
+    border-radius: 5px;
+    margin-right: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+.delete-button {
+    width: 100%;
+    max-width: 100px;
+    height: 30px;
+    border: none;
+    background: #AF00FA;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+button:hover {
+    background: #61257A;
+}
+
 
 @media screen and (max-width: 600px) {
     .container {
@@ -127,9 +271,10 @@ button {
 
     #vasen {
         position: fixed;
-        top: 100px;
+        top: 60px;
         height: 50px;
         max-width: 600px;
+        margin: 0;
     }
 
     #keski {
@@ -146,5 +291,6 @@ button {
         height: 50px;
         max-width: 600px;
         top: initial;
+        margin: 0;
     }
 }
