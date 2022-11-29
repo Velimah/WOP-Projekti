@@ -24,7 +24,8 @@ const getMessage = async (id) => {
   const response = await fetch(url + '/message/' + id, fetchOptions);
   const message = await response.json();
   img.src = `${url}/${message.picture}`;
-  //addMarker(JSON.parse(cat.coords));
+  console.log(message);
+  addMarker(JSON.parse(message.coords));
 };
 
 getMessage(message_id);

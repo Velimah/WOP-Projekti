@@ -1,12 +1,12 @@
 @font-face {
     font-family: GalanoClassic;
     src: url(GalanoClassic-Regular.woff2);
-//src: url(ProductSans-Regular.ttf);
 
 }
 
 * {
     font-size: 1rem;
+    line-height: 1.6;
     box-sizing: border-box;
     font-family: GalanoClassic, sans-serif;
     margin: 0;
@@ -204,6 +204,7 @@ input[type=file]::file-selector-button:hover {
 .viesti {
     padding-top: 20px;
     padding-bottom: 20px;
+    font-size: 0.9rem;
 }
 .viesti-kuva {
     box-shadow: 0px 0px 5px -3px;

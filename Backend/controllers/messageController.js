@@ -47,20 +47,22 @@ const message_post = async (req, res, next) => {
       return;
     }
 
-    console.log('message_post', req.body, req.file);
+    console.log('message_post', req.body, req.file, req.file.path);
 
     if (req.file !== undefined) {
 
-      const thumbnail = await sharp(req.file.path).resize(600, 600).png().toFile('./thumbnails/' + req.file.filename);
+      const thumbnail = await sharp(req.file.path).resize(560, 560).png().toFile('./thumbnails/' + req.file.filename);
 
-      //const coords = await getCoordinates(req.file.path);
+      const coords = await getCoordinates(req.file.path);
+
+      console.log(coords);
 
       const data = [
         req.body.message_body,
         req.user.user_id,
         req.body.board_id,
         req.file.filename,
-        //JSON.stringify(coords),
+        JSON.stringify(coords),
       ];
 
       const result = await addMessage(data, next);
@@ -83,7 +85,7 @@ const message_post = async (req, res, next) => {
         req.user.user_id,
         req.body.board_id,
         "",
-        //JSON.stringify(coords),
+        "[-1.087326, 43.571747]",
       ];
 
       const result = await addMessage(data, next);
