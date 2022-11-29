@@ -56,7 +56,7 @@ const loadMessages = (messages) => {
     palsta.innerHTML = message.boardname;
 
     const tykkaykset = document.createElement('p');
-    tykkaykset.innerHTML = "<i class=\"fa-solid fa-heart\"></i> "+ message.likecount;
+    tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
 
     let messageId = `viesti-${message.message_id}`;
     let boardId = `board-${message.board_id} viesti-container`;

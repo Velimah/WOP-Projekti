@@ -50,10 +50,44 @@ header {
     flex-shrink: 1;
     flex-grow: 0;
     width: 100%;
-    height: 400px;
+    height: 100%;
     background: #ececec;
     max-width: 250px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+#aluevalikko {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+
+}
+.aluelista {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 40px;
+    max-width: 200px;
+    width: 100%;
+    background-color: #AF00FA;
+    transition: background .2s ease-in-out;
+    list-style: none;
+    border-radius: 20px;
+}
+
+.aluelista:hover {
+    background: #61257A;
+}
+.aluelinkki{
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: white;
 }
 
 #keski {
@@ -68,12 +102,15 @@ header {
 }
 
 #oikea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-left: 40px;
     padding: 20px;
     top: 100px;
     overflow: auto;
     position: sticky;
-    height: 400px;
+    height: 100%;
     border-radius: 5px;
     background-color: #ececec;
     flex-shrink: 1;
@@ -204,7 +241,11 @@ input[type=file]::file-selector-button:hover {
 .viesti {
     padding-top: 20px;
     padding-bottom: 20px;
-    font-size: 0.9rem;
+    font-size: 1rem;
+}
+p.viesti {
+    max-width: 560px;
+    width: 100%;
 }
 .viesti-kuva {
     box-shadow: 0px 0px 5px -3px;
@@ -217,6 +258,10 @@ input[type=file]::file-selector-button:hover {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+.fa-solid {
+    font-size: 1.1rem;
+    color: red;
 }
 
 .like-button {

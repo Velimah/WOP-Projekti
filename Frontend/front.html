@@ -14,14 +14,14 @@
 <main class="container">
   <div id="vasen">
 
-    <ul>
-      <li><a href="front.html">Kaikki viestit</a></li>
-      <li><a href="modify-user.html">Yleinen</a></li>
-      <li><a href="logout.html">Frontend</a></li>
-      <li><a href="logout.html">Backend</a></li>
-      <li><a href="logout.html">Tietokannat</a></li>
-      <li><a href="logout.html">Matematiikka</a></li>
-    </ul>
+    <div class="aluevalikko">
+      <div class="aluelista"><a class="aluelinkki" href="front.html">Kaikki viestit</a></div>
+      <div class="aluelista"><a class="aluelinkki" href="modify-user.html">Yleinen</a></div>
+      <div class="aluelista"><a class="aluelinkki" href="logout.html">Frontend</a></div>
+      <div class="aluelista"><a class="aluelinkki" href="logout.html">Backend</a></div>
+      <div class="aluelista"><a class="aluelinkki" href="logout.html">Tietokannat</a></div>
+      <div class="aluelista"><a class="aluelinkki" href="logout.html">Matematiikka</a></div>
+    </div>
 
   </div>
   <div id="keski">
@@ -29,7 +29,7 @@
     <form action="http://localhost:3000/message" method="post"
           enctype="multipart/form-data" id="addMessageForm">
       <label for="tekstikentta"></label><input id="tekstikentta" type="text" name="message_body"
-                                               placeholder="Kirjoita viesti">
+                                               placeholder=" Kirjoita viesti...">
       <div id="input-container">
         <input id="kuva-nappi" type="file" name="picture" accept="image/*" placeholder="">
 
@@ -51,12 +51,11 @@
 
   </div>
   <div id="oikea">
-    <ul>
-      <li><a href="front.html">Frontpage</a></li>
-      <li><a href="modify-user.html">Modify user</a></li>
-      <li><a href="logout.html">Logout</a></li>
-    </ul>
-
+    <div class="aluevalikko">
+      <div class="aluelista"><a class="aluelinkki" href="front.html">Etusivu</a></div>
+      <div class="aluelista"><a class="aluelinkki" href="modify-user.html">Muokkaa käyttäjää</a></div>
+      <div class="aluelista"><a class="aluelinkki" href="logout.html">Kirjaudu ulos</a></div>
+    </div>
   </div>
 </main>
 
