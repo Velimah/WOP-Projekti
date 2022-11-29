@@ -1,6 +1,6 @@
 'use strict';
-const {getAllMessages, getMessage, addMessage, updateMessage, deleteMessage,likeMessage} = require(
-    '../models/messageModel');
+const {getAllMessages, getMessage, addMessage, updateMessage, deleteMessage, likeMessage} = require(
+  '../models/messageModel');
 const {httpError} = require('../utils/errors');
 const {validationResult} = require('express-validator');
 const sharp = require('sharp');
@@ -49,32 +49,54 @@ const message_post = async (req, res, next) => {
 
     console.log('message_post', req.body, req.file);
 
-    const thumbnail = await sharp(req.file.path).
-        resize(160, 160).
-        png().
-        toFile('./thumbnails/' + req.file.filename);
+    if (req.file !== undefined) {
 
-    //const coords = await getCoordinates(req.file.path);
+      const thumbnail = await sharp(req.file.path).resize(600, 600).png().toFile('./thumbnails/' + req.file.filename);
 
-    const data = [
-      req.body.message_body,
-      req.user.user_id,
-      req.body.board_id,
-      req.file.filename,
-      //JSON.stringify(coords),
-    ];
+      //const coords = await getCoordinates(req.file.path);
 
-    const result = await addMessage(data, next);
-    if (result.affectedRows < 1) {
-      next(httpError('Invalid data', 400));
-      return;
-    }
-    if(thumbnail) {
-      res.json({
-        message: 'message added',
-        cat_id: result.insertId,
-      });
-    }
+      const data = [
+        req.body.message_body,
+        req.user.user_id,
+        req.body.board_id,
+        req.file.filename,
+        //JSON.stringify(coords),
+      ];
+
+      const result = await addMessage(data, next);
+      if (result.affectedRows < 1) {
+        next(httpError('Invalid data', 400));
+        return;
+      }
+      if (thumbnail) {
+        res.json({
+          message: 'message added',
+          cat_id: result.insertId,
+        });
+      }
+
+    } else {
+      //const coords = await getCoordinates(req.file.path);
+
+      const data = [
+        req.body.message_body,
+        req.user.user_id,
+        req.body.board_id,
+        "",
+        //JSON.stringify(coords),
+      ];
+
+      const result = await addMessage(data, next);
+      if (result.affectedRows < 1) {
+        next(httpError('Invalid data', 400));
+        return;
+      }
+        res.json({
+          message: 'message added',
+          cat_id: result.insertId,
+        });
+      }
+
   } catch (e) {
     console.error('message_post', e.message);
     next(httpError('Internal server error', 500));
@@ -157,7 +179,7 @@ const message_like = async (req, res, next) => {
       return;
     }
 
-    console.log('message_like',req.user, req.params.id);
+    console.log('message_like', req.user, req.params.id);
 
     const data = [
       req.user.user_id,
@@ -169,10 +191,10 @@ const message_like = async (req, res, next) => {
       next(httpError('Invalid data', 400));
       return;
     }
-      res.json({
-        message: 'message liked',
-        cat_id: result.insertId,
-      });
+    res.json({
+      message: 'message liked',
+      cat_id: result.insertId,
+    });
 
   } catch (e) {
     console.error('message_like', e.message);

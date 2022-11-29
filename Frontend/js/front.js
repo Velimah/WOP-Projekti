@@ -2,7 +2,7 @@
 const url = 'http://localhost:3000'; // change url when uploading to server
 
 // select existing html elements
-const div = document.querySelector('#viestit');
+const viestit = document.querySelector('#viestit');
 
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
@@ -12,27 +12,29 @@ const loadMessages = (messages) => {
   // clear ul
   document.getElementById('viestit').innerHTML = '';
   messages.forEach((message) => {
-    // create li with DOM methods
 
     const img = document.createElement('img');
-    img.src = url + '/thumbnails/' + message.picture;
-    img.alt = "kuva";
-    img.className = 'viesti-kuva';
 
-    img.addEventListener('click', () => {
-      location.href = 'single.html?id=' + message.message_id;
-    });
+    if (message.picture !== "") {
+      img.src = url + '/thumbnails/' + message.picture;
+      img.alt = "kuva";
+      img.className = 'viesti-kuva';
 
-    const figure = document.createElement('figure').appendChild(img);
+      img.addEventListener('click', () => {
+        location.href = 'single.html?id=' + message.message_id;
+      });
 
-    const Lahettaja = document.createElement('h2');
-    Lahettaja.innerHTML ="Lähettäjä: " +message.name;
+    }
+
+    const Lahettaja = document.createElement('p');
+    Lahettaja.innerHTML = message.name;
 
     const email = document.createElement('p');
-    email.innerHTML = "Email: "+message.email;
+    email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + '</a>';
 
     const viesti = document.createElement('p');
-    viesti.innerHTML = "Viesti: "+ message.message_body;
+    viesti.setAttribute('class', 'viesti');
+    viesti.innerHTML = message.message_body;
 
     const aika = document.createElement('p');
 
@@ -43,34 +45,54 @@ const loadMessages = (messages) => {
     const hours = elapsedTime / (1000 * 3600);
 
     if (minutes < 60) {
-      aika.innerHTML = `Lähetetty: ${Math.trunc(minutes)}m`;
+      aika.innerHTML = `${Math.trunc(minutes)} minuuttia sitten`;
     } else if (hours < 24) {
-      aika.innerHTML = `Lähetetty: ${Math.trunc(hours)}h`;
+      aika.innerHTML = ` ${Math.trunc(hours)} tuntia sitten`;
     } else {
-      aika.innerHTML = `Lähetetty: ${message.send_time.substring(0, 10)} ${message.send_time.substring(11, 19)}`;
+      aika.innerHTML = `${message.send_time.substring(0, 10)} ${message.send_time.substring(11, 19)}`;
     }
 
     const palsta = document.createElement('p');
-    palsta.innerHTML = "Viestialue: "+ message.boardname;
+    palsta.innerHTML = message.boardname;
 
     const tykkaykset = document.createElement('p');
-    tykkaykset.innerHTML = "Tykkäykset: "+ message.likecount;
+    tykkaykset.innerHTML = "<i class=\"fa-solid fa-heart\"></i> "+ message.likecount;
 
     let messageId = `viesti-${message.message_id}`;
-    let boardId = `board-${message.board_id}`;
+    let boardId = `board-${message.board_id} viesti-container`;
 
-    const div2 = document.createElement('div');
-    div2.setAttribute('id', messageId);
-    div2.setAttribute('class', boardId);
+    const viestiContainer = document.createElement('div');
+    viestiContainer.setAttribute('id', messageId);
+    viestiContainer.setAttribute('class', boardId);
 
-    div2.appendChild(Lahettaja);
-    div2.appendChild(email);
-    div2.appendChild(palsta);
-    div2.appendChild(aika);
-    div2.appendChild(tykkaykset);
-    div2.appendChild(viesti);
-    div2.appendChild(figure);
-    div.appendChild(div2);
+    const lahettajaKortti = document.createElement('div');
+    lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
+
+    const viestiKortti = document.createElement('div');
+    viestiKortti.setAttribute('class', 'viesti-kortti');
+
+    const napitKortti = document.createElement('div');
+    napitKortti.setAttribute('class', 'napit-kortti');
+
+    lahettajaKortti.appendChild(Lahettaja);
+    lahettajaKortti.appendChild(email);
+    lahettajaKortti.appendChild(palsta);
+    lahettajaKortti.appendChild(aika);
+    viestiKortti.appendChild(viesti);
+
+    if (message.picture !== "") {
+      const figure = document.createElement('figure').appendChild(img);
+      viestiKortti.appendChild(figure);
+    }
+
+    napitKortti.appendChild(tykkaykset);
+    viestiContainer.appendChild(lahettajaKortti);
+    viestiContainer.appendChild(viestiKortti);
+    viestiContainer.appendChild(napitKortti);
+
+    viestit.appendChild(viestiContainer);
+
+
 
     const likeButton = document.createElement('button');
     likeButton.setAttribute('class', "like-button");
@@ -90,19 +112,23 @@ const loadMessages = (messages) => {
       alert(json.message);
     });
 
-    div2.appendChild(likeButton);
+    napitKortti.appendChild(likeButton);
 
     if (user.role === 0 || user.user_id === message.sender) {
-      // link to modify form
-      const modButton = document.createElement('a');
+      const modButton = document.createElement('button');
       modButton.innerHTML = 'Modify';
-      modButton.href = `modify-cat.html?id=${message.message_id}`;
-      modButton.classList.add('button');
+      modButton.classList.add('modify-button');
+      const href = `modify-cat.html?id=${message.message_id}`;
+      modButton.addEventListener('click', function () {
+        location.href=href;
+      });
 
-      // delete selected cat
+      napitKortti.appendChild(modButton);
+
+      // delete message
       const delButton = document.createElement('button');
       delButton.innerHTML = 'Delete';
-      delButton.classList.add('button');
+      delButton.classList.add('delete-button');
       delButton.addEventListener('click', async () => {
         const fetchOptions = {
           method: 'DELETE',
@@ -122,9 +148,7 @@ const loadMessages = (messages) => {
           console.log(e.message);
         }
       });
-
-      div2.appendChild(modButton);
-      div2.appendChild(delButton);
+      napitKortti.appendChild(delButton);
     }
   });
 };
