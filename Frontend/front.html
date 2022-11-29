@@ -6,6 +6,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/index.css">
+  <script src="https://kit.fontawesome.com/c5e93b78b7.js" crossorigin="anonymous"></script>
   <title>Document</title>
 </head>
 <body>
@@ -15,36 +16,34 @@
 
     <ul>
       <li><a href="front.html">Kaikki viestit</a></li>
-      <li><a href="modify-user.html">Yleiset viestit</a></li>
-      <li><a href="logout.html">Kurssi 1</a></li>
-      <li><a href="logout.html">Kurssi 2</a></li>
-      <li><a href="logout.html">Kurssi 3</a></li>
-      <li><a href="logout.html">Kurssi 4</a></li>
+      <li><a href="modify-user.html">Yleinen</a></li>
+      <li><a href="logout.html">Frontend</a></li>
+      <li><a href="logout.html">Backend</a></li>
+      <li><a href="logout.html">Tietokannat</a></li>
+      <li><a href="logout.html">Matematiikka</a></li>
     </ul>
 
   </div>
   <div id="keski">
 
-    <div id="uusi-viesti">
-        <form action="http://localhost:3000/message" method="post"
-              enctype="multipart/form-data" id="addMessageForm">
-          <input id="tekstikentta" type="text" name="message_body" placeholder="Kirjoita viesti">
-          <div id="input-container">
-          <input id="valitse-kuva" type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
+    <form action="http://localhost:3000/message" method="post"
+          enctype="multipart/form-data" id="addMessageForm">
+      <label for="tekstikentta"></label><input id="tekstikentta" type="text" name="message_body"
+                                               placeholder="Kirjoita viesti">
+      <div id="input-container">
+        <input id="kuva-nappi" type="file" name="picture" accept="image/*" placeholder="">
 
-            <select name="board_id">
-              <option value="1">kaikki</option>
-              <option value="2">yleiset</option>
-              <option value="3">kurssi1</option>
-              <option value="4">kurssi2</option>
-              <option value="5">kurssi3</option>
-              <option value="6">kurssi4</option>
-            </select>
+        <select id=board-select name="board_id">
+          <option value="2">Yleinen</option>
+          <option value="3">Frontend</option>
+          <option value="4">Backend</option>
+          <option value="5">Tietokannat</option>
+          <option value="6">Matematiikka</option>
+        </select>
 
-          <button id="laheta-nappi" type="submit">Lähetä</button>
-          </div>
-        </form>
-    </div>
+        <button id="laheta-nappi" type="submit">Lähetä</button>
+      </div>
+    </form>
 
     <div id="viestit">
       <div class="viesti"></div>
