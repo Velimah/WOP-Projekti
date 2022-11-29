@@ -73,7 +73,7 @@ const message_post = async (req, res, next) => {
       if (thumbnail) {
         res.json({
           message: 'message added',
-          cat_id: result.insertId,
+          message_id: result.insertId,
         });
       }
 
@@ -85,7 +85,7 @@ const message_post = async (req, res, next) => {
         req.user.user_id,
         req.body.board_id,
         "",
-        "[-1.087326, 43.571747]",
+        "[24.74,60.24]",
       ];
 
       const result = await addMessage(data, next);

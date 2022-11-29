@@ -8,8 +8,8 @@ const getCoordinates = (imgFile) => { // imgFile = full path to uploaded image
       // TODO: Use node-exif to get longitude and latitude from imgFile
       new ExifImage({image: imgFile}, function (error, exifData) {
         if (error) {
-          coordinates.push(-13.087326);
-          coordinates.push(43.571747);
+          coordinates.push(24.74);
+          coordinates.push(60.24);
           resolve(coordinates);
         } else {
           coordinates.push(gpsToDecimal(exifData.gps.GPSLongitude, exifData.gps.GPSLongitudeRef));

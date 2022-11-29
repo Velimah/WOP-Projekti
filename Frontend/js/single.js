@@ -24,8 +24,10 @@ const getMessage = async (id) => {
   const response = await fetch(url + '/message/' + id, fetchOptions);
   const message = await response.json();
   img.src = `${url}/${message.picture}`;
-  console.log(message);
   addMarker(JSON.parse(message.coords));
+  if (message.coords === "[24.74,60.24]") {
+    document.getElementById("map").style.display = "none";
+  }
 };
 
 getMessage(message_id);
