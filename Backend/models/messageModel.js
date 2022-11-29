@@ -90,6 +90,7 @@ const likeMessage = async (data, next) => {
   }
 };
 
+//Message Seach WIP
 const searchMessage = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`SELECT * FROM message WHERE message.message_body LIKE '%'?'%';`,
