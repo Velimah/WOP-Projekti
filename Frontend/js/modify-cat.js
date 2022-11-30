@@ -68,6 +68,7 @@ const getUsers = async () => {
 modForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const data = serializeJson(modForm);
+  console.log(data);
   // remove empty properties
   for (const [prop, value] of Object.entries(data)) {
     if (value === '') {

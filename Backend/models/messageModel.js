@@ -13,7 +13,7 @@ const getAllMessages = async (next) => {
     return rows;
   } catch (e) {
     console.error('getAllMessages', e.message);
-    next(httpError('Database error', 500));
+    next(httpError('Database error getAllMessages', 500));
   }
 };
 
@@ -28,7 +28,7 @@ const getMessage = async (messageId, next) => {
     return rows;
   } catch (e) {
     console.error('getMessage', e.message);
-    next(httpError('Database error', 500));
+    next(httpError('Database error getMessage', 500));
   }
 };
 
@@ -39,7 +39,7 @@ const addMessage = async (data, next) => {
     return rows;
   } catch (e) {
     console.error('addMessage', e.message);
-    next(httpError('Database error', 500));
+    next(httpError('Database error addMessage', 500));
   }
 };
 
@@ -57,7 +57,7 @@ const updateMessage = async (data, user, next) => {
 
   } catch (e) {
     console.error('updateMessage', e.message);
-    next(httpError('Database error', 500));
+    next(httpError('Database error updateMessage', 500));
   }
 };
 
@@ -75,7 +75,7 @@ const deleteMessage = async (messageId, user, next) => {
 */
   } catch (e) {
     console.error('deleteMessage', e.message);
-    next(httpError('Database error', 500));
+    next(httpError('Database error deleteMessage', 500));
   }
 };
 
@@ -98,7 +98,7 @@ const searchMessage = async (data, next) => {
     return rows;
   } catch (e) {
     console.error('likeMessage', e.message);
-    next(httpError('ALREADY LIKED?', 500));
+    next(httpError('Database error searchMessage', 500));
   }
 };
 

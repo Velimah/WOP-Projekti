@@ -127,7 +127,7 @@ const message_put = async (req, res, next) => {
       return;
     }
 
-    let data = [];
+    let data;
 
     if (req.user.role === 0) {
       data = [

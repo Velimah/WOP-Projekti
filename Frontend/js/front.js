@@ -7,10 +7,24 @@ const viestit = document.querySelector('#viestit');
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
 
-// create cat cards
+//header username and email
+const header = document.querySelector('header');
+const headerName = document.createElement('div');
+headerName.setAttribute('id', 'header-name');
+const headerEmail = document.createElement('div');
+headerEmail.setAttribute('id', 'header-email');
+
+headerName.innerHTML = user.name;
+headerEmail.innerHTML = user.email;
+
+header.appendChild(headerName);
+header.appendChild(headerEmail);
+
+// load all messages
 const loadMessages = (messages) => {
-  // clear ul
+
   document.getElementById('viestit').innerHTML = '';
+
   messages.forEach((message) => {
 
     const img = document.createElement('img');
@@ -54,6 +68,7 @@ const loadMessages = (messages) => {
 
     const palsta = document.createElement('p');
     palsta.innerHTML = message.boardname;
+    palsta.setAttribute('class', "viestikortti-palsta");
 
     const tykkaykset = document.createElement('p');
     tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
@@ -108,8 +123,6 @@ const loadMessages = (messages) => {
 
     viestit.appendChild(viestiContainer);
 
-
-
     const likeButton = document.createElement('button');
     likeButton.setAttribute('class', "like-button");
     likeButton.innerHTML = 'Tykkää';
@@ -136,7 +149,7 @@ const loadMessages = (messages) => {
       modButton.classList.add('modify-button');
       const href = `modify-cat.html?id=${message.message_id}`;
       modButton.addEventListener('click', function () {
-        location.href=href;
+        location.href = href;
       });
 
       napitKortti.appendChild(modButton);
@@ -164,11 +177,12 @@ const loadMessages = (messages) => {
           console.log(e.message);
         }
       });
+
       napitKortti.appendChild(delButton);
+
     }
   });
 };
-
 const getMessages = async () => {
   try {
     const fetchOptions = {
@@ -179,12 +193,13 @@ const getMessages = async () => {
     const response = await fetch(url + '/message', fetchOptions);
     const messages = await response.json();
     loadMessages(messages);
+
   } catch (e) {
     console.log(e.message);
   }
 };
-getMessages();
 
+getMessages();
 
 // select existing html elements
 const addForm = document.querySelector('#addMessageForm');
@@ -203,9 +218,8 @@ addForm.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/message', fetchOptions);
   const json = await response.json();
   alert(json.message);
-  location.href="front.html";
+  location.href = "front.html";
 });
-
 
 const addForm2 = document.querySelector('#addPictureForm');
 
@@ -223,5 +237,5 @@ addForm2.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/user/picture', fetchOptions);
   const json = await response.json();
   alert(json.message);
-  location.href="front.html";
+  location.href = "front.html";
 });

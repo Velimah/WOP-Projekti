@@ -25,7 +25,7 @@ header {
     max-width: 1200px;
     width: 100%;
     height: 60px;
-    background-color: #ececec;
+    background-color: #E6E6E6;
     //border-bottom: black solid 1px;
     box-shadow: 0 5px 5px -5px black;
 }
@@ -51,7 +51,7 @@ header {
     flex-grow: 0;
     width: 100%;
     height: 100%;
-    background: #ececec;
+    background: #E6E6E6;
     max-width: 250px;
     border-radius: 5px;
     display: flex;
@@ -75,19 +75,19 @@ header {
     height: 40px;
     max-width: 200px;
     width: 100%;
-    background-color: #A100DB;
+    background-color: #8F00C7;
     transition: background .2s ease-in-out;
     list-style: none;
     border-radius: 20px;
 }
 
 .aluelista:hover {
-    background: #61257A;
+    background: #490066;
 }
 .aluelinkki{
     text-decoration: none;
     font-size: 1.2rem;
-    color: white;
+    color: #FFFFFF;
 }
 
 #keski {
@@ -112,7 +112,7 @@ header {
     position: sticky;
     height: 100%;
     border-radius: 5px;
-    background-color: #ececec;
+    background-color: #E6E6E6;
     flex-shrink: 1;
     flex-grow: 0;
     width: 100%;
@@ -124,7 +124,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     width: 100%;
     height: 150px;
 }
@@ -151,7 +151,7 @@ input[type=file] {
     width: 100%;
     height: 40px;
     color: #000000;
-    background: #ffffff;
+    background: #FFFFFF;
     border-radius: 5px;
     margin-right: 20px;
 }
@@ -160,16 +160,16 @@ input[type=file]::file-selector-button {
     height: 100%;
     width: 100%;
     border: none;
-    background: #A100DB;
+    background: #8F00C7;
     padding: 10px;
     border-radius: 5px;
-    color: #ffffff;
+    color: #FFFFFF;
     cursor: pointer;
     transition: background .3s ease-in-out;
 }
 
 input[type=file]::file-selector-button:hover {
-    background: #61257A;
+    background: #490066;
 }
 
 #board-select {
@@ -177,17 +177,17 @@ input[type=file]::file-selector-button:hover {
     max-width: 150px;
     height: 40px;
     border: none;
-    background: #A100DB;
+    background: #8F00C7;
     padding: 10px;
     margin-right: 20px;
     border-radius: 5px;
-    color: #fff;
+    color: #FFFFFF;
     cursor: pointer;
     transition: background .3s ease-in-out;
 }
 
 #board-select:hover {
-    background: #61257A;
+    background: #490066;
 }
 
 #laheta-nappi {
@@ -195,16 +195,16 @@ input[type=file]::file-selector-button:hover {
     max-width: 150px;
     height: 40px;
     border: none;
-    background: #A100DB;
+    background: #8F00C7;
     padding: 10px 20px;
     border-radius: 5px;
-    color: #fff;
+    color: #FFFFFF;
     cursor: pointer;
     transition: background .3s ease-in-out;
 }
 
 #laheta-nappi:hover {
-    background: #61257A;
+    background: #490066;
 }
 
 #viestit {
@@ -220,18 +220,19 @@ input[type=file]::file-selector-button:hover {
     padding: 20px;
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
-    border-top: 1px solid #d0d0d0;
+    background-color: #FFFFFF;
+    border-top: 1px solid #E6E6E6;
     transition: background .2s ease-in-out;
 }
 
 .viesti-container:hover {
-    background-color: #f1f1f1;
+    background-color: #E6E6E6;
 }
 
 .lahettaja-kortti {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 .profiilikuva {
     border-radius: 20px;
@@ -240,7 +241,11 @@ input[type=file]::file-selector-button:hover {
 .lK1 {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 100%;
+}
+p.lK1 {
+    width: 50px;
 }
 
 .lK2 {
@@ -250,18 +255,27 @@ input[type=file]::file-selector-button:hover {
     align-items: center;
     width: 100%;
 }
+.viestikortti-palsta {
+    font-weight: bold;
+    padding: 5px;
+    background-color: #E6E6E6;
+    border-radius: 10px;
+    box-shadow: 0 0 3px -2px black;
+}
 
 .viesti-kortti {
     align-items: center;
     display: flex;
     flex-direction: column;
 }
+.
 .viesti {
-    padding-top: 20px;
     padding-bottom: 20px;
     font-size: 1rem;
 }
 p.viesti {
+    padding-top: 10px;
+    padding-bottom: 10px;
     max-width: 560px;
     width: 100%;
 }
@@ -287,11 +301,11 @@ p.viesti {
     max-width: 100px;
     height: 30px;
     border: none;
-    background: #A100DB;
+    background: #8F00C7;
     border-radius: 5px;
     margin-left: 10px;
     margin-right: 10px;
-    color: #fff;
+    color: #FFFFFF;
     cursor: pointer;
     transition: background .3s ease-in-out;
 }
@@ -301,10 +315,10 @@ p.viesti {
     max-width: 100px;
     height: 30px;
     border: none;
-    background: #A100DB;
+    background: #8F00C7;
     border-radius: 5px;
     margin-right: 10px;
-    color: #fff;
+    color: #FFFFFF;
     cursor: pointer;
     transition: background .3s ease-in-out;
 }
@@ -314,15 +328,15 @@ p.viesti {
     max-width: 100px;
     height: 30px;
     border: none;
-    background: #A100DB;
+    background: #8F00C7;
     border-radius: 5px;
-    color: #fff;
+    color: #FFFFFF;
     cursor: pointer;
     transition: background .3s ease-in-out;
 }
 
 button:hover {
-    background: #61257A;
+    background: #490066;
 }
 
 
@@ -341,7 +355,7 @@ button:hover {
         margin: 0;
         padding: 5px;
         border-radius: 0;
-        box-shadow: 0 5px 5px -4px #8a8a8a;
+        box-shadow: 0 5px 5px -4px #E6E6E6;
     }
 
     #keski {
@@ -361,7 +375,7 @@ button:hover {
         margin: 0;
         padding: 5px;
         border-radius: 0;
-        box-shadow: 0 0 5px 0 #8a8a8a;
+        box-shadow: 0 0 5px 0 #E6E6E6;
     }
     .aluevalikko {
         flex-direction: row;

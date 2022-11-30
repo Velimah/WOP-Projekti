@@ -43,7 +43,7 @@ const user_put = async (req, res, next) => {
     if (!errors.isEmpty()) {
       // There are errors.
       // Error messages can be returned in an array using `errors.array()`.
-      console.error('user_post validation', errors.array());
+      console.error('user_put validation', errors.array());
       next(httpError('Invalid data', 400));
       return;
     }
@@ -109,7 +109,7 @@ const user_picture_update = async (req, res, next) => {
       return;
     }
 
-    console.log('profilepic_testi', req.body, req.file, req.file.path);
+    console.log('profilePic_test', req.body, req.file, req.file.path);
 
     if (req.file !== undefined) {
 
