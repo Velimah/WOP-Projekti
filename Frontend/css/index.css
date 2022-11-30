@@ -231,8 +231,26 @@ input[type=file]::file-selector-button:hover {
 
 .lahettaja-kortti {
     display: flex;
+    flex-direction: row;
+}
+.profiilikuva {
+    border-radius: 20px;
+    margin-right: 10px;
+}
+.lK1 {
+    display: flex;
     flex-direction: column;
 }
+
+.lK2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
+    width: 100%;
+}
+
 .viesti-kortti {
     align-items: center;
     display: flex;

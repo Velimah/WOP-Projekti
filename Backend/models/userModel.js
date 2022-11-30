@@ -36,6 +36,17 @@ const addUser = async (data, next) => {
   }
 };
 
+const addProfilePic = async (data, next) => {
+  try {
+    const [rows] = await promisePool.execute(`UPDATE user SET user.profile_picture = ? WHERE user.user_id =?;`,
+      data);
+    return rows;
+  } catch (e) {
+    console.error('addProfilePic', e.message);
+    next(httpError('Database error', 500));
+  }
+};
+
 const updateUser = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`UPDATE user set name = ?, email = ?, password = ? WHERE user_id = ?;`,
@@ -75,6 +86,7 @@ module.exports = {
   getAllUsers,
   getUser,
   addUser,
+  addProfilePic,
   updateUser,
   deleteUser,
   getUserLogin,

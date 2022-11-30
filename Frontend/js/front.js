@@ -68,16 +68,32 @@ const loadMessages = (messages) => {
     const lahettajaKortti = document.createElement('div');
     lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
 
+    const lK1 = document.createElement('div');
+    lK1.setAttribute('class', 'lK1');
+    const lK2 = document.createElement('div');
+    lK2.setAttribute('class', 'lK2');
+
     const viestiKortti = document.createElement('div');
     viestiKortti.setAttribute('class', 'viesti-kortti');
 
     const napitKortti = document.createElement('div');
     napitKortti.setAttribute('class', 'napit-kortti');
 
-    lahettajaKortti.appendChild(Lahettaja);
-    lahettajaKortti.appendChild(email);
-    lahettajaKortti.appendChild(palsta);
-    lahettajaKortti.appendChild(aika);
+    const kuva = document.createElement('img');
+    kuva.setAttribute('class', 'profiilikuva');
+
+    if (message.profile_picture !== "") {
+      kuva.src = url + '/thumbnails/' + message.profile_picture;
+      kuva.alt = "kuva";
+    }
+
+    lK1.appendChild(Lahettaja);
+    lK1.appendChild(email);
+    lK2.appendChild(aika);
+    lK2.appendChild(palsta);
+    lahettajaKortti.appendChild(kuva);
+    lahettajaKortti.appendChild(lK1);
+    lahettajaKortti.appendChild(lK2);
     viestiKortti.appendChild(viesti);
 
     if (message.picture !== "") {
@@ -96,7 +112,7 @@ const loadMessages = (messages) => {
 
     const likeButton = document.createElement('button');
     likeButton.setAttribute('class', "like-button");
-    likeButton.innerHTML = 'Like';
+    likeButton.innerHTML = 'Tykkää';
 
     likeButton.addEventListener('click', async (evt) => {
       evt.preventDefault();
@@ -116,7 +132,7 @@ const loadMessages = (messages) => {
 
     if (user.role === 0 || user.user_id === message.sender) {
       const modButton = document.createElement('button');
-      modButton.innerHTML = 'Modify';
+      modButton.innerHTML = 'Muokkaa';
       modButton.classList.add('modify-button');
       const href = `modify-cat.html?id=${message.message_id}`;
       modButton.addEventListener('click', function () {
@@ -127,7 +143,7 @@ const loadMessages = (messages) => {
 
       // delete message
       const delButton = document.createElement('button');
-      delButton.innerHTML = 'Delete';
+      delButton.innerHTML = 'Poista';
       delButton.classList.add('delete-button');
       delButton.addEventListener('click', async () => {
         const fetchOptions = {
@@ -176,6 +192,7 @@ const addForm = document.querySelector('#addMessageForm');
 addForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const fd = new FormData(addForm);
+  console.log(fd);
   const fetchOptions = {
     method: 'POST',
     headers: {
@@ -189,3 +206,21 @@ addForm.addEventListener('submit', async (evt) => {
   location.href="front.html";
 });
 
+
+const addForm2 = document.querySelector('#addPictureForm');
+
+addForm2.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  const fd = new FormData(addForm2);
+  console.log(fd);
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    body: fd,
+  };
+  const response = await fetch(url + '/user/picture', fetchOptions);
+  const json = await response.json();
+  alert(json.message);
+});

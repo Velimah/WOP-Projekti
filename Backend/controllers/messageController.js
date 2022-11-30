@@ -47,11 +47,11 @@ const message_post = async (req, res, next) => {
       return;
     }
 
-    console.log('message_post', req.body, req.file, req.file.path);
+    console.log('message_post_testi', req.body, req.file, req.file.path);
 
     if (req.file !== undefined) {
 
-      const thumbnail = await sharp(req.file.path).resize(560, 560).png().toFile('./thumbnails/' + req.file.filename);
+      const thumbnail = await sharp(req.file.path).resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
 
       const coords = await getCoordinates(req.file.path);
 
@@ -78,7 +78,6 @@ const message_post = async (req, res, next) => {
       }
 
     } else {
-      //const coords = await getCoordinates(req.file.path);
 
       const data = [
         req.body.message_body,

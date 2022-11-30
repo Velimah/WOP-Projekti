@@ -1,8 +1,9 @@
 'use strict';
 // userController
-const {getUser, getAllUsers, deleteUser, updateUser} = require('../models/userModel');
+const {getUser, getAllUsers, deleteUser, updateUser, addProfilePic} = require('../models/userModel');
 const {validationResult} = require('express-validator');
 const {httpError} = require('../utils/errors');
+const sharp = require("sharp");
 
 const user_list_get = async (req, res, next) => {
   try {
@@ -83,10 +84,52 @@ const check_token = (req, res, next) => {
   }
 };
 
+const user_picture_update = async (req, res, next) => {
+  try {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      console.error('user_picture_update validation', errors.array());
+      next(httpError('Invalid data', 400));
+      return;
+    }
+
+    console.log('profilepic_testi', req.body, req.file, req.file.path);
+
+    if (req.file !== undefined) {
+
+      const thumbnail = await sharp(req.file.path).resize(60, 60).png().toFile('./thumbnails/' + req.file.filename);
+
+      const data = [
+        req.file.filename,
+        req.user.user_id,
+      ];
+
+      const result = await addProfilePic(data, next);
+      if (result.affectedRows < 1) {
+        next(httpError('Invalid data', 400));
+        return;
+      }
+      if (thumbnail) {
+        res.json({
+          message: 'profile picture added',
+          user_id: result.insertId,
+        });
+      }
+    }
+
+  } catch (e) {
+    console.error('user_picture_update', e.message);
+    next(httpError('Internal server error', 500));
+  }
+};
+
 module.exports = {
   user_list_get,
   user_get,
   user_put,
   user_delete,
   check_token,
+  user_picture_update,
 };
