@@ -4,6 +4,7 @@ const {getUser, getAllUsers, deleteUser, updateUser, addProfilePic} = require('.
 const {validationResult} = require('express-validator');
 const {httpError} = require('../utils/errors');
 const sharp = require("sharp");
+const bcrypt = require("bcryptjs");
 
 const user_list_get = async (req, res, next) => {
   try {
@@ -37,10 +38,23 @@ const user_put = async (req, res, next) => {
   console.log(req.body, req.user);
   try {
 
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // There are errors.
+      // Error messages can be returned in an array using `errors.array()`.
+      console.error('user_post validation', errors.array());
+      next(httpError('Invalid data', 400));
+      return;
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const pwd = bcrypt.hashSync(req.body.password, salt);
+
     const data = [
       req.body.name,
       req.body.email,
-      req.body.password,
+      pwd,
       req.user.user_id,
     ];
 
@@ -99,7 +113,7 @@ const user_picture_update = async (req, res, next) => {
 
     if (req.file !== undefined) {
 
-      const thumbnail = await sharp(req.file.path).resize(60, 60).png().toFile('./thumbnails/' + req.file.filename);
+      const thumbnail = await sharp(req.file.path).resize(60, 60).withMetadata().png().toFile('./thumbnails/' + req.file.filename);
 
       const data = [
         req.file.filename,
