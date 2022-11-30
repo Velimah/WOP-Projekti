@@ -47,15 +47,25 @@ const message_post = async (req, res, next) => {
       return;
     }
 
-    console.log('message_post_testi', req.body, req.file, req.file.path);
+    console.log('message_post_testi', req.body, req.file);
 
     if (req.file !== undefined) {
 
-      const thumbnail = await sharp(req.file.path).resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
-
+      const thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
+/*
+      const dimensions = sizeOf(req.file.path);
+      console.log(dimensions.width, dimensions.height);
+      if (dimensions.width < dimensions.height) {
+        thumbnail = await sharp(req.file.path).withMetadata().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
+      } else {
+        thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
+      }
+*/
+      console.log(thumbnail);
       const coords = await getCoordinates(req.file.path);
 
-      console.log(coords);
+
+     // console.log(coords);
 
       const data = [
         req.body.message_body,
@@ -94,7 +104,7 @@ const message_post = async (req, res, next) => {
       }
         res.json({
           message: 'message added',
-          cat_id: result.insertId,
+          message_id: result.insertId,
         });
       }
 
@@ -194,7 +204,7 @@ const message_like = async (req, res, next) => {
     }
     res.json({
       message: 'message liked',
-      cat_id: result.insertId,
+      message_id: result.insertId,
     });
 
   } catch (e) {

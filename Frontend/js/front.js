@@ -223,4 +223,5 @@ addForm2.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/user/picture', fetchOptions);
   const json = await response.json();
   alert(json.message);
+  location.href="front.html";
 });
