@@ -9,22 +9,13 @@
 
 <body>
     <div class="container">
-        <nav>
-            <ul>
-                <li><a href="front.html">Frontpage</a></li>
-                <li><a href="add-cat.html">Add cat</a></li>
-                <li><a href="modify-user.html">Modify user</a></li>
-                <li><a href="logout.html">Logout</a></li>
-            </ul>
-        </nav>
-        <hr>
         <div class="forms">
             <div class="form-wrapper">
                 <h3>Modify user</h3>
                 <form class="light-border" id="modUserForm">
-                    <input minlength="3" required class="light-border" type="text" name="name" placeholder="Name">
-                    <input required class="light-border" type="email" name="email" placeholder="email">
-                    <input required pattern="(?=.*[\p{Lu}]).{8,}" class="light-border" type="password" name="password" placeholder="Password">
+                    <input minlength="3" required class="light-border" type="text" name="name" placeholder="Nimi">
+                    <input required class="light-border" type="email" name="email" placeholder="Email">
+                    <input required pattern="(?=.*[\p{Lu}]).{8,}" class="light-border" type="password" name="password" placeholder="Salasana">
                     <button class="light-border" type="submit">Save</button>
                 </form>
             </div>
