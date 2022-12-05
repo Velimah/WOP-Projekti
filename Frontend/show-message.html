@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf8">
+  <title>Example</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/viestit-vastaukset.css">
+  <script src="https://kit.fontawesome.com/c5e93b78b7.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+</header>
+
+<main class="container">
+  <div id="vasen">
+  </div>
+  <div id="keski">
+<div id="viestit"></div>
+<form action="http://localhost:3000/message" method="post"
+      enctype="multipart/form-data" id="addReplyForm">
+  <label for="tekstikentta"></label><input id="tekstikentta" type="text" name="message_body"
+                                           placeholder=" Kirjoita vastaus...">
+  <div id="input-container">
+    <input id="kuva-nappi" type="file" name="picture" accept="image/*" placeholder="">
+
+    <button id="laheta-nappi" type="submit">Lähetä</button>
+  </div>
+</form>
+<div id="vastaukset"></div>
+  </div>
+  <div id="oikea">
+  </div>
+</main>
+
+<script src="js/check-login.js"></script>
+<script src="js/serialize.js"></script>
+<script src="js/showMessage.js"></script>
+</body>
+
+</html>

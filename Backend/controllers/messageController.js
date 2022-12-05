@@ -1,5 +1,5 @@
 'use strict';
-const {getAllMessages, getMessage, addMessage, updateMessage, deleteMessage, likeMessage} = require(
+const {getAllMessages, getMessage, addMessage, addReply, updateMessage, deleteMessage, likeMessage} = require(
   '../models/messageModel');
 const {httpError} = require('../utils/errors');
 const {validationResult} = require('express-validator');
@@ -52,28 +52,19 @@ const message_post = async (req, res, next) => {
     if (req.file !== undefined) {
 
       const thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
-/*
-      const dimensions = sizeOf(req.file.path);
-      console.log(dimensions.width, dimensions.height);
-      if (dimensions.width < dimensions.height) {
-        thumbnail = await sharp(req.file.path).withMetadata().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
-      } else {
-        thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
-      }
-*/
+
       console.log(thumbnail);
       const coords = await getCoordinates(req.file.path);
 
+        const data = [
+          req.body.message_body,
+          req.user.user_id,
+          req.body.board_id,
+          req.file.filename,
+          JSON.stringify(coords),
+        ];
 
-     // console.log(coords);
 
-      const data = [
-        req.body.message_body,
-        req.user.user_id,
-        req.body.board_id,
-        req.file.filename,
-        JSON.stringify(coords),
-      ];
 
       const result = await addMessage(data, next);
       if (result.affectedRows < 1) {
@@ -110,6 +101,79 @@ const message_post = async (req, res, next) => {
 
   } catch (e) {
     console.error('message_post', e.message);
+    next(httpError('Internal server error', 500));
+  }
+};
+
+const message_reply = async (req, res, next) => {
+  try {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // There are errors.
+      // Error messages can be returned in an array using `errors.array()`.
+      console.error('message_reply validation', errors.array());
+      next(httpError('Invalid data', 400));
+      return;
+    }
+
+    console.log('message_reply_body', req.body);
+    console.log('message_reply_file', req.file);
+    console.log('message_reply_params', req.params);
+
+    if (req.file !== undefined) {
+
+      const thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
+
+      console.log(thumbnail);
+      const coords = await getCoordinates(req.file.path);
+
+      const data = [
+        req.body.message_body,
+        req.user.user_id,
+        parseInt(req.body.board_id),
+        req.file.filename,
+        JSON.stringify(coords),
+        req.params.id,
+      ];
+
+      const result = await addReply(data, next);
+      if (result.affectedRows < 1) {
+        next(httpError('Invalid data', 400));
+        return;
+      }
+      if (thumbnail) {
+        res.json({
+          message: 'reply added',
+          message_id: result.insertId,
+        });
+      }
+
+    } else {
+
+      const data = [
+        req.body.message_body,
+        req.user.user_id,
+        parseInt(req.body.board_id),
+        "",
+        "[24.74,60.24]",
+        req.params.id,
+      ];
+
+      const result = await addReply(data, next);
+      if (result.affectedRows < 1) {
+        next(httpError('Invalid data', 400));
+        return;
+      }
+      res.json({
+        message: 'reply added',
+        message_id: result.insertId,
+      });
+    }
+
+  } catch (e) {
+    console.error('message_reply', e.message);
     next(httpError('Internal server error', 500));
   }
 };
@@ -217,6 +281,7 @@ module.exports = {
   message_list_get,
   message_get,
   message_post,
+  message_reply,
   message_put,
   message_delete,
   message_like,
