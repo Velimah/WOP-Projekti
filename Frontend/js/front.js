@@ -67,7 +67,7 @@ const loadMessages = (messages) => {
       } else if (hours < 24) {
         aika.innerHTML = ` ${Math.trunc(hours)} tuntia sitten`;
       } else {
-        aika.innerHTML = `${message.send_time.substring(0, 10)} ${message.send_time.substring(11, 19)}`;
+        aika.innerHTML = `${message.send_time.substring(0, 10)}`;
       }
 
       const palsta = document.createElement('p');
@@ -145,6 +145,7 @@ const loadMessages = (messages) => {
         };
         const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
         const json = await response.json();
+        getMessages();
         alert(json.message);
       });
 

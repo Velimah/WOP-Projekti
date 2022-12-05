@@ -7,7 +7,7 @@ const getAllMessages = async (next) => {
   try {
     const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.picture, 
                                                          user.user_id AS sender, user.name, user.email, user.profile_picture, board.name AS boardname, 
-                                                 (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount                                 
+                                                 (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount                               
                                                   FROM message, user, board
                                                   WHERE user.user_id = message.user_id AND board.board_id = message.board_id
                                                   ORDER BY send_time DESC;`);
@@ -22,7 +22,7 @@ const getMessage = async (messageId, next) => {
   try {
     const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.picture, 
                                                          user.user_id AS sender, user.name, user.email, user.profile_picture, board.name AS boardname, 
-                                                 (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount                                 
+                                                 (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount                                      
                                                   FROM message, user, board
                                                   WHERE user.user_id = message.user_id AND board.board_id = message.board_id AND message.message_id = ?
                                                   ORDER BY send_time DESC;`, [messageId]);

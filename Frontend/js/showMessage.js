@@ -55,7 +55,7 @@ const loadMessage = (message) => {
   } else if (hours < 24) {
     aika.innerHTML = ` ${Math.trunc(hours)} tuntia sitten`;
   } else {
-    aika.innerHTML = `${message.send_time.substring(0, 10)} ${message.send_time.substring(11, 19)}`;
+    aika.innerHTML = `${message.send_time.substring(0, 10)}`;
   }
 
   const palsta = document.createElement('p');
@@ -244,7 +244,7 @@ const loadMessages = (messages) => {
   messages.forEach((message) => {
     console.log("jee", message)
 
-    if (message.reply_id == message_id) {
+    if (message.reply_id === message_id) {
 
       const img = document.createElement('img');
 
@@ -282,7 +282,7 @@ const loadMessages = (messages) => {
       } else if (hours < 24) {
         aika.innerHTML = ` ${Math.trunc(hours)} tuntia sitten`;
       } else {
-        aika.innerHTML = `${message.send_time.substring(0, 10)} ${message.send_time.substring(11, 19)}`;
+        aika.innerHTML = `${message.send_time.substring(0, 10)}`;
       }
 
 
@@ -357,6 +357,7 @@ const loadMessages = (messages) => {
         const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
         const json = await response.json();
         alert(json.message);
+        getMessage();
       });
 
       napitKortti.appendChild(likeButton);
