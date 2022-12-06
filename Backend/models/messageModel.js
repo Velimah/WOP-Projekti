@@ -77,7 +77,7 @@ const updateMessage = async (data, user, next) => {
 
 const deleteMessage = async (messageId, user, next) => {
   try {
-   // if (user.role === 0) {
+    // if (user.role === 0) {
       const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ?;`,
         [messageId]);
       return rows;
@@ -100,7 +100,7 @@ const likeMessage = async (data, next) => {
     return rows;
   } catch (e) {
     console.error('likeMessage', e.message);
-    next(httpError('ALREADY LIKED?', 500));
+    next(httpError('Database error likeMessage. ALREADY LIKED?', 500));
   }
 };
 
@@ -115,7 +115,6 @@ const searchMessage = async (data, next) => {
     next(httpError('Database error searchMessage', 500));
   }
 };
-
 
 module.exports = {
   getAllMessages,

@@ -6,6 +6,7 @@ const {validationResult} = require('express-validator');
 const sharp = require('sharp');
 const {getCoordinates} = require('../utils/imageMeta');
 
+// gets all messages
 const message_list_get = async (req, res, next) => {
   try {
     const messages = await getAllMessages(next);
@@ -20,6 +21,7 @@ const message_list_get = async (req, res, next) => {
   }
 };
 
+//gets a single message with params.id
 const message_get = async (req, res, next) => {
   try {
     const message = await getMessage(req.params.id, next);
@@ -34,6 +36,7 @@ const message_get = async (req, res, next) => {
   }
 };
 
+// posts a message
 const message_post = async (req, res, next) => {
   try {
     // Extract the validation errors from a request.
@@ -49,6 +52,7 @@ const message_post = async (req, res, next) => {
 
     console.log('message_post_testi', req.body, req.file);
 
+    // checks if there is an image
     if (req.file !== undefined) {
 
       const thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
@@ -105,6 +109,7 @@ const message_post = async (req, res, next) => {
   }
 };
 
+// posts reply to a message with params.id
 const message_reply = async (req, res, next) => {
   try {
     // Extract the validation errors from a request.
@@ -122,6 +127,7 @@ const message_reply = async (req, res, next) => {
     console.log('message_reply_file', req.file);
     console.log('message_reply_params', req.params);
 
+    //checks if there is an image
     if (req.file !== undefined) {
 
       const thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
@@ -178,6 +184,7 @@ const message_reply = async (req, res, next) => {
   }
 };
 
+// edits message
 const message_put = async (req, res, next) => {
   try {
     // Extract the validation errors from a request.
@@ -223,6 +230,7 @@ const message_put = async (req, res, next) => {
   }
 };
 
+// deletes message
 const message_delete = async (req, res, next) => {
   console.log(req.params.id, req.user);
   try {
@@ -241,6 +249,7 @@ const message_delete = async (req, res, next) => {
   }
 };
 
+// likes a message
 const message_like = async (req, res, next) => {
   try {
     // Extract the validation errors from a request.
