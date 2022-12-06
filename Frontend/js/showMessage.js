@@ -2,35 +2,29 @@
 
 const url = 'http://localhost:3000'; // change url when uploading to server
 
-
 const getQParam = (param) => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   return urlParams.get(param);
 };
-
+// gets user information and message id
 const user = JSON.parse(sessionStorage.getItem('user'));
-
 const message_id = parseInt(getQParam('id'));
+
+//selects correct html elements from page to use in message and replies
 const viestit = document.querySelector('#viestit');
 const vastaukset = document.querySelector('#vastaukset');
 
+// loads the main message
 const loadMessage = (message) => {
 
+  //clears the html element before adding content
   document.getElementById('viestit').innerHTML = '';
 
-  const img = document.createElement('img');
+  //message sender information section
 
-  if (message.picture !== "") {
-    img.src = url + '/thumbnails/' + message.picture;
-    img.alt = "kuva";
-    img.className = 'viesti-kuva';
-
-    img.addEventListener('click', () => {
-      location.href = 'single.html?id=' + message.message_id;
-    });
-
-  }
+  const lahettajaKortti = document.createElement('div');
+  lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
 
   const Lahettaja = document.createElement('p');
   Lahettaja.innerHTML = message.name;
@@ -38,18 +32,16 @@ const loadMessage = (message) => {
   const email = document.createElement('p');
   email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + '</a>';
 
-  const viesti = document.createElement('p');
-  viesti.setAttribute('class', 'viesti');
-  viesti.innerHTML = message.message_body;
-
   const aika = document.createElement('p');
 
+  //calculates minutes and hours since the message was posted
   const time1 = new Date(message.send_time);
   const time2 = new Date();
   const elapsedTime = time2.getTime() - time1.getTime();
   const minutes = elapsedTime / (1000 * 60);
   const hours = elapsedTime / (1000 * 3600);
 
+  //chooses the correct time format to display (minutes/hours/date)
   if (minutes < 60) {
     aika.innerHTML = `${Math.trunc(minutes)} minuuttia sitten`;
   } else if (hours < 24) {
@@ -62,30 +54,7 @@ const loadMessage = (message) => {
   palsta.innerHTML = message.boardname;
   palsta.setAttribute('class', "viestikortti-palsta");
 
-  const tykkaykset = document.createElement('p');
-  tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
-
-  let messageId = `viesti-${message.message_id}`;
-  let boardId = `board-${message.board_id} viesti-container`;
-
-  const viestiContainer = document.createElement('div');
-  viestiContainer.setAttribute('id', messageId);
-  viestiContainer.setAttribute('class', boardId);
-
-  const lahettajaKortti = document.createElement('div');
-  lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
-
-  const lK1 = document.createElement('div');
-  lK1.setAttribute('class', 'lK1');
-  const lK2 = document.createElement('div');
-  lK2.setAttribute('class', 'lK2');
-
-  const viestiKortti = document.createElement('div');
-  viestiKortti.setAttribute('class', 'viesti-kortti');
-
-  const napitKortti = document.createElement('div');
-  napitKortti.setAttribute('class', 'napit-kortti');
-
+  // if the sender has profile pic embeds it into the message header
   const kuva = document.createElement('img');
   kuva.setAttribute('class', 'profiilikuva');
 
@@ -94,9 +63,13 @@ const loadMessage = (message) => {
     kuva.alt = "kuva";
   }
 
-  const vastausKortti = document.createElement('div');
-  vastausKortti.setAttribute('class', 'vastaus-kortti');
+  // containers for flexbox
+  const lK1 = document.createElement('div');
+  lK1.setAttribute('class', 'lK1');
+  const lK2 = document.createElement('div');
+  lK2.setAttribute('class', 'lK2');
 
+  // combining information into flexbox containers, then into a parent element
   lK1.appendChild(Lahettaja);
   lK1.appendChild(email);
   lK2.appendChild(aika);
@@ -104,19 +77,46 @@ const loadMessage = (message) => {
   lahettajaKortti.appendChild(kuva);
   lahettajaKortti.appendChild(lK1);
   lahettajaKortti.appendChild(lK2);
+
+  // message body section
+
+  const viestiKortti = document.createElement('div');
+  viestiKortti.setAttribute('class', 'viesti-kortti');
+
+  const viesti = document.createElement('p');
+  viesti.setAttribute('class', 'viesti');
+  viesti.innerHTML = message.message_body;
+
   viestiKortti.appendChild(viesti);
+
+  const img = document.createElement('img');
+
+  //if the message has a picture, embeds it into the message post
+  if (message.picture !== "") {
+    img.src = url + '/thumbnails/' + message.picture;
+    img.alt = "kuva";
+    img.className = 'viesti-kuva';
+
+    img.addEventListener('click', () => {
+      location.href = 'single.html?id=' + message.message_id;
+    });
+  }
 
   if (message.picture !== "") {
     const figure = document.createElement('figure').appendChild(img);
     viestiKortti.appendChild(figure);
   }
 
-  napitKortti.appendChild(tykkaykset);
-  viestiContainer.appendChild(lahettajaKortti);
-  viestiContainer.appendChild(viestiKortti);
-  viestiContainer.appendChild(napitKortti);
-  viestiContainer.appendChild(vastausKortti);
+  // message button section
 
+  const napitKortti = document.createElement('div');
+  napitKortti.setAttribute('class', 'napit-kortti');
+
+  // like count and like button
+  const tykkaykset = document.createElement('p');
+  tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
+
+  napitKortti.appendChild(tykkaykset);
 
   const likeButton = document.createElement('button');
   likeButton.setAttribute('class', "like-button");
@@ -138,8 +138,10 @@ const loadMessage = (message) => {
 
   napitKortti.appendChild(likeButton);
 
-
+  // edit and delete button depending on user role
   if (user.role === 0 || user.user_id === message.sender) {
+
+    // edit message
     const modButton = document.createElement('button');
     modButton.innerHTML = 'Muokkaa';
     modButton.classList.add('modify-button');
@@ -168,96 +170,47 @@ const loadMessage = (message) => {
         );
         const json = await response.json();
         console.log('delete response', json);
-        getMessages();
+        getMessage();
       } catch (e) {
         console.log(e.message);
       }
     });
-
     napitKortti.appendChild(delButton);
-
   }
 
-  //   viestiContainer.appendChild(replyBox);
+  // container for each complete message
+  const viestiContainer = document.createElement('div');
 
+  //puts the post and board id into each message (if needed for something in future)
+  let messageId = `viesti-${message.message_id}`;
+  let boardId = `board-${message.board_id} viesti-container`;
+  viestiContainer.setAttribute('id', messageId);
+  viestiContainer.setAttribute('class', boardId);
+
+  //combines message header, message body, buttons and replies into same container
+  viestiContainer.appendChild(lahettajaKortti);
+  viestiContainer.appendChild(viestiKortti);
+  viestiContainer.appendChild(napitKortti);
   viestit.appendChild(viestiContainer);
-  getMessages();
 
-  /*
-        const replyBox = document.createElement('div');
-        replyBox.innerHTML =
-
-        '<form action="http://localhost:3000/message" method="post" encType="multipart/form-data" id="addReplyForm'+message.message_id+'">'+
-          '<label htmlFor="tekstikentta'+message.message_id+'"></label>'+
-          '<input id="tekstikentta'+message.message_id+'" type="text" name="message_body" placeholder=" Kirjoita viesti...">'+
-          '<div id="input-container'+message.message_id+'">'+
-            '<input id="kuva-nappi'+message.message_id+'" type="file" name="picture" accept="image/*" placeholder="">'+
-            '<button id="laheta-nappi'+message.message_id+'" type="submit">Lähetä</button>'+
-          '</div>'+
-        '</form>';
-
-        const replyForm = document.querySelector(`#addReplyForm${message.message_id}`);
-        replyForm.addEventListener('submit', async (evt) => {
-          evt.preventDefault();
-          const fd = new FormData(replyForm);
-          console.log(fd);
-          const fetchOptions = {
-            method: 'POST',
-            headers: {
-              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-            },
-            body: fd, ,
-          };
-
-          const response = await fetch(url + '/message', fetchOptions);
-          const json = await response.json();
-          alert(json.message);
-          location.href = "front.html";
-        });
-
-  */
+  // runs the function that gets message replies after the main message is ready
+  getMessage();
 };
 
-let message;
-const getMessage = async () => {
-  try {
-  const fetchOptions = {
-    headers: {
-      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-    },
-  };
-  const response = await fetch(url + '/message/' + message_id, fetchOptions);
-  message = await response.json();
-  console.log(message);
-  loadMessage(message);
-  } catch (e) {
-    console.log(e.message);
-  }
-};
-
-
-
-const loadMessages = (messages) => {
+// loads the replies for the message. code is almost same as above, just loops through reply_id's to find correct replies
+const loadReplies = (messages) => {
 
   document.getElementById('vastaukset').innerHTML = '';
 
   messages.forEach((message) => {
-    console.log("jee", message)
 
+    // checks for reply_id to find correct reply messages
     if (message.reply_id === message_id) {
 
-      const img = document.createElement('img');
+//message sender information section
 
-      if (message.picture !== "") {
-        img.src = url + '/thumbnails/' + message.picture;
-        img.alt = "kuva";
-        img.className = 'viesti-kuva';
-
-        img.addEventListener('click', () => {
-          location.href = 'single.html?id=' + message.message_id;
-        });
-
-      }
+      const lahettajaKortti = document.createElement('div');
+      lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
 
       const Lahettaja = document.createElement('p');
       Lahettaja.innerHTML = message.name;
@@ -265,18 +218,16 @@ const loadMessages = (messages) => {
       const email = document.createElement('p');
       email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + '</a>';
 
-      const viesti = document.createElement('p');
-      viesti.setAttribute('class', 'viesti');
-      viesti.innerHTML = message.message_body;
-
       const aika = document.createElement('p');
 
+      //calculates minutes and hours since the message was posted
       const time1 = new Date(message.send_time);
       const time2 = new Date();
       const elapsedTime = time2.getTime() - time1.getTime();
       const minutes = elapsedTime / (1000 * 60);
       const hours = elapsedTime / (1000 * 3600);
 
+      //chooses the correct time format to display (minutes/hours/date)
       if (minutes < 60) {
         aika.innerHTML = `${Math.trunc(minutes)} minuuttia sitten`;
       } else if (hours < 24) {
@@ -285,31 +236,11 @@ const loadMessages = (messages) => {
         aika.innerHTML = `${message.send_time.substring(0, 10)}`;
       }
 
+      const palsta = document.createElement('p');
+      palsta.innerHTML = message.boardname;
+      palsta.setAttribute('class', "viestikortti-palsta");
 
-      const tykkaykset = document.createElement('p');
-      tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
-
-      let messageId = `viesti-${message.message_id}`;
-      let boardId = `board-${message.board_id} viesti-container`;
-
-      const viestiContainer = document.createElement('div');
-      viestiContainer.setAttribute('id', messageId);
-      viestiContainer.setAttribute('class', boardId);
-
-      const lahettajaKortti = document.createElement('div');
-      lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
-
-      const lK1 = document.createElement('div');
-      lK1.setAttribute('class', 'lK1');
-      const lK2 = document.createElement('div');
-      lK2.setAttribute('class', 'lK2');
-
-      const viestiKortti = document.createElement('div');
-      viestiKortti.setAttribute('class', 'viesti-kortti');
-
-      const napitKortti = document.createElement('div');
-      napitKortti.setAttribute('class', 'napit-kortti');
-
+      // if the sender has profile pic embeds it into the message header
       const kuva = document.createElement('img');
       kuva.setAttribute('class', 'profiilikuva');
 
@@ -318,28 +249,60 @@ const loadMessages = (messages) => {
         kuva.alt = "kuva";
       }
 
-      const vastausKortti = document.createElement('div');
-      vastausKortti.setAttribute('class', 'vastaus-kortti');
+      // containers for flexbox
+      const lK1 = document.createElement('div');
+      lK1.setAttribute('class', 'lK1');
+      const lK2 = document.createElement('div');
+      lK2.setAttribute('class', 'lK2');
 
+      // combining information into flexbox containers, then into a parent element
       lK1.appendChild(Lahettaja);
       lK1.appendChild(email);
       lK2.appendChild(aika);
+      lK2.appendChild(palsta);
       lahettajaKortti.appendChild(kuva);
       lahettajaKortti.appendChild(lK1);
       lahettajaKortti.appendChild(lK2);
+
+      // message body section
+
+      const viestiKortti = document.createElement('div');
+      viestiKortti.setAttribute('class', 'viesti-kortti');
+
+      const viesti = document.createElement('p');
+      viesti.setAttribute('class', 'viesti');
+      viesti.innerHTML = message.message_body;
+
       viestiKortti.appendChild(viesti);
+
+      const img = document.createElement('img');
+
+      //if the message has a picture, embeds it into the message post
+      if (message.picture !== "") {
+        img.src = url + '/thumbnails/' + message.picture;
+        img.alt = "kuva";
+        img.className = 'viesti-kuva';
+
+        img.addEventListener('click', () => {
+          location.href = 'single.html?id=' + message.message_id;
+        });
+      }
 
       if (message.picture !== "") {
         const figure = document.createElement('figure').appendChild(img);
         viestiKortti.appendChild(figure);
       }
 
-      napitKortti.appendChild(tykkaykset);
-      viestiContainer.appendChild(lahettajaKortti);
-      viestiContainer.appendChild(viestiKortti);
-      viestiContainer.appendChild(napitKortti);
-      viestiContainer.appendChild(vastausKortti);
+      // message button section
 
+      const napitKortti = document.createElement('div');
+      napitKortti.setAttribute('class', 'napit-kortti');
+
+      // like count and like button
+      const tykkaykset = document.createElement('p');
+      tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
+
+      napitKortti.appendChild(tykkaykset);
 
       const likeButton = document.createElement('button');
       likeButton.setAttribute('class', "like-button");
@@ -357,13 +320,14 @@ const loadMessages = (messages) => {
         const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
         const json = await response.json();
         alert(json.message);
-        getMessage();
       });
 
       napitKortti.appendChild(likeButton);
 
-
+      // edit and delete button depending on user role
       if (user.role === 0 || user.user_id === message.sender) {
+
+        // edit message
         const modButton = document.createElement('button');
         modButton.innerHTML = 'Muokkaa';
         modButton.classList.add('modify-button');
@@ -397,17 +361,29 @@ const loadMessages = (messages) => {
             console.log(e.message);
           }
         });
-
         napitKortti.appendChild(delButton);
-
       }
+
+      // container for each complete message
+      const viestiContainer = document.createElement('div');
+
+      //puts the post and board id into each message (if needed for something in future)
+      let messageId = `viesti-${message.message_id}`;
+      let boardId = `board-${message.board_id} viesti-container`;
+      viestiContainer.setAttribute('id', messageId);
+      viestiContainer.setAttribute('class', boardId);
+
+      //combines message header, message body, buttons and replies into same container
+      viestiContainer.appendChild(lahettajaKortti);
+      viestiContainer.appendChild(viestiKortti);
+      viestiContainer.appendChild(napitKortti);
 
       vastaukset.appendChild(viestiContainer);
     }
   });
 };
 
-const getMessages = async () => {
+const getMessage = async () => {
   try {
     const fetchOptions = {
       headers: {
@@ -416,20 +392,44 @@ const getMessages = async () => {
     };
     const response = await fetch(url + '/message', fetchOptions);
     const messages = await response.json();
-    loadMessages(messages);
+    loadReplies(messages);
 
   } catch (e) {
     console.log(e.message);
   }
 };
 
-getMessage();
+// storage for message information
+let message;
 
+// gets the correct message id from param.id and finds the matching replies
+const getReplies = async () => {
+  try {
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + '/message/' + message_id, fetchOptions);
+    message = await response.json();
+    console.log(message);
+    loadMessage(message);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+// starts the function train
+getReplies();
+
+// form to reply to the message
 const addForm = document.querySelector('#addReplyForm');
 
 addForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const fd = new FormData(addForm);
+
+  //sends board id to be able to use the same sql route
   fd.append('board_id',`${message.board_id}`)
   console.log(fd);
   const fetchOptions = {

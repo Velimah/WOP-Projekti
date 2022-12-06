@@ -25,24 +25,18 @@ header.appendChild(headerEmail);
 // load all messages
 const loadMessages = (messages) => {
 
+  // clears the html element before adding content
   document.getElementById('viestit').innerHTML = '';
 
   messages.forEach((message) => {
 
+    // chooses only non-reply messages
     if (message.reply_id === null) {
 
-      const img = document.createElement('img');
+      // message sender information section
 
-      if (message.picture !== "") {
-        img.src = url + '/thumbnails/' + message.picture;
-        img.alt = "kuva";
-        img.className = 'viesti-kuva';
-
-        img.addEventListener('click', () => {
-          location.href = 'single.html?id=' + message.message_id;
-        });
-
-      }
+      const lahettajaKortti = document.createElement('div');
+      lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
 
       const Lahettaja = document.createElement('p');
       Lahettaja.innerHTML = message.name;
@@ -50,18 +44,16 @@ const loadMessages = (messages) => {
       const email = document.createElement('p');
       email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + '</a>';
 
-      const viesti = document.createElement('p');
-      viesti.setAttribute('class', 'viesti');
-      viesti.innerHTML = message.message_body;
-
       const aika = document.createElement('p');
 
+      // calculates minutes and hours since the message was posted
       const time1 = new Date(message.send_time);
       const time2 = new Date();
       const elapsedTime = time2.getTime() - time1.getTime();
       const minutes = elapsedTime / (1000 * 60);
       const hours = elapsedTime / (1000 * 3600);
 
+      // chooses the correct time format to display (minutes/hours/date)
       if (minutes < 60) {
         aika.innerHTML = `${Math.trunc(minutes)} minuuttia sitten`;
       } else if (hours < 24) {
@@ -71,44 +63,25 @@ const loadMessages = (messages) => {
       }
 
       const palsta = document.createElement('p');
-      palsta.innerHTML = message.boardname;
       palsta.setAttribute('class', "viestikortti-palsta");
-
-      const tykkaykset = document.createElement('p');
-      tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
-
-      let messageId = `viesti-${message.message_id}`;
-      let boardId = `board-${message.board_id} viesti-container`;
-
-      const viestiContainer = document.createElement('div');
-      viestiContainer.setAttribute('id', messageId);
-      viestiContainer.setAttribute('class', boardId);
-
-      const lahettajaKortti = document.createElement('div');
-      lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
-
-      const lK1 = document.createElement('div');
-      lK1.setAttribute('class', 'lK1');
-      const lK2 = document.createElement('div');
-      lK2.setAttribute('class', 'lK2');
-
-      const viestiKortti = document.createElement('div');
-      viestiKortti.setAttribute('class', 'viesti-kortti');
-
-      const napitKortti = document.createElement('div');
-      napitKortti.setAttribute('class', 'napit-kortti');
+      palsta.innerHTML = message.boardname;
 
       const kuva = document.createElement('img');
       kuva.setAttribute('class', 'profiilikuva');
 
+      // if the sender has profile pic embeds it into the message header
       if (message.profile_picture !== "") {
         kuva.src = url + '/thumbnails/' + message.profile_picture;
         kuva.alt = "kuva";
       }
 
-      const vastausKortti = document.createElement('div');
-      vastausKortti.setAttribute('class', 'vastaus-kortti');
+      // containers for flexbox
+      const lK1 = document.createElement('div');
+      lK1.setAttribute('class', 'lK1');
+      const lK2 = document.createElement('div');
+      lK2.setAttribute('class', 'lK2');
 
+      // combining information into flexbox containers, then into a parent element
       lK1.appendChild(Lahettaja);
       lK1.appendChild(email);
       lK2.appendChild(aika);
@@ -116,19 +89,46 @@ const loadMessages = (messages) => {
       lahettajaKortti.appendChild(kuva);
       lahettajaKortti.appendChild(lK1);
       lahettajaKortti.appendChild(lK2);
+
+      // message body section
+
+      const viestiKortti = document.createElement('div');
+      viestiKortti.setAttribute('class', 'viesti-kortti');
+
+      const viesti = document.createElement('p');
+      viesti.setAttribute('class', 'viesti');
+      viesti.innerHTML = message.message_body;
+
       viestiKortti.appendChild(viesti);
+
+      const img = document.createElement('img');
+
+      // if the message has a picture, embeds it into the message post
+      if (message.picture !== "") {
+        img.src = url + '/thumbnails/' + message.picture;
+        img.alt = "kuva";
+        img.className = 'viesti-kuva';
+
+        img.addEventListener('click', () => {
+          location.href = 'single.html?id=' + message.message_id;
+        });
+      }
 
       if (message.picture !== "") {
         const figure = document.createElement('figure').appendChild(img);
         viestiKortti.appendChild(figure);
       }
 
-      napitKortti.appendChild(tykkaykset);
-      viestiContainer.appendChild(lahettajaKortti);
-      viestiContainer.appendChild(viestiKortti);
-      viestiContainer.appendChild(napitKortti);
-      viestiContainer.appendChild(vastausKortti);
+      // message button section
 
+      const napitKortti = document.createElement('div');
+      napitKortti.setAttribute('class', 'napit-kortti');
+
+      // like count and like button
+      const tykkaykset = document.createElement('p');
+      tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
+
+      napitKortti.appendChild(tykkaykset);
 
       const likeButton = document.createElement('button');
       likeButton.setAttribute('class', "like-button");
@@ -151,6 +151,7 @@ const loadMessages = (messages) => {
 
       napitKortti.appendChild(likeButton);
 
+      // reply button
       const replyButton = document.createElement('button');
       replyButton.innerHTML = 'Vastaa';
       replyButton.classList.add('modify-button');
@@ -161,8 +162,10 @@ const loadMessages = (messages) => {
 
       napitKortti.appendChild(replyButton);
 
-
+      // edit and delete button depending on user role
       if (user.role === 0 || user.user_id === message.sender) {
+
+        // edit message
         const modButton = document.createElement('button');
         modButton.innerHTML = 'Muokkaa';
         modButton.classList.add('modify-button');
@@ -196,16 +199,26 @@ const loadMessages = (messages) => {
             console.log(e.message);
           }
         });
-
         napitKortti.appendChild(delButton);
-
       }
 
+      // container for each complete message
+      const viestiContainer = document.createElement('div');
+
+      //puts the post and board id into each message (if needed for something in future)
+      let messageId = `viesti-${message.message_id}`;
+      let boardId = `board-${message.board_id} viesti-container`;
+      viestiContainer.setAttribute('id', messageId);
+      viestiContainer.setAttribute('class', boardId);
+
+      //combines message header, message body and buttons together into a container and then into existing html element
+      viestiContainer.appendChild(lahettajaKortti);
+      viestiContainer.appendChild(viestiKortti);
+      viestiContainer.appendChild(napitKortti);
       viestit.appendChild(viestiContainer);
     }
   });
 };
-
 
 const getMessages = async () => {
   try {
@@ -225,7 +238,7 @@ const getMessages = async () => {
 
 getMessages();
 
-// select existing html elements
+//form to add messages
 const addForm = document.querySelector('#addMessageForm');
 
 addForm.addEventListener('submit', async (evt) => {
@@ -245,6 +258,7 @@ addForm.addEventListener('submit', async (evt) => {
   location.href = "front.html";
 });
 
+//form to add profile picture
 const addForm2 = document.querySelector('#addPictureForm');
 
 addForm2.addEventListener('submit', async (evt) => {
