@@ -13,13 +13,13 @@ const message_id = getQParam('id');
 console.log(message_id);
 
 // select existing html elements
-const modForm = document.querySelector('#modCatForm');
+const modForm = document.querySelector('#modMessageForm');
 const userList = document.querySelector('.add-owner');
 
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
 
-// add existing cat data to form
+// add existing message data to form
 const getMessage = async (id) => {
   const fetchOptions = {
     headers: {
@@ -27,9 +27,9 @@ const getMessage = async (id) => {
     },
   };
   const response = await fetch(url + '/message/' + id, fetchOptions);
-  const cat = await response.json();
+  const message = await response.json();
   const inputs = modForm.querySelectorAll('input');
-  inputs[0].value = cat.message_body;
+  inputs[0].value = message.message_body;
 };
 
 // create user options to <select>
@@ -44,7 +44,7 @@ const createUserOptions = (users) => {
     option.classList.add('light-border');
     userList.appendChild(option);
   });
-  // load cat data after users
+  // load message data after users
   getMessage(message_id);
 };
 

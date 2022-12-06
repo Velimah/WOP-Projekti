@@ -145,7 +145,7 @@ const loadMessage = (message) => {
     const modButton = document.createElement('button');
     modButton.innerHTML = 'Muokkaa';
     modButton.classList.add('modify-button');
-    const href = `modify-cat.html?id=${message.message_id}`;
+    const href = `modify-message.html?id=${message.message_id}`;
     modButton.addEventListener('click', function () {
       location.href = href;
     });
@@ -331,7 +331,7 @@ const loadReplies = (messages) => {
         const modButton = document.createElement('button');
         modButton.innerHTML = 'Muokkaa';
         modButton.classList.add('modify-button');
-        const href = `modify-cat.html?id=${message.message_id}`;
+        const href = `modify-message.html?id=${message.message_id}`;
         modButton.addEventListener('click', function () {
           location.href = href;
         });
