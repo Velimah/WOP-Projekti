@@ -28,6 +28,7 @@ app.use('/thumbnails', express.static('thumbnails'));
 
 app.use('/auth', authRoute);
 app.use('/message', passport.authenticate('jwt', {session: false}), messageRoute);
+app.use('/message/:id', passport.authenticate('jwt', {session: false}), messageRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 app.use('/like', passport.authenticate('jwt', {session: false}), messageRoute);
 
