@@ -287,3 +287,37 @@ addForm2.addEventListener('submit', async (evt) => {
   alert(json.message);
   location.href = "front.html";
 });
+
+// search
+const searchForm = document.querySelector('#search-form');
+
+// submits the search string
+searchForm.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  const data = serializeJson(searchForm);
+
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    body: JSON.stringify(data),
+  };
+
+  const response = await fetch(url + '/message/search', fetchOptions);
+  const json = await response.json();
+
+  // checks if the result has an error message in json reply
+  if (json.hasOwnProperty('message')) {
+    alert("Ei tuloksia");
+    location.href = "front.html";
+  } else {
+    loadMessages(json);
+    if (json.length === 1) {
+      alert("Löytyi " + json.length + " tulos");
+    } else {
+      alert("Löytyi " + json.length + " tulosta");
+    }
+  }
+});

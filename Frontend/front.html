@@ -11,7 +11,12 @@
 </head>
 <body>
 <header>
-  <div class="aluelista"><a class="aluelinkki" href="logout.html">Kirjaudu ulos</a></div>
+
+  <form class="light-border" id="search-form">
+    <input class="light-border" type="text" name="message_body" placeholder="Name">
+    <button class="light-border" type="submit">Save</button>
+  </form>
+
 </header>
 <main class="container">
   <div id="vasen">
@@ -57,7 +62,7 @@
       <div class="aluelista"><a class="aluelinkki" href="front.html">Etusivu</a></div>
       <div class="aluelista"><a class="aluelinkki" href="modify-user.html">Muokkaa käyttäjää</a></div>
       <div class="aluelista"><a class="aluelinkki" href="logout.html">Kirjaudu ulos</a></div>
-      <form action="http://localhost:3000/message" method="post"
+      <form action="http://localhost:3000/user" method="post"
             enctype="multipart/form-data" id="addPictureForm">
         <input id="asdss" type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
         <button id="asdsssdd" type="submit">Lähetä</button>

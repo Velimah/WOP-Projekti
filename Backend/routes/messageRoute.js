@@ -14,7 +14,9 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({dest: 'uploads/', fileFilter});
 
-const {message_list_get, message_get, message_post, message_reply, message_put, message_delete, message_like} = require(
+const {message_list_get, message_get, message_post, message_reply, message_put, message_delete, message_like,
+  message_search
+} = require(
     '../controllers/messageController');
 const router = express.Router();
 
@@ -24,6 +26,10 @@ router.route('/').
     post(upload.single('picture'),
         body('message_body').isLength({min: 1}).escape(),
         message_post);
+
+router.route('/search').post(message_search);
+
+router.route('/like/:id').post(message_like);
 
 router.route('/:id').
     get(message_get).
@@ -35,6 +41,5 @@ router.route('/:id').
     message_reply);
 
 
-router.route('/like/:id').post(message_like);
 
 module.exports = router;

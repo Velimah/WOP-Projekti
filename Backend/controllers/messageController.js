@@ -1,5 +1,5 @@
 'use strict';
-const {getAllMessages, getMessage, addMessage, addReply, updateMessage, deleteMessage, likeMessage} = require(
+const {getAllMessages, getMessage, addMessage, addReply, updateMessage, deleteMessage, likeMessage, searchMessage} = require(
   '../models/messageModel');
 const {httpError} = require('../utils/errors');
 const {validationResult} = require('express-validator');
@@ -286,6 +286,22 @@ const message_like = async (req, res, next) => {
   }
 };
 
+const message_search = async (req, res, next) => {
+    try {
+      const messages = await searchMessage(`%${req.body.message_body}%`, next);
+      if (messages.length < 1) {
+        next(httpError('No message found', 404));
+        return;
+      }
+      console.log(messages);
+      res.json(messages);
+    } catch (e) {
+      console.error('message_search', e.message);
+      next(httpError('Internal server error', 500));
+    }
+  };
+
+
 module.exports = {
   message_list_get,
   message_get,
@@ -294,4 +310,5 @@ module.exports = {
   message_put,
   message_delete,
   message_like,
+  message_search,
 };
