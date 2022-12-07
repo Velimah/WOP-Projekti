@@ -219,7 +219,7 @@ input[type=file]::file-selector-button:hover {
 .viesti-container {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 15px;
     width: 100%;
     height: 100%;
     background-color: #FFFFFF;
@@ -287,58 +287,44 @@ p.viesti {
     width: 100%;
 }
 .napit-kortti {
-    padding-top: 20px;
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
-.fa-solid {
-    font-size: 1.1rem;
-    color: red;
+/*
+i {
+    font-size: 1.5rem;
 }
-
-.like-button {
+*/
+.message-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     max-width: 100px;
     height: 30px;
     border: none;
-    background: #8F00C7;
+    background: none;
     border-radius: 5px;
     margin-left: 10px;
     margin-right: 10px;
     color: #FFFFFF;
     cursor: pointer;
-    transition: background .3s ease-in-out;
+    text-align: center;
 }
 
-.modify-button {
-    width: 100%;
-    max-width: 100px;
-    height: 30px;
-    border: none;
-    background: #8F00C7;
-    border-radius: 5px;
-    margin-right: 10px;
-    color: #FFFFFF;
-    cursor: pointer;
-    transition: background .3s ease-in-out;
+.message-button:hover >*{
+    color: #8F00C7;
 }
 
-.delete-button {
-    width: 100%;
-    max-width: 100px;
-    height: 30px;
-    border: none;
-    background: #8F00C7;
-    border-radius: 5px;
-    color: #FFFFFF;
-    cursor: pointer;
-    transition: background .3s ease-in-out;
-}
-
-button:hover {
-    background: #490066;
+.message-button > * {
+    color: black;
+    font-size: 1.1rem;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 
