@@ -14,7 +14,7 @@ const message_id = getQParam('id');
 // select existing html elements
 const img = document.querySelector('#image img');
 
-// add existing cat data to form
+
 const getMessage = async (id) => {
   const fetchOptions = {
     headers: {
@@ -23,6 +23,7 @@ const getMessage = async (id) => {
   };
   const response = await fetch(url + '/message/' + id, fetchOptions);
   const message = await response.json();
+  console.log(message);
   img.src = `${url}/${message.picture}`;
   addMarker(JSON.parse(message.coords));
   if (message.coords === "[24.74,60.24]") {

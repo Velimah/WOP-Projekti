@@ -1,5 +1,5 @@
 'use strict';
-const {getAllMessages, getMessage, addMessage, addReply, updateMessage, deleteMessage, likeMessage, searchMessage} = require(
+const {getAllMessages, getMessage, addMessage, addReply, updateMessage, deleteMessage, likeMessage, searchMessage, boardSelect} = require(
   '../models/messageModel');
 const {httpError} = require('../utils/errors');
 const {validationResult} = require('express-validator');
@@ -301,6 +301,21 @@ const message_search = async (req, res, next) => {
     }
   };
 
+const board_select = async (req, res, next) => {
+  try {
+    const messages = await boardSelect(req.body.board_id, next);
+    if (messages.length < 1) {
+      next(httpError('No message found', 404));
+      return;
+    }
+    console.log(messages);
+    res.json(messages);
+  } catch (e) {
+    console.error('board_select', e.message);
+    next(httpError('Internal server error', 500));
+  }
+};
+
 
 module.exports = {
   message_list_get,
@@ -311,4 +326,5 @@ module.exports = {
   message_delete,
   message_like,
   message_search,
+  board_select,
 };

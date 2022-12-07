@@ -27,7 +27,7 @@ const getAllMessages = async (next) => {
 
 const getMessage = async (messageId, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, 
+    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, message.coords, 
                                                          user.user_id AS sender, user.name, user.email, user.profile_picture, 
                                                          board.name AS boardname, 
                                                          (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
@@ -145,6 +145,31 @@ const searchMessage = async (MessageBody, next) => {
   }
 };
 
+const boardSelect = async (MessageBody, next) => {
+  try {
+    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, 
+                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, 
+                                                         board.name AS boardname, 
+                                                         (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
+                                                         replies.replycount
+                                                              
+                                                  FROM message
+                                                  
+                                                  JOIN user ON user.user_id = message.user_id
+                                                  JOIN board ON board.board_id = message.board_id
+                                                  LEFT JOIN replies ON message.message_id = replies.reply_id
+                                                  
+                                                  WHERE message.board_id = ?
+                                                                                                            
+                                                  ORDER BY send_time DESC;`,
+      [MessageBody]);
+    return rows;
+  } catch (e) {
+    console.error('searchMessage', e.message);
+    next(httpError('Database error searchMessage', 500));
+  }
+};
+
 module.exports = {
   getAllMessages,
   getMessage,
@@ -154,4 +179,5 @@ module.exports = {
   likeMessage,
   addReply,
   searchMessage,
+  boardSelect,
 };

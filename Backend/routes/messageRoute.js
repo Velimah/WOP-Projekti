@@ -15,7 +15,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({dest: 'uploads/', fileFilter});
 
 const {message_list_get, message_get, message_post, message_reply, message_put, message_delete, message_like,
-  message_search
+  message_search, board_select
 } = require(
     '../controllers/messageController');
 const router = express.Router();
@@ -28,6 +28,8 @@ router.route('/').
         message_post);
 
 router.route('/search').post(message_search);
+
+router.route('/board').post(board_select);
 
 router.route('/like/:id').post(message_like);
 

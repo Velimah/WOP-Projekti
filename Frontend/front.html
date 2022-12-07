@@ -12,23 +12,30 @@
 <body>
 <header>
 
-  <form class="light-border" id="search-form">
-    <input class="light-border" type="text" name="message_body" placeholder="Name">
-    <button class="light-border" type="submit">Save</button>
-  </form>
 
 </header>
 <main class="container">
   <div id="vasen">
 
-    <div class="aluevalikko">
-      <div class="aluelista"><a class="aluelinkki" href="front.html">Kaikki viestit</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="modify-user.html">Yleinen</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="logout.html">Frontend</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="logout.html">Backend</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="logout.html">Tietokannat</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="logout.html">Matematiikka</a></div>
-    </div>
+    <h2>Haku</h2>
+    <form id="search-form">
+      <input type="text" name="message_body" placeholder="Etsi viestiä">
+      <button type="submit">Hae</button>
+    </form>
+
+    <h2>Viestialueet</h2>
+    <form action="http://localhost:3000/message/board" method="post"
+          enctype="multipart/form-data" id="board-select2">
+      <select name="board_id" id="select">
+        <option value="1">Kaikki</option>
+        <option value="2">Yleinen</option>
+        <option value="3">Frontend</option>
+        <option value="4">Backend</option>
+        <option value="5">Tietokannat</option>
+        <option value="6">Matematiikka</option>
+      </select>
+      <button id="laheta-nappis" type="submit">Siirry</button>
+    </form>
 
   </div>
   <div id="keski">
@@ -62,6 +69,7 @@
       <div class="aluelista"><a class="aluelinkki" href="front.html">Etusivu</a></div>
       <div class="aluelista"><a class="aluelinkki" href="modify-user.html">Muokkaa käyttäjää</a></div>
       <div class="aluelista"><a class="aluelinkki" href="logout.html">Kirjaudu ulos</a></div>
+      <h2>Lisää profiilikuva</h2>
       <form action="http://localhost:3000/user" method="post"
             enctype="multipart/form-data" id="addPictureForm">
         <input id="asdss" type="file" name="picture" accept="image/*" placeholder="Valitse kuva">

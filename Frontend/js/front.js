@@ -23,13 +23,12 @@ header.appendChild(headerEmail);
 
 // load all messages
 const loadMessages = (messages) => {
-
   // clears the html element before adding content
   document.getElementById('viestit').innerHTML = '';
 
   messages.forEach((message) => {
 
-    // chooses only non-reply messages. Search removes reply_id from results and !message.hasOwnProperty allows to show replies also if searched.
+    // chooses only non-reply messages. Search removes reply_id from results so !message.hasOwnProperty allows to show replies when search is used.
     if (message.reply_id === null || (!message.hasOwnProperty('reply_id'))) {
 
       // message sender information section
@@ -344,4 +343,35 @@ searchForm.addEventListener('submit', async (evt) => {
       alert("Löytyi " + json.length + " tulosta");
     }
   }
+});
+
+// board select;
+
+const boardSelect = document.querySelector('#board-select2');
+
+boardSelect.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  const data = serializeJson(boardSelect);
+  console.log(data)
+
+  //checks if all messages are chosen and the returns to main page
+  if (data?.board_id === "1") {
+    location.href = "front.html";
+    return;
+  }
+
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    body: JSON.stringify(data),
+  };
+
+  const response = await fetch(url + '/message/board', fetchOptions);
+  const json = await response.json();
+  console.log(json)
+  loadMessages(json);
+
 });
