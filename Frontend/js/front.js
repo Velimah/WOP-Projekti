@@ -151,7 +151,17 @@ const loadMessages = (messages) => {
 
       napitKortti.appendChild(likeButton);
 
-      // reply button
+      // reply count and reply button
+      const vastaukset = document.createElement('p');
+
+      if (message.replycount === null) {
+        vastaukset.innerHTML = 0 + " <i class=\"fa-regular fa-comment\"></i>";
+      } else {
+        vastaukset.innerHTML = message.replycount + " <i class=\"fa-regular fa-comment\"></i>"
+      }
+
+      napitKortti.appendChild(vastaukset);
+
       const replyButton = document.createElement('button');
       replyButton.innerHTML = 'Vastaa';
       replyButton.classList.add('modify-button');

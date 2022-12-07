@@ -6,10 +6,17 @@ const promisePool = pool.promise();
 const getAllMessages = async (next) => {
   try {
     const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.picture, 
-                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, board.name AS boardname, 
-                                                 (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount                               
-                                                  FROM message, user, board
-                                                  WHERE user.user_id = message.user_id AND board.board_id = message.board_id
+                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, 
+                                                         board.name AS boardname, 
+                                                         (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
+                                                         replies.replycount
+                                                              
+                                                  FROM message
+                                                  
+                                                  JOIN user ON user.user_id = message.user_id
+                                                  JOIN board ON board.board_id = message.board_id
+                                                  LEFT JOIN replies ON message.message_id = replies.reply_id
+                                                                                                            
                                                   ORDER BY send_time DESC;`);
     return rows;
   } catch (e) {
@@ -21,10 +28,19 @@ const getAllMessages = async (next) => {
 const getMessage = async (messageId, next) => {
   try {
     const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.picture, 
-                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, board.name AS boardname, 
-                                                 (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount                                      
-                                                  FROM message, user, board
-                                                  WHERE user.user_id = message.user_id AND board.board_id = message.board_id AND message.message_id = ?
+                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, 
+                                                         board.name AS boardname, 
+                                                         (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
+                                                         replies.replycount
+                                                              
+                                                  FROM message
+                                                  
+                                                  JOIN user ON user.user_id = message.user_id
+                                                  JOIN board ON board.board_id = message.board_id
+                                                  LEFT JOIN replies ON message.message_id = replies.reply_id
+                                                  
+                                                  WHERE message.message_id = ?
+                                                                                                            
                                                   ORDER BY send_time DESC;`, [messageId]);
     return rows;
   } catch (e) {
@@ -56,7 +72,6 @@ const addReply = async (data, next) => {
 };
 
 
-
 const updateMessage = async (data, user, next) => {
   try {
     if (user.role === 0) {
@@ -78,15 +93,15 @@ const updateMessage = async (data, user, next) => {
 const deleteMessage = async (messageId, user, next) => {
   try {
     // if (user.role === 0) {
-      const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ?;`,
-        [messageId]);
-      return rows;
-   /* } else {
-      const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? AND message.user_id = ?;`,
-        [messageId, user]);
-      return rows;
-    }
-*/
+    const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ?;`,
+      [messageId]);
+    return rows;
+    /* } else {
+       const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? AND message.user_id = ?;`,
+         [messageId, user]);
+       return rows;
+     }
+ */
   } catch (e) {
     console.error('deleteMessage', e.message);
     next(httpError('Database error deleteMessage', 500));
