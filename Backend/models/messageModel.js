@@ -5,7 +5,7 @@ const promisePool = pool.promise();
 
 const getAllMessages = async (next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.picture, 
+    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, 
                                                          user.user_id AS sender, user.name, user.email, user.profile_picture, 
                                                          board.name AS boardname, 
                                                          (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
@@ -27,7 +27,7 @@ const getAllMessages = async (next) => {
 
 const getMessage = async (messageId, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.picture, 
+    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, 
                                                          user.user_id AS sender, user.name, user.email, user.profile_picture, 
                                                          board.name AS boardname, 
                                                          (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
@@ -62,7 +62,7 @@ const addMessage = async (data, next) => {
 
 const addReply = async (data, next) => {
   try {
-    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords, reply_id) VALUES (?, now(), ?, ?, ?, ?, ?);`,
+    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords, reply_id) VALUES (?, NOW(), ?, ?, ?, ?, ?);`,
       data);
     return rows;
   } catch (e) {
@@ -75,11 +75,11 @@ const addReply = async (data, next) => {
 const updateMessage = async (data, user, next) => {
   try {
     if (user.role === 0) {
-      const [rows] = await promisePool.execute(`UPDATE message SET message_body = ? WHERE message_id = ?;`,
+      const [rows] = await promisePool.execute(`UPDATE message SET message_body = ?, modify_time = NOW() WHERE message_id = ?;`,
         data);
       return rows;
     } else {
-      const [rows] = await promisePool.execute(`UPDATE message SET message_body = ? WHERE message_id = ? AND user_id = ?;`,
+      const [rows] = await promisePool.execute(`UPDATE message SET message_body = ?, modify_time = NOW() WHERE message_id = ? AND user_id = ?;`,
         data);
       return rows;
     }
@@ -122,7 +122,7 @@ const likeMessage = async (data, next) => {
 //Message Seach WIP
 const searchMessage = async (MessageBody, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.message_body, message.send_time, message.picture, 
+    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.message_body, message.send_time, message.modify_time, message.picture, 
                                                          user.user_id AS sender, user.name, user.email, user.profile_picture, 
                                                          board.name AS boardname, 
                                                          (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,

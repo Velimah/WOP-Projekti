@@ -89,6 +89,20 @@ const loadMessage = (message) => {
 
   viestiKortti.appendChild(viesti);
 
+  if (message.modify_time != null) {
+
+    const muokkausAika = document.createElement('p');
+
+    if (minutes < 60) {
+      muokkausAika.innerHTML = `Muokattu ${Math.trunc(minutes)} minuuttia sitten`;
+    } else if (hours < 24) {
+      muokkausAika.innerHTML = `Muokattu ${Math.trunc(hours)} tuntia sitten`;
+    } else {
+      muokkausAika.innerHTML = `Muokattu ${message.modify_time.substring(0, 10)}`;
+    }
+    viestiKortti.appendChild(muokkausAika);
+  }
+
   const img = document.createElement('img');
 
   //if the message has a picture, embeds it into the message post
@@ -283,6 +297,20 @@ const loadReplies = (messages) => {
       viesti.innerHTML = message.message_body;
 
       viestiKortti.appendChild(viesti);
+
+      if (message.modify_time != null) {
+
+        const muokkausAika = document.createElement('p');
+
+        if (minutes < 60) {
+          muokkausAika.innerHTML = `Muokattu ${Math.trunc(minutes)} minuuttia sitten`;
+        } else if (hours < 24) {
+          muokkausAika.innerHTML = `Muokattu ${Math.trunc(hours)} tuntia sitten`;
+        } else {
+          muokkausAika.innerHTML = `Muokattu ${message.modify_time.substring(0, 10)}`;
+        }
+        viestiKortti.appendChild(muokkausAika);
+      }
 
       const img = document.createElement('img');
 

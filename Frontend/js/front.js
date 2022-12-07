@@ -30,7 +30,7 @@ const loadMessages = (messages) => {
   messages.forEach((message) => {
 
     // chooses only non-reply messages. Search removes reply_id from results and !message.hasOwnProperty allows to show replies also if searched.
-    if (message.reply_id === null || (!message.hasOwnProperty('reply_id')) ) {
+    if (message.reply_id === null || (!message.hasOwnProperty('reply_id'))) {
 
       // message sender information section
 
@@ -102,6 +102,22 @@ const loadMessages = (messages) => {
       });
 
       viestiKortti.appendChild(viesti);
+
+
+      if (message.modify_time != null) {
+
+        const muokkausAika = document.createElement('p');
+
+        if (minutes < 60) {
+          muokkausAika.innerHTML = `Muokattu ${Math.trunc(minutes)} minuuttia sitten`;
+        } else if (hours < 24) {
+          muokkausAika.innerHTML = `Muokattu ${Math.trunc(hours)} tuntia sitten`;
+        } else {
+          muokkausAika.innerHTML = `Muokattu ${message.modify_time.substring(0, 10)}`;
+        }
+        viestiKortti.appendChild(muokkausAika);
+      }
+
 
       const img = document.createElement('img');
 
