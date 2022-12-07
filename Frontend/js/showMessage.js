@@ -142,8 +142,8 @@ const loadMessage = (message) => {
 
   // like count and like button
   const likeButton = document.createElement('button');
-  likeButton.setAttribute('class', "like-button");
-  likeButton.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
+  likeButton.setAttribute('class', "message-button");
+  likeButton.innerHTML = "<p>"+message.likecount+"</p>" + " <i class=\"fa-solid fa-heart\"></i>";
 
   likeButton.addEventListener('click', async (evt) => {
     evt.preventDefault();
@@ -164,14 +164,13 @@ const loadMessage = (message) => {
 
   // reply count and reply button
   const replyButton = document.createElement('button');
+  replyButton.setAttribute('class', "message-button");
 
   if (message.replycount === null) {
-    replyButton.innerHTML = 0 + " <i class=\"fa-regular fa-comment\"></i>";
+    replyButton.innerHTML = "<p>0</p>" + " <i class=\"fa-regular fa-comment\"></i>";
   } else {
-    replyButton.innerHTML = message.replycount + " <i class=\"fa-regular fa-comment\"></i>"
+    replyButton.innerHTML = "<p>"+message.replycount+"</p>" + " <i class=\"fa-regular fa-comment\"></i>"
   }
-
-  replyButton.classList.add('modify-button');
 
   napitKortti.appendChild(replyButton);
 
@@ -180,8 +179,9 @@ const loadMessage = (message) => {
 
     // edit message
     const modButton = document.createElement('button');
-    modButton.innerHTML = 'Muokkaa';
-    modButton.classList.add('modify-button');
+    modButton.setAttribute('class', "message-button");
+
+    modButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>';
     const href = `modify-message.html?id=${message.message_id}`;
     modButton.addEventListener('click', function () {
       location.href = href;
@@ -191,8 +191,9 @@ const loadMessage = (message) => {
 
     // delete message
     const delButton = document.createElement('button');
-    delButton.innerHTML = 'Poista';
-    delButton.classList.add('delete-button');
+    delButton.setAttribute('class', "message-button");
+
+    delButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
     delButton.addEventListener('click', async () => {
       const fetchOptions = {
         method: 'DELETE',
@@ -364,8 +365,9 @@ const loadReplies = (messages) => {
       napitKortti.setAttribute('class', 'napit-kortti');
 
       const likeButton = document.createElement('button');
-      likeButton.setAttribute('class', "like-button");
-      likeButton.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
+      likeButton.setAttribute('class', "message-button");
+
+      likeButton.innerHTML = "<p>"+message.likecount+"</p>" + " <i class=\"fa-solid fa-heart\"></i>";
 
       likeButton.addEventListener('click', async (evt) => {
         evt.preventDefault();
@@ -389,8 +391,10 @@ const loadReplies = (messages) => {
 
         // edit message
         const modButton = document.createElement('button');
-        modButton.innerHTML = 'Muokkaa';
-        modButton.classList.add('modify-button');
+        modButton.setAttribute('class', "message-button");
+
+        modButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>';
+
         const href = `modify-message.html?id=${message.message_id}`;
         modButton.addEventListener('click', function () {
           location.href = href;
@@ -400,8 +404,10 @@ const loadReplies = (messages) => {
 
         // delete message
         const delButton = document.createElement('button');
-        delButton.innerHTML = 'Poista';
-        delButton.classList.add('delete-button');
+        delButton.setAttribute('class', "message-button");
+
+        delButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+
         delButton.addEventListener('click', async () => {
           const fetchOptions = {
             method: 'DELETE',
