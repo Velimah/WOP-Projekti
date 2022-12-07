@@ -119,20 +119,15 @@ const loadMessages = (messages) => {
         viestiKortti.appendChild(figure);
       }
 
-      // message button section
+      // message buttons section
 
       const napitKortti = document.createElement('div');
       napitKortti.setAttribute('class', 'napit-kortti');
 
-      // like count and like button
-      const tykkaykset = document.createElement('p');
-      tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
-
-      napitKortti.appendChild(tykkaykset);
-
+      // like count and button
       const likeButton = document.createElement('button');
       likeButton.setAttribute('class', "like-button");
-      likeButton.innerHTML = 'Tykkää';
+      likeButton.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
 
       likeButton.addEventListener('click', async (evt) => {
         evt.preventDefault();
@@ -152,18 +147,14 @@ const loadMessages = (messages) => {
       napitKortti.appendChild(likeButton);
 
       // reply count and reply button
-      const vastaukset = document.createElement('p');
+      const replyButton = document.createElement('button');
 
       if (message.replycount === null) {
-        vastaukset.innerHTML = 0 + " <i class=\"fa-regular fa-comment\"></i>";
+        replyButton.innerHTML = 0 + " <i class=\"fa-regular fa-comment\"></i>";
       } else {
-        vastaukset.innerHTML = message.replycount + " <i class=\"fa-regular fa-comment\"></i>"
+        replyButton.innerHTML = message.replycount + " <i class=\"fa-regular fa-comment\"></i>"
       }
 
-      napitKortti.appendChild(vastaukset);
-
-      const replyButton = document.createElement('button');
-      replyButton.innerHTML = 'Vastaa';
       replyButton.classList.add('modify-button');
       const href = `show-message.html?id=${message.message_id}`;
       replyButton.addEventListener('click', function () {

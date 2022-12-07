@@ -113,14 +113,9 @@ const loadMessage = (message) => {
   napitKortti.setAttribute('class', 'napit-kortti');
 
   // like count and like button
-  const tykkaykset = document.createElement('p');
-  tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
-
-  napitKortti.appendChild(tykkaykset);
-
   const likeButton = document.createElement('button');
   likeButton.setAttribute('class', "like-button");
-  likeButton.innerHTML = 'Tykkää';
+  likeButton.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
 
   likeButton.addEventListener('click', async (evt) => {
     evt.preventDefault();
@@ -133,10 +128,24 @@ const loadMessage = (message) => {
     };
     const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
     const json = await response.json();
+    getMessage();
     alert(json.message);
   });
 
   napitKortti.appendChild(likeButton);
+
+  // reply count and reply button
+  const replyButton = document.createElement('button');
+
+  if (message.replycount === null) {
+    replyButton.innerHTML = 0 + " <i class=\"fa-regular fa-comment\"></i>";
+  } else {
+    replyButton.innerHTML = message.replycount + " <i class=\"fa-regular fa-comment\"></i>"
+  }
+
+  replyButton.classList.add('modify-button');
+
+  napitKortti.appendChild(replyButton);
 
   // edit and delete button depending on user role
   if (user.role === 0 || user.user_id === message.sender) {
@@ -298,15 +307,9 @@ const loadReplies = (messages) => {
       const napitKortti = document.createElement('div');
       napitKortti.setAttribute('class', 'napit-kortti');
 
-      // like count and like button
-      const tykkaykset = document.createElement('p');
-      tykkaykset.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
-
-      napitKortti.appendChild(tykkaykset);
-
       const likeButton = document.createElement('button');
       likeButton.setAttribute('class', "like-button");
-      likeButton.innerHTML = 'Tykkää';
+      likeButton.innerHTML = message.likecount + " <i class=\"fa-solid fa-heart\"></i>";
 
       likeButton.addEventListener('click', async (evt) => {
         evt.preventDefault();
@@ -319,6 +322,7 @@ const loadReplies = (messages) => {
         };
         const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
         const json = await response.json();
+        getMessage();
         alert(json.message);
       });
 
