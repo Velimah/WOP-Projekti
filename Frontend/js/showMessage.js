@@ -38,14 +38,18 @@ const loadMessage = (message) => {
   const time1 = new Date(message.send_time);
   const time2 = new Date();
   const elapsedTime = time2.getTime() - time1.getTime();
-  const minutes = elapsedTime / (1000 * 60);
-  const hours = elapsedTime / (1000 * 3600);
+  const minutes = Math.trunc(elapsedTime / (1000 * 60));
+  const hours = Math.trunc(elapsedTime / (1000 * 3600));
 
   //chooses the correct time format to display (minutes/hours/date)
-  if (minutes < 60) {
-    aika.innerHTML = `${Math.trunc(minutes)} minuuttia sitten`;
+  if (minutes === 1) {
+    aika.innerHTML = `Minuutti sitten`;
+  } else if (minutes < 60) {
+    aika.innerHTML = `${minutes} minuuttia sitten`;
+  } else if (hours === 1) {
+    aika.innerHTML = `Tunti sitten`;
   } else if (hours < 24) {
-    aika.innerHTML = ` ${Math.trunc(hours)} tuntia sitten`;
+    aika.innerHTML = `${hours} tuntia sitten`;
   } else {
     aika.innerHTML = `${message.send_time.substring(0, 10)}`;
   }
@@ -93,10 +97,20 @@ const loadMessage = (message) => {
 
     const muokkausAika = document.createElement('p');
 
-    if (minutes < 60) {
-      muokkausAika.innerHTML = `Muokattu ${Math.trunc(minutes)} minuuttia sitten`;
+    const time1 = new Date(message.modify_time);
+    const time2 = new Date();
+    const elapsedTime2 = time2.getTime() - time1.getTime();
+    const minutes = Math.trunc(elapsedTime2 / (1000 * 60));
+    const hours = Math.trunc(elapsedTime2 / (1000 * 3600));
+
+    if (minutes === 1) {
+      muokkausAika.innerHTML = `Muokattu minuutti sitten`;
+    } else if (minutes < 60) {
+      muokkausAika.innerHTML = `Muokattu ${minutes} minuuttia sitten`;
+    } else if (hours === 1) {
+      muokkausAika.innerHTML = `Muokattu tunti sitten`;
     } else if (hours < 24) {
-      muokkausAika.innerHTML = `Muokattu ${Math.trunc(hours)} tuntia sitten`;
+      muokkausAika.innerHTML = `Muokattu ${hours} tuntia sitten`;
     } else {
       muokkausAika.innerHTML = `Muokattu ${message.modify_time.substring(0, 10)}`;
     }
@@ -247,14 +261,18 @@ const loadReplies = (messages) => {
       const time1 = new Date(message.send_time);
       const time2 = new Date();
       const elapsedTime = time2.getTime() - time1.getTime();
-      const minutes = elapsedTime / (1000 * 60);
-      const hours = elapsedTime / (1000 * 3600);
+      const minutes = Math.trunc(elapsedTime / (1000 * 60));
+      const hours = Math.trunc(elapsedTime / (1000 * 3600));
 
       //chooses the correct time format to display (minutes/hours/date)
-      if (minutes < 60) {
-        aika.innerHTML = `${Math.trunc(minutes)} minuuttia sitten`;
+      if (minutes === 1) {
+        aika.innerHTML = `${minutes} Minuutti sitten`;
+      } else if (minutes < 60) {
+        aika.innerHTML = `${minutes} minuuttia sitten`;
+      } else if (hours === 1) {
+        aika.innerHTML = `${hours} Tunti sitten`;
       } else if (hours < 24) {
-        aika.innerHTML = ` ${Math.trunc(hours)} tuntia sitten`;
+        aika.innerHTML = `${hours} tuntia sitten`;
       } else {
         aika.innerHTML = `${message.send_time.substring(0, 10)}`;
       }
@@ -302,10 +320,20 @@ const loadReplies = (messages) => {
 
         const muokkausAika = document.createElement('p');
 
-        if (minutes < 60) {
-          muokkausAika.innerHTML = `Muokattu ${Math.trunc(minutes)} minuuttia sitten`;
+        const time1 = new Date(message.modify_time);
+        const time2 = new Date();
+        const elapsedTime2 = time2.getTime() - time1.getTime();
+        const minutes = Math.trunc(elapsedTime2 / (1000 * 60));
+        const hours = Math.trunc(elapsedTime2 / (1000 * 3600));
+
+        if (minutes === 1) {
+          muokkausAika.innerHTML = `Muokattu minuutti sitten`;
+        } else if (minutes < 60) {
+          muokkausAika.innerHTML = `Muokattu ${minutes} minuuttia sitten`;
+        } else if (hours === 1) {
+          muokkausAika.innerHTML = `Muokattu tunti sitten`;
         } else if (hours < 24) {
-          muokkausAika.innerHTML = `Muokattu ${Math.trunc(hours)} tuntia sitten`;
+          muokkausAika.innerHTML = `Muokattu ${hours} tuntia sitten`;
         } else {
           muokkausAika.innerHTML = `Muokattu ${message.modify_time.substring(0, 10)}`;
         }
@@ -462,7 +490,7 @@ addForm.addEventListener('submit', async (evt) => {
   const fd = new FormData(addForm);
 
   //sends board id to be able to use the same sql route
-  fd.append('board_id',`${message.board_id}`)
+  fd.append('board_id', `${message.board_id}`)
   console.log(fd);
   const fetchOptions = {
     method: 'POST',
@@ -474,5 +502,5 @@ addForm.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/message/' + message_id, fetchOptions);
   const json = await response.json();
   alert(json.message);
-  location.href = "show-message.html?id="+message_id;
+  location.href = "show-message.html?id=" + message_id;
 });

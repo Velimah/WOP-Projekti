@@ -49,14 +49,18 @@ const loadMessages = (messages) => {
       const time1 = new Date(message.send_time);
       const time2 = new Date();
       const elapsedTime = time2.getTime() - time1.getTime();
-      const minutes = elapsedTime / (1000 * 60);
-      const hours = elapsedTime / (1000 * 3600);
+      const minutes = Math.trunc(elapsedTime / (1000 * 60));
+      const hours = Math.trunc(elapsedTime / (1000 * 3600));
 
       // chooses the correct time format to display (minutes/hours/date)
-      if (minutes < 60) {
-        aika.innerHTML = `${Math.trunc(minutes)} minuuttia sitten`;
+      if (minutes === 1) {
+        aika.innerHTML = `Minuutti sitten`;
+      } else if (minutes < 60) {
+        aika.innerHTML = `${minutes} minuuttia sitten`;
+      } else if (hours === 1) {
+        aika.innerHTML = `Tunti sitten`;
       } else if (hours < 24) {
-        aika.innerHTML = ` ${Math.trunc(hours)} tuntia sitten`;
+        aika.innerHTML = `${hours} tuntia sitten`;
       } else {
         aika.innerHTML = `${message.send_time.substring(0, 10)}`;
       }
@@ -106,12 +110,22 @@ const loadMessages = (messages) => {
 
       if (message.modify_time != null) {
 
+        const time1 = new Date(message.modify_time);
+        const time2 = new Date();
+        const elapsedTime2 = time2.getTime() - time1.getTime();
+        const minutes = Math.trunc(elapsedTime2 / (1000 * 60));
+        const hours = Math.trunc(elapsedTime2 / (1000 * 3600));
+
         const muokkausAika = document.createElement('p');
 
-        if (minutes < 60) {
-          muokkausAika.innerHTML = `Muokattu ${Math.trunc(minutes)} minuuttia sitten`;
+        if (minutes === 1) {
+          muokkausAika.innerHTML = `Muokattu minuutti sitten`;
+        } else if (minutes < 60) {
+          muokkausAika.innerHTML = `Muokattu ${minutes} minuuttia sitten`;
+        } else if (hours === 1) {
+          muokkausAika.innerHTML = `Muokattu tunti sitten`;
         } else if (hours < 24) {
-          muokkausAika.innerHTML = `Muokattu ${Math.trunc(hours)} tuntia sitten`;
+          muokkausAika.innerHTML = `Muokattu ${hours} tuntia sitten`;
         } else {
           muokkausAika.innerHTML = `Muokattu ${message.modify_time.substring(0, 10)}`;
         }
