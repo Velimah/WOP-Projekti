@@ -13,22 +13,13 @@
 <header>
 
   <form class="light-border" id="search-form">
-    <input class="light-border" type="text" name="message_body" placeholder="Name">
-    <button class="light-border" type="submit">Save</button>
+    <input class="light-border" type="text" name="message_body" placeholder="Etsi viestiä">
+    <button class="light-border" type="submit">Hae</button>
   </form>
 
 </header>
 <main class="container">
   <div id="vasen">
-
-    <div class="aluevalikko">
-      <div class="aluelista"><a class="aluelinkki" href="front.html">Kaikki viestit</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="modify-user.html">Yleinen</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="logout.html">Frontend</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="logout.html">Backend</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="logout.html">Tietokannat</a></div>
-      <div class="aluelista"><a class="aluelinkki" href="logout.html">Matematiikka</a></div>
-    </div>
 
     <form action="http://localhost:3000/message/board" method="post"
           enctype="multipart/form-data" id="board-select2">
@@ -40,7 +31,7 @@
         <option value="5">Tietokannat</option>
         <option value="6">Matematiikka</option>
       </select>
-      <button id="laheta-nappis" type="submit">Lähetä</button>
+      <button id="laheta-nappis" type="submit">Siirry</button>
     </form>
 
   </div>

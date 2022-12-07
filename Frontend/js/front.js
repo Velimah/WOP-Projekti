@@ -23,13 +23,12 @@ header.appendChild(headerEmail);
 
 // load all messages
 const loadMessages = (messages) => {
-
   // clears the html element before adding content
   document.getElementById('viestit').innerHTML = '';
 
   messages.forEach((message) => {
 
-    // chooses only non-reply messages. Search removes reply_id from results and !message.hasOwnProperty allows to show replies also if searched.
+    // chooses only non-reply messages. Search removes reply_id from results so !message.hasOwnProperty allows to show replies when search is used.
     if (message.reply_id === null || (!message.hasOwnProperty('reply_id'))) {
 
       // message sender information section
