@@ -27,7 +27,7 @@ const getAllMessages = async (next) => {
 
 const getMessage = async (messageId, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, 
+    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, message.coords, 
                                                          user.user_id AS sender, user.name, user.email, user.profile_picture, 
                                                          board.name AS boardname, 
                                                          (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
