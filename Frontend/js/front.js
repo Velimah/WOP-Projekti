@@ -98,6 +98,9 @@ const loadMessages = (messages) => {
       const viesti = document.createElement('p');
       viesti.setAttribute('class', 'viesti');
       viesti.innerHTML = message.message_body;
+      viesti.addEventListener('click', function () {
+        location.href = href;
+      });
 
       viestiKortti.appendChild(viesti);
 
