@@ -122,7 +122,7 @@ const likeMessage = async (data, next) => {
 //Message Seach WIP
 const searchMessage = async (MessageBody, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.picture, 
+    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.message_body, message.send_time, message.picture, 
                                                          user.user_id AS sender, user.name, user.email, user.profile_picture, 
                                                          board.name AS boardname, 
                                                          (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,

@@ -6,7 +6,6 @@ const viestit = document.querySelector('#viestit');
 
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
-
 //header username and email
 /*
 const header = document.querySelector('header');
@@ -30,8 +29,8 @@ const loadMessages = (messages) => {
 
   messages.forEach((message) => {
 
-    // chooses only non-reply messages
-    if (message.reply_id === null) {
+    // chooses only non-reply messages. Search removes reply_id from results and !message.hasOwnProperty allows to show replies also if searched.
+    if (message.reply_id === null || (!message.hasOwnProperty('reply_id')) ) {
 
       // message sender information section
 
@@ -301,6 +300,7 @@ searchForm.addEventListener('submit', async (evt) => {
 
   const response = await fetch(url + '/message/search', fetchOptions);
   const json = await response.json();
+  console.log(json)
 
   // checks if the result has an error message in json reply
   if (json.hasOwnProperty('message')) {

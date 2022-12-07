@@ -51,7 +51,6 @@ header {
     flex-grow: 0;
     width: 100%;
     height: 100%;
-    background: #E6E6E6;
     max-width: 250px;
     border-radius: 5px;
     display: flex;
@@ -112,7 +111,6 @@ header {
     position: sticky;
     height: 100%;
     border-radius: 5px;
-    background-color: #E6E6E6;
     flex-shrink: 1;
     flex-grow: 0;
     width: 100%;
