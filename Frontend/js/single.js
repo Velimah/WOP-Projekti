@@ -14,7 +14,7 @@ const message_id = getQParam('id');
 // select existing html elements
 const img = document.querySelector('#image img');
 
-// add existing cat data to form
+
 const getMessage = async (id) => {
   const fetchOptions = {
     headers: {
