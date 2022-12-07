@@ -30,6 +30,19 @@
       <div class="aluelista"><a class="aluelinkki" href="logout.html">Matematiikka</a></div>
     </div>
 
+    <form action="http://localhost:3000/message/board" method="post"
+          enctype="multipart/form-data" id="board-select2">
+      <select name="board_id" id="select">
+        <option value="1">Kaikki</option>
+        <option value="2">Yleinen</option>
+        <option value="3">Frontend</option>
+        <option value="4">Backend</option>
+        <option value="5">Tietokannat</option>
+        <option value="6">Matematiikka</option>
+      </select>
+      <button id="laheta-nappis" type="submit">Lähetä</button>
+    </form>
+
   </div>
   <div id="keski">
 

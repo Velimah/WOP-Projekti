@@ -345,3 +345,34 @@ searchForm.addEventListener('submit', async (evt) => {
     }
   }
 });
+
+// board select;
+
+const boardSelect = document.querySelector('#board-select2');
+
+boardSelect.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  const data = serializeJson(boardSelect);
+  console.log(data)
+
+  //checks if all messages are chosen and the returns to main page
+  if (data?.board_id === "1") {
+    location.href = "front.html";
+    return;
+  }
+
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    body: JSON.stringify(data),
+  };
+
+  const response = await fetch(url + '/message/board', fetchOptions);
+  const json = await response.json();
+  console.log(json)
+  loadMessages(json);
+
+});
