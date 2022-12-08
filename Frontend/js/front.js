@@ -159,7 +159,7 @@ const loadMessages = (messages) => {
 
       const likeButton = document.createElement('button');
       likeButton.setAttribute('class', "message-button");
-      likeButton.innerHTML = "<p>"+message.likecount+"</p>" + " <i class=\"fa-solid fa-heart\"></i>";
+      likeButton.innerHTML = "<p>"+message.likecount+"</p>" + " <i class=\"fa-regular fa-heart\"></i>";
 
       likeButton.addEventListener('click', async (evt) => {
         evt.preventDefault();
