@@ -159,7 +159,7 @@ const loadMessages = (messages) => {
 
       const likeButton = document.createElement('button');
       likeButton.setAttribute('class', "message-button");
-      likeButton.innerHTML = "<p>"+message.likecount+"</p>" + " <i class=\"fa-regular fa-heart\"></i>";
+      likeButton.innerHTML = "<p>" + message.likecount + "</p>" + " <i class=\"fa-regular fa-heart\"></i>";
 
       likeButton.addEventListener('click', async (evt) => {
         evt.preventDefault();
@@ -185,7 +185,7 @@ const loadMessages = (messages) => {
       if (message.replycount === null) {
         replyButton.innerHTML = "<p>0</p>" + " <i class=\"fa-regular fa-comment\"></i>";
       } else {
-        replyButton.innerHTML = "<p>"+message.replycount+"</p>" + " <i class=\"fa-regular fa-comment\"></i>"
+        replyButton.innerHTML = "<p>" + message.replycount + "</p>" + " <i class=\"fa-regular fa-comment\"></i>"
       }
 
       const href = `show-message.html?id=${message.message_id}`;

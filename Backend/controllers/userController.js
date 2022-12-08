@@ -94,7 +94,7 @@ const check_token = (req, res, next) => {
   if (!req.user) {
     next(httpError('token not valid', 403));
   } else {
-    res.json({ user: req.user });
+    res.json({user: req.user});
   }
 };
 

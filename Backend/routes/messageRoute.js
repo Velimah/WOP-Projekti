@@ -14,18 +14,17 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({dest: 'uploads/', fileFilter});
 
-const {message_list_get, message_get, message_post, message_reply, message_put, message_delete, message_like,
+const {
+  message_list_get, message_get, message_post, message_reply, message_put, message_delete, message_like,
   message_search, board_select
 } = require(
-    '../controllers/messageController');
+  '../controllers/messageController');
 const router = express.Router();
 
 
-router.route('/').
-    get(message_list_get).
-    post(upload.single('picture'),
-        body('message_body').isLength({min: 1}).escape(),
-        message_post);
+router.route('/').get(message_list_get).post(upload.single('picture'),
+  body('message_body').isLength({min: 1}).escape(),
+  message_post);
 
 router.route('/search').post(message_search);
 
@@ -33,15 +32,10 @@ router.route('/board').post(board_select);
 
 router.route('/like/:id').post(message_like);
 
-router.route('/:id').
-    get(message_get).
-    delete(message_delete).
-    put(body('message_body').isLength({min: 1}).escape(),
-        message_put).
-    post(upload.single('picture'),
-    body('message_body').isLength({min: 1}).escape(),
-    message_reply);
-
+router.route('/:id').get(message_get).delete(message_delete).put(body('message_body').isLength({min: 1}).escape(),
+  message_put).post(upload.single('picture'),
+  body('message_body').isLength({min: 1}).escape(),
+  message_reply);
 
 
 module.exports = router;

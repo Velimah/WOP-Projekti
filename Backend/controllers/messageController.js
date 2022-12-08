@@ -1,5 +1,15 @@
 'use strict';
-const {getAllMessages, getMessage, addMessage, addReply, updateMessage, deleteMessage, likeMessage, searchMessage, boardSelect} = require(
+const {
+  getAllMessages,
+  getMessage,
+  addMessage,
+  addReply,
+  updateMessage,
+  deleteMessage,
+  likeMessage,
+  searchMessage,
+  boardSelect
+} = require(
   '../models/messageModel');
 const {httpError} = require('../utils/errors');
 const {validationResult} = require('express-validator');
@@ -60,14 +70,13 @@ const message_post = async (req, res, next) => {
       console.log(thumbnail);
       const coords = await getCoordinates(req.file.path);
 
-        const data = [
-          req.body.message_body,
-          req.user.user_id,
-          req.body.board_id,
-          req.file.filename,
-          JSON.stringify(coords),
-        ];
-
+      const data = [
+        req.body.message_body,
+        req.user.user_id,
+        req.body.board_id,
+        req.file.filename,
+        JSON.stringify(coords),
+      ];
 
 
       const result = await addMessage(data, next);
@@ -97,11 +106,11 @@ const message_post = async (req, res, next) => {
         next(httpError('Invalid data', 400));
         return;
       }
-        res.json({
-          message: 'message added',
-          message_id: result.insertId,
-        });
-      }
+      res.json({
+        message: 'message added',
+        message_id: result.insertId,
+      });
+    }
 
   } catch (e) {
     console.error('message_post', e.message);
@@ -287,19 +296,19 @@ const message_like = async (req, res, next) => {
 };
 
 const message_search = async (req, res, next) => {
-    try {
-      const messages = await searchMessage(`%${req.body.message_body}%`, next);
-      if (messages.length < 1) {
-        next(httpError('No message found', 404));
-        return;
-      }
-      console.log(messages);
-      res.json(messages);
-    } catch (e) {
-      console.error('message_search', e.message);
-      next(httpError('Internal server error', 500));
+  try {
+    const messages = await searchMessage(`%${req.body.message_body}%`, next);
+    if (messages.length < 1) {
+      next(httpError('No message found', 404));
+      return;
     }
-  };
+    console.log(messages);
+    res.json(messages);
+  } catch (e) {
+    console.error('message_search', e.message);
+    next(httpError('Internal server error', 500));
+  }
+};
 
 const board_select = async (req, res, next) => {
   try {
