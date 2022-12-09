@@ -143,7 +143,7 @@ const loadMessage = (message) => {
   // like count and like button
   const likeButton = document.createElement('button');
   likeButton.setAttribute('class', "message-button");
-  likeButton.innerHTML = "<p>" + message.likecount + "</p>" + " <i class=\"fa-regular fa-heart\"></i>";
+  likeButton.innerHTML = "<i class=\"fa-regular fa-heart\"></i> " + "<p>" + message.likecount + "</p>";
 
   likeButton.addEventListener('click', async (evt) => {
     evt.preventDefault();
@@ -167,9 +167,9 @@ const loadMessage = (message) => {
   replyButton.setAttribute('class', "message-button");
 
   if (message.replycount === null) {
-    replyButton.innerHTML = "<p>0</p>" + " <i class=\"fa-regular fa-comment\"></i>";
+    replyButton.innerHTML = "<i class=\"fa-regular fa-comment\"></i> " + "<p>0</p>";
   } else {
-    replyButton.innerHTML = "<p>" + message.replycount + "</p>" + " <i class=\"fa-regular fa-comment\"></i>"
+    replyButton.innerHTML = "<i class=\"fa-regular fa-comment\"></i> " + "<p>" + message.replycount + "</p>";
   }
 
   napitKortti.appendChild(replyButton);
@@ -367,7 +367,7 @@ const loadReplies = (messages) => {
       const likeButton = document.createElement('button');
       likeButton.setAttribute('class', "message-button");
 
-      likeButton.innerHTML = "<p>" + message.likecount + "</p>" + " <i class=\"fa-regular fa-heart\"></i>";
+      likeButton.innerHTML = "<i class=\"fa-regular fa-heart\"></i> " + "<p>" + message.likecount + "</p>";
 
       likeButton.addEventListener('click', async (evt) => {
         evt.preventDefault();
