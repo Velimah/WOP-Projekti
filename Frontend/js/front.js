@@ -272,11 +272,11 @@ const getMessages = async () => {
 getMessages();
 
 //form to add messages
-const addForm = document.querySelector('#addMessageForm');
+const addMessageForm = document.querySelector('#addMessageForm');
 
-addForm.addEventListener('submit', async (evt) => {
+addMessageForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
-  const fd = new FormData(addForm);
+  const fd = new FormData(addMessageForm);
   console.log(fd);
   const fetchOptions = {
     method: 'POST',
@@ -292,11 +292,11 @@ addForm.addEventListener('submit', async (evt) => {
 });
 
 //form to add profile picture
-const addForm2 = document.querySelector('#addPictureForm');
+const addPictureForm = document.querySelector('#addPictureForm');
 
-addForm2.addEventListener('submit', async (evt) => {
+addPictureForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
-  const fd = new FormData(addForm2);
+  const fd = new FormData(addPictureForm);
   console.log(fd);
   const fetchOptions = {
     method: 'POST',
