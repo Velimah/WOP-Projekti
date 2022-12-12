@@ -25,6 +25,8 @@ header {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    padding-right: 20px;
 }
 
 header h1 {
@@ -133,6 +135,35 @@ input[type=file]::file-selector-button {
 input[type=file]::file-selector-button:hover {
     background: #490066;
 }
+
+.aluelista {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 40px;
+    max-width: 170px;
+    width: 100%;
+    background-color: #8F00C7;
+    transition: background .2s ease-in-out;
+    list-style: none;
+    border-radius: 5px;
+}
+
+.aluelista:hover {
+    background: #490066;
+}
+
+.aluelista i {
+    margin-right: 10px;
+}
+
+.aluelinkki {
+    padding-left: 20px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+}
+
 
 @media screen and (max-width: 500px) {
     .container {
