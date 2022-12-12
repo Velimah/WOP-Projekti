@@ -291,26 +291,6 @@ addMessageForm.addEventListener('submit', async (evt) => {
   location.href = "front.html";
 });
 
-//form to add profile picture
-const addPictureForm = document.querySelector('#addPictureForm');
-
-addPictureForm.addEventListener('submit', async (evt) => {
-  evt.preventDefault();
-  const fd = new FormData(addPictureForm);
-  console.log(fd);
-  const fetchOptions = {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-    },
-    body: fd,
-  };
-  const response = await fetch(url + '/user/picture', fetchOptions);
-  const json = await response.json();
-  alert(json.message);
-  location.href = "front.html";
-});
-
 // search
 const searchForm = document.querySelector('#search-form');
 

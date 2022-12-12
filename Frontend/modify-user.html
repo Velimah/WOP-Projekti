@@ -23,6 +23,14 @@
             </div>
         </div>
     </div>
+
+    <h2>Lisää profiilikuva</h2>
+    <form action="http://localhost:3000/user" method="post"
+          enctype="multipart/form-data" id="addPictureForm">
+        <input id="asdss" type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
+        <button id="asdsssdd" type="submit">Lähetä</button>
+    </form>
+
     <script src="js/check-login.js"></script>
     <script src="js/serialize.js"></script>
     <script src="js/modify-user.js"></script>
