@@ -6,6 +6,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Example</title>
+  <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/show-message.css">
   <script src="https://kit.fontawesome.com/c5e93b78b7.js" crossorigin="anonymous"></script>
 </head>
@@ -16,25 +17,41 @@
 
 <main class="container">
   <div id="vasen">
+
   </div>
   <div id="keski">
 
-<div id="viestit"></div>
+<div id="viestit" class="vastaussivu-viestit"></div>
 
-    <form action="http://localhost:3000/message" method="post"
-          enctype="multipart/form-data" id="addReplyForm">
-      <label for="tekstikentta"></label><input id="tekstikentta" type="text" name="message_body"
-                                               placeholder=" Kirjoita vastaus...">
+    <form action="http://localhost:3000/message" method="post" enctype="multipart/form-data" id="addReplyForm">
+      <label for="tekstikentta"></label>
+      <textarea id="tekstikentta" name="message_body" type="text" rows="4" cols="50" placeholder="Kirjoita vastaus..."></textarea>
       <div id="input-container">
         <input id="kuva-nappi" type="file" name="picture" accept="image/*" placeholder="">
 
-        <button id="laheta-nappi" type="submit">Lähetä</button>
+        <button class="laheta-nappi" type="submit">Lähetä</button>
       </div>
     </form>
 
 <div id="vastaukset"></div>
   </div>
   <div id="oikea">
+    <div class="aluevalikko">
+
+      <div class="aluelista">
+        <a class="aluelinkki" href="front.html"><i class="fa-solid fa-house-user"></i><span class="linkkiteksti"> Etusivu</span></a>
+      </div>
+
+      <div class="aluelista">
+        <a class="aluelinkki" href="modify-user.html"><i class="fa-solid fa-gear"></i><span class="linkkiteksti"> Asetukset</span></a>
+      </div>
+
+      <div class="aluelista">
+        <a class="aluelinkki" href="logout.html"><i class="fa-solid fa-right-from-bracket"></i><span
+              class="linkkiteksti"> Kirjaudu ulos</span></a>
+      </div>
+
+    </div>
   </div>
 </main>
 

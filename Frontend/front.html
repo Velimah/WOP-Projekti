@@ -16,8 +16,8 @@
 <main class="container">
   <div id="vasen">
 
-      <h2 class="vasen-teksti">Haku</h2>
-      <p><i class="fa-solid fa-magnifying-glass"></i></p>
+    <h2 class="vasen-teksti">Haku</h2>
+    <p><i class="fa-solid fa-magnifying-glass"></i></p>
 
     <form id="search-form">
       <input type="text" name="message_body" placeholder="Etsi viestiä">
@@ -43,7 +43,8 @@
   <div id="keski">
 
     <form action="http://localhost:3000/message" method="post" enctype="multipart/form-data" id="addMessageForm">
-      <textarea id="tekstikentta" name="message_body" type="text" rows="4" cols="50" placeholder="Kirjoita viesti..."></textarea>
+      <textarea id="tekstikentta" name="message_body" type="text" rows="4" cols="50"
+                placeholder="Kirjoita viesti..."></textarea>
       <div id="input-container">
         <input id="kuva-nappi" type="file" name="picture" accept="image/*" placeholder="">
 
@@ -76,13 +77,13 @@
       </div>
 
       <div class="aluelista">
-        <a class="aluelinkki" href="logout.html"><i class="fa-solid fa-right-from-bracket"></i><span class="linkkiteksti"> Kirjaudu ulos</span></a>
+        <a class="aluelinkki" href="logout.html"><i class="fa-solid fa-right-from-bracket"></i><span
+              class="linkkiteksti"> Kirjaudu ulos</span></a>
       </div>
 
     </div>
   </div>
 </main>
-
 
 <script src="js/check-login.js"></script>
 <script src="js/serialize.js"></script>
