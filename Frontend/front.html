@@ -27,9 +27,8 @@
     <h2 class="vasen-teksti">Viestialueet</h2>
     <p><i class="fa-solid fa-list"></i></p>
 
-    <form action="http://localhost:3000/message/board" method="post"
-          enctype="multipart/form-data" id="board-select2">
-      <select name="board_id" id="select">
+    <form action="http://localhost:3000/message/board" method="post" enctype="multipart/form-data" id="board-select2">
+      <select name="board_id">
         <option value="1">Kaikki</option>
         <option value="2">Yleinen</option>
         <option value="3">Frontend</option>
@@ -43,10 +42,8 @@
   </div>
   <div id="keski">
 
-    <form action="http://localhost:3000/message" method="post"
-          enctype="multipart/form-data" id="addMessageForm">
-      <label for="tekstikentta"></label><input id="tekstikentta" type="text" name="message_body"
-                                               placeholder=" Kirjoita viesti...">
+    <form action="http://localhost:3000/message" method="post" enctype="multipart/form-data" id="addMessageForm">
+      <textarea id="tekstikentta" name="message_body" type="text" rows="4" cols="50" placeholder="Kirjoita viesti..."></textarea>
       <div id="input-container">
         <input id="kuva-nappi" type="file" name="picture" accept="image/*" placeholder="">
 

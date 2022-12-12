@@ -1,16 +1,521 @@
+@font-face {
+    font-family: GalanoClassic;
+    src: url(GalanoClassic-Regular.woff2);
+}
+
+* {
+    font-size: 1rem;
+    line-height: 1.6;
+    box-sizing: border-box;
+    font-family: GalanoClassic, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+}
+
+header {
+    left: 50%;
+    transform: translate(-50%, 0);
+    position: fixed;
+    top: 0;
+    max-width: 1200px;
+    width: 100%;
+    height: 60px;
+    background-color: #F0F0F0;
+    box-shadow: 0 5px 5px -5px black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+header h1 {
+    font-size: 2rem;
+    padding-left: 20px;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+#vasen {
+    margin-right: 40px;
+    padding: 20px;
+    top: 100px;
+    overflow: auto;
+    position: sticky;
+    flex-shrink: 1;
+    flex-grow: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+#vasen i {
+    display: none;
+    font-size: 1.5rem;
+}
+
+.aluevalikko {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+
+}
+
+.aluelista {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 40px;
+    max-width: 170px;
+    width: 100%;
+    background-color: #8F00C7;
+    transition: background .2s ease-in-out;
+    list-style: none;
+    border-radius: 5px;
+}
+
+.aluelista:hover {
+    background: #490066;
+}
+
+.aluelinkki {
+    padding-left: 20px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+}
+
+#search-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+#board-select2 {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    width: 100%;
+}
+
+#board-select2 select {
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+#board-select2 button {
+    display: flex;
+    flex-direction: column;
+    max-width: 100px;
+    width: 100%;
+}
+
+#search-form > input {
+    max-width: 200px;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+#search-form button {
+    display: flex;
+    flex-direction: column;
+    max-width: 100px;
+    width: 100%;
+}
+
+#keski {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+    max-width: 600px;
+    width: 100%;
+    height: 100%;
+}
+
+#oikea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 40px;
+    padding: 20px;
+    top: 100px;
+    overflow: auto;
+    position: sticky;
+    height: 100%;
+    flex-shrink: 1;
+    flex-grow: 0;
+    width: 100%;
+    max-width: 250px;
+}
 #vastaukset {
     max-width: 600px;
     width: 100%;
     min-height: 300px;
     box-shadow: 0 1px 10px -5px black;
 }
+
+#addMessageForm {
+    background-color: #FFFFFF;
+    max-width: 600px;
+    width: 100%;
+    height: 100px;
+}
+
 #addMessageForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #FFFFFF;
+    width: 100%;
+    height: 150px;
+}
+
+#tekstikentta {
+    width: 90%;
+    height: 60px;
+    resize: none;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+#input-container {
     max-width: 600px;
     width: 100%;
-    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type=file] {
+    max-width: 150px;
+    width: 100%;
+    height: 40px;
+    color: #000000;
+    background: #FFFFFF;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+input[type=file]::file-selector-button {
+    height: 100%;
+    width: 100%;
+    border: none;
+    background: #8F00C7;
+    padding: 10px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+    background: #490066;
+}
+
+.select {
+    width: 100%;
+    max-width: 150px;
+    height: 40px;
+    border: none;
+    background: #8F00C7;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+.select:hover {
+    background: #490066;
+}
+
+.laheta-nappi {
+    width: 100%;
+    max-width: 150px;
+    height: 40px;
+    border: none;
+    background: #8F00C7;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+.laheta-nappi:hover {
+    background: #490066;
+}
+
+#viestit {
+    max-width: 600px;
+    width: 100%;
+    min-height: 300px;
+    box-shadow: 0 1px 10px -5px black;
+}
+
+.viesti-container {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    border-top: 1px solid #F0F0F0;
+    transition: background .2s ease-in-out;
+}
+
+.viesti-container:hover {
+    background-color: #F0F0F0;
+}
+
+.lahettaja-kortti {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profiilikuva {
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.lK1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+p.lK1 {
+    width: 50px;
+}
+
+.lK2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.viestikortti-palsta {
+    font-weight: bold;
+    padding: 2px 5px 2px 5px;
+
+    background-color: #F0F0F0;
+    border-radius: 5px;
+    box-shadow: 0 0 3px -2px black;
+    transition: background .2s ease-in-out;
+}
+
+.viesti-container:hover .viestikortti-palsta {
+    background-color: #ffffff;
+}
+
+.viesti-kortti {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.viesti {
+    padding-bottom: 20px;
+    font-size: 1rem;
+}
+
+p.viesti {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: 560px;
+    width: 100%;
+}
+
+.viesti-kuva {
+    box-shadow: 0 0 5px -3px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.napit-kortti {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.message-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100px;
+    height: 30px;
+    border: none;
+    background: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #FFFFFF;
+    cursor: pointer;
+    text-align: center;
+}
+
+.message-button:hover > * {
+    color: #8F00C7;
+    font-weight: 600;
+}
+
+.message-button > * {
+    color: black;
+    font-size: 1.1rem;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+@media screen and (max-width: 1100px) {
+    #oikea {
+        margin-left: auto;
+    }
+    .linkkiteksti {
+        display: none;
+    }
+    .aluelista  {
+        justify-content: center;
+    }
+    .aluelinkki {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #vasen {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 60px;
+        height: 50px;
+        max-width: 900px;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        background-color: #F0F0F0;
+        box-shadow: 0 5px 5px -5px black;
+    }
+
+    .vasen-teksti {
+        display: none;
+    }
+
+    #vasen i {
+        display: initial;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    #keski {
+        padding-top: 50px;
+    }
+
+    #search-form {
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-bottom: 0;
+    }
+
+    #board-select2 {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    #board-select2 select {
+        margin-bottom: 0;
+        max-width: 150px;
+    }
+
+    #search-form > input {
+        margin-bottom: 0;
+        max-width: 150px;
+    }
+
+    #oikea {
+        position: fixed;
+        bottom: 0;
+        height: 50px;
+        max-width: 900px;
+        top: initial;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        background-color: #F0F0F0;
+        box-shadow: 0 -5px 5px -5px black;
+    }
+
+    .aluevalikko {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .aluelista {
+
+        margin-bottom: 0;
+        height: 40px;
+        max-width: 170px;
+        width: 100%;
+        background-color: #F0F0F0;
+        transition: background .2s ease-in-out;
+        border-radius: 5px;
+    }
+    .aluelista i {
+        font-size: 1.4rem;
+        color: black;
+    }
+    .aluelista i:hover {
+        color: #8F00C7;
+    }
+
+    .aluelista:hover {
+        background-color: initial;
+    }
+
+    .aluelinkki {
+        padding-left: 0;
+        text-decoration: none;
+        font-size: 1.2rem;
+        color: #FFFFFF;
+    }
 }
