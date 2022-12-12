@@ -401,7 +401,7 @@ p.viesti {
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
     .container {
         justify-content: flex-start;
         flex-direction: column;
@@ -415,7 +415,7 @@ p.viesti {
         position: fixed;
         top: 60px;
         height: 50px;
-        max-width: 800px;
+        max-width: 900px;
         margin: 0;
         padding: 0;
         border-radius: 0;
@@ -462,7 +462,7 @@ p.viesti {
         position: fixed;
         bottom: 0;
         height: 50px;
-        max-width: 800px;
+        max-width: 900px;
         top: initial;
         margin: 0;
         padding: 0;
