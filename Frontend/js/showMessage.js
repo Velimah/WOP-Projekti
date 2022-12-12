@@ -26,13 +26,16 @@ const loadMessage = (message) => {
   const lahettajaKortti = document.createElement('div');
   lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
 
-  const Lahettaja = document.createElement('p');
-  Lahettaja.innerHTML = message.name;
+  const lahettaja = document.createElement('p');
+  lahettaja.setAttribute('class', 'lahettaja-kortti-nimi');
+  lahettaja.innerHTML = message.name;
 
   const email = document.createElement('p');
+  email.setAttribute('class', 'lahettaja-kortti-email');
   email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + '</a>';
 
   const aika = document.createElement('p');
+  aika.setAttribute('class', 'lahettaja-kortti-aika');
 
   //calculates minutes and hours since the message was posted
   const time1 = new Date(message.send_time);
@@ -74,7 +77,7 @@ const loadMessage = (message) => {
   lK2.setAttribute('class', 'lK2');
 
   // combining information into flexbox containers, then into a parent element
-  lK1.appendChild(Lahettaja);
+  lK1.appendChild(lahettaja);
   lK1.appendChild(email);
   lK2.appendChild(aika);
   lK2.appendChild(palsta);
@@ -96,6 +99,7 @@ const loadMessage = (message) => {
   if (message.modify_time != null) {
 
     const muokkausAika = document.createElement('p');
+    muokkausAika.setAttribute('class', 'viesti-kortti-muokkausaika');
 
     const time1 = new Date(message.modify_time);
     const time2 = new Date();
@@ -250,13 +254,16 @@ const loadReplies = (messages) => {
       const lahettajaKortti = document.createElement('div');
       lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
 
-      const Lahettaja = document.createElement('p');
-      Lahettaja.innerHTML = message.name;
+      const lahettaja = document.createElement('p');
+      lahettaja.setAttribute('class', 'lahettaja-kortti-nimi');
+      lahettaja.innerHTML = message.name;
 
       const email = document.createElement('p');
+      email.setAttribute('class', 'lahettaja-kortti-email');
       email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + '</a>';
 
       const aika = document.createElement('p');
+      aika.setAttribute('class', 'lahettaja-kortti-aika');
 
       //calculates minutes and hours since the message was posted
       const time1 = new Date(message.send_time);
@@ -298,7 +305,7 @@ const loadReplies = (messages) => {
       lK2.setAttribute('class', 'lK2');
 
       // combining information into flexbox containers, then into a parent element
-      lK1.appendChild(Lahettaja);
+      lK1.appendChild(lahettaja);
       lK1.appendChild(email);
       lK2.appendChild(aika);
       lK2.appendChild(palsta);
@@ -320,6 +327,7 @@ const loadReplies = (messages) => {
       if (message.modify_time != null) {
 
         const muokkausAika = document.createElement('p');
+        muokkausAika.setAttribute('class', 'viesti-kortti-muokkausaika');
 
         const time1 = new Date(message.modify_time);
         const time2 = new Date();
