@@ -69,16 +69,16 @@ header {
 
 .aluelista {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 10px;
     height: 40px;
-    max-width: 200px;
+    max-width: 170px;
     width: 100%;
     background-color: #8F00C7;
     transition: background .2s ease-in-out;
     list-style: none;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .aluelista:hover {
@@ -86,6 +86,7 @@ header {
 }
 
 .aluelinkki {
+    padding-left: 20px;
     text-decoration: none;
     font-size: 1.2rem;
     color: #FFFFFF;
@@ -309,12 +310,6 @@ p.viesti {
     justify-content: center;
     align-items: center;
 }
-
-/*
-i {
-    font-size: 1.5rem;
-}
-*/
 .message-button {
     display: flex;
     flex-direction: row;
@@ -346,7 +341,21 @@ i {
 }
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1100px) {
+    #oikea {
+        margin-left: auto;
+    }
+    .linkkiteksti {
+        display: none;
+    }
+    .aluelista  {
+        justify-content: center;
+    }
+    .aluelinkki {
+        padding: 0;
+    }
+}
+@media screen and (max-width: 800px) {
     .container {
         justify-content: flex-start;
         flex-direction: column;
@@ -385,6 +394,7 @@ i {
     }
 
     .aluevalikko {
+        display: flex;
         flex-direction: row;
     }
 
@@ -392,9 +402,12 @@ i {
         margin-bottom: 0;
         margin-right: 5px;
         margin-left: 5px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     .aluelinkki {
-        font-size: 0.7rem;
+        font-size: 1rem;
     }
 }
