@@ -122,15 +122,15 @@ const loadMessages = (messages) => {
         muokkausAika.setAttribute('class', 'viesti-kortti-muokkausaika');
 
         if (minutes === 1) {
-          muokkausAika.innerHTML = `( Muokattu minuutti sitten )`;
+          muokkausAika.innerHTML = `Muokattu minuutti sitten`;
         } else if (minutes < 60) {
-          muokkausAika.innerHTML = `( Muokattu ${minutes} minuuttia sitten )`;
+          muokkausAika.innerHTML = `Muokattu ${minutes} minuuttia sitten`;
         } else if (hours === 1) {
-          muokkausAika.innerHTML = `( Muokattu tunti sitten )`;
+          muokkausAika.innerHTML = `Muokattu tunti sitten`;
         } else if (hours < 24) {
-          muokkausAika.innerHTML = `( Muokattu ${hours} tuntia sitten )`;
+          muokkausAika.innerHTML = `Muokattu ${hours} tuntia sitten`;
         } else {
-          muokkausAika.innerHTML = `( Muokattu ${message.modify_time.substring(0, 10)} )`;
+          muokkausAika.innerHTML = `Muokattu ${message.modify_time.substring(0, 10)}`;
         }
         viestiKortti.appendChild(muokkausAika);
       }

@@ -19,14 +19,16 @@
     <h2 class="vasen-teksti">Haku</h2>
     <p><i class="fa-solid fa-magnifying-glass"></i></p>
     <form id="search-form">
-      <input type="text" name="message_body" placeholder="Etsi viestiä">
+      <label for="haku"></label>
+      <input id="haku" type="text" name="message_body" placeholder="Etsi viestiä">
       <button class="laheta-nappi" type="submit">Hae</button>
     </form>
 
     <h2 class="vasen-teksti">Viestialueet</h2>
     <p><i class="fa-solid fa-list"></i></p>
     <form action="http://localhost:3000/message/board" method="post" enctype="multipart/form-data" id="board-select2">
-      <select name="board_id">
+      <label for="board-valikko"></label>
+      <select id="board-valikko" name="board_id">
         <option value="1">Kaikki</option>
         <option value="2">Yleinen</option>
         <option value="3">Frontend</option>
@@ -42,12 +44,15 @@
   <div id="keski">
 
     <form action="http://localhost:3000/message" method="post" enctype="multipart/form-data" id="addMessageForm">
+      <label for="tekstikentta"></label>
       <textarea id="tekstikentta" name="message_body" type="text" rows="4" cols="50"
                 placeholder="Kirjoita viesti..."></textarea>
       <div id="input-container">
+        <label for="kuva-nappi"></label>
         <input id="kuva-nappi" type="file" name="picture" accept="image/*" placeholder="">
 
-        <select class="select" id=board-select name="board_id">
+        <label for="board-select"></label>
+        <select class="select" id="board-select" name="board_id">
           <option value="2">Yleinen</option>
           <option value="3">Frontend</option>
           <option value="4">Backend</option>
