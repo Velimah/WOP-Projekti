@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mapbox-gl" level="application" />
+    <orderEntry type="library" name="c5e93b78b7" level="application" />
   </component>
 </module>
