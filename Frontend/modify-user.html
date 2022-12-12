@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Example</title>
-    <link href="css/ui4.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Example</title>
+  <link href="css/modify-user.css" rel="stylesheet">
 </head>
 
+<header>
+
+</header>
+
 <body>
-    <div class="container">
-        <div class="forms">
-            <div class="form-wrapper">
-                <h3>Modify user</h3>
-                <form class="light-border" id="modUserForm">
-                    <input minlength="3" required class="light-border" type="text" name="name" placeholder="Nimi">
-                    <input required class="light-border" type="email" name="email" placeholder="Email">
-                    <input required pattern="(?=.*[\p{Lu}]).{8,}" class="light-border" type="password" name="password" placeholder="Salasana">
-                    <button class="light-border" type="submit">Save</button>
-                </form>
-            </div>
-        </div>
+<div class="container">
+
+  <div class="forms">
+    <div class="modify-user">
+      <form class="form" id="modUserForm">
+        <h3>Muokkaa tietoja</h3>
+        <input minlength="3" requiredtype="text" name="name" placeholder="Nimi">
+        <input required type="email" name="email" placeholder="Email">
+        <input required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password"
+               placeholder="Salasana">
+        <p class="aputeksti">(Väh. 1 iso kirjain, 8 merkkiä)</p>
+        <button class="edit-buttons" type="submit">Tallenna</button>
+      </form>
     </div>
 
-    <h2>Lisää profiilikuva</h2>
-    <form action="http://localhost:3000/user" method="post"
-          enctype="multipart/form-data" id="addPictureForm">
-        <input id="asdss" type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
-        <button id="asdsssdd" type="submit">Lähetä</button>
-    </form>
+    <div id="change-picture">
+      <form class="form" action="http://localhost:3000/user" method="post"
+            enctype="multipart/form-data" id="addPictureForm">
+        <h3>Lisää profiilikuva</h3>
+        <input id="kuva" type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
+        <button class="edit-buttons" type="submit">Tallenna</button>
+      </form>
+    </div>
+  </div>
 
-    <script src="js/check-login.js"></script>
-    <script src="js/serialize.js"></script>
-    <script src="js/modify-user.js"></script>
+</div>
+
+<script src="js/check-login.js"></script>
+<script src="js/serialize.js"></script>
+<script src="js/modify-user.js"></script>
 </body>
 
 </html>
