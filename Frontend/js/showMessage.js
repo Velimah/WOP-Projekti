@@ -486,7 +486,6 @@ const getReplies = async () => {
     };
     const response = await fetch(url + '/message/' + message_id, fetchOptions);
     message = await response.json();
-    console.log(message);
     loadMessage(message);
   } catch (e) {
     console.log(e.message);
@@ -505,7 +504,6 @@ addForm.addEventListener('submit', async (evt) => {
 
   //sends board id to be able to use the same sql route
   fd.append('board_id', `${message.board_id}`)
-  console.log(fd);
   const fetchOptions = {
     method: 'POST',
     headers: {

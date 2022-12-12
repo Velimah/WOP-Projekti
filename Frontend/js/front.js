@@ -281,7 +281,6 @@ const addMessageForm = document.querySelector('#addMessageForm');
 addMessageForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const fd = new FormData(addMessageForm);
-  console.log(fd);
   const fetchOptions = {
     method: 'POST',
     headers: {
@@ -314,7 +313,6 @@ searchForm.addEventListener('submit', async (evt) => {
 
   const response = await fetch(url + '/message/search', fetchOptions);
   const json = await response.json();
-  console.log(json)
 
   // checks if the result has an error message in json reply
   if (json.hasOwnProperty('message')) {
@@ -337,7 +335,6 @@ const boardSelect = document.querySelector('#board-select2');
 boardSelect.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const data = serializeJson(boardSelect);
-  console.log(data)
 
   //checks if all messages are chosen and the returns to main page
   if (data?.board_id === "1") {
@@ -356,7 +353,6 @@ boardSelect.addEventListener('submit', async (evt) => {
 
   const response = await fetch(url + '/message/board', fetchOptions);
   const json = await response.json();
-  console.log(json)
   loadMessages(json);
 
 });

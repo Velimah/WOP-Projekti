@@ -35,7 +35,6 @@ const user_get = async (req, res, next) => {
 };
 
 const user_put = async (req, res, next) => {
-  console.log(req.body, req.user);
   try {
 
     const errors = validationResult(req);
@@ -108,8 +107,6 @@ const user_picture_update = async (req, res, next) => {
       next(httpError('Invalid data', 400));
       return;
     }
-
-    console.log('profilePic_test', req.body, req.file, req.file.path);
 
     if (req.file !== undefined) {
 

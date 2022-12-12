@@ -10,7 +10,6 @@ const getQParam = (param) => {
 
 // get id from address
 const message_id = getQParam('id');
-console.log(message_id);
 
 // select existing html elements
 const modForm = document.querySelector('#modMessageForm');
@@ -68,7 +67,6 @@ const getUsers = async () => {
 modForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const data = serializeJson(modForm);
-  console.log(data);
   // remove empty properties
   for (const [prop, value] of Object.entries(data)) {
     if (value === '') {
@@ -84,7 +82,6 @@ modForm.addEventListener('submit', async (evt) => {
     body: JSON.stringify(data),
   };
 
-  console.log(fetchOptions);
   const response = await fetch(url + '/message/' + message_id, fetchOptions);
   const json = await response.json();
   if (json.error) {

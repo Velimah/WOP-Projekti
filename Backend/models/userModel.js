@@ -21,7 +21,7 @@ const getUser = async (userId, next) => {
 
   } catch (e) {
     console.error('getUser', e.message);
-   // next(httpError('Database error', 500));
+    next(httpError('Database error', 500));
   }
 };
 
@@ -71,7 +71,6 @@ const deleteUser = async (userId, next) => {
 
 const getUserLogin = async (params, next) => {
   try {
-    console.log(params);
     const [rows] = await promisePool.execute(
         'SELECT * FROM user WHERE email = ?;',
         params);

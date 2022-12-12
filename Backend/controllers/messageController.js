@@ -60,14 +60,11 @@ const message_post = async (req, res, next) => {
       return;
     }
 
-    console.log('message_post_testi', req.body, req.file);
-
     // checks if there is an image
     if (req.file !== undefined) {
 
       const thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
 
-      console.log(thumbnail);
       const coords = await getCoordinates(req.file.path);
 
       const data = [
@@ -132,16 +129,11 @@ const message_reply = async (req, res, next) => {
       return;
     }
 
-    console.log('message_reply_body', req.body);
-    console.log('message_reply_file', req.file);
-    console.log('message_reply_params', req.params);
-
     //checks if there is an image
     if (req.file !== undefined) {
 
       const thumbnail = await sharp(req.file.path).withMetadata().rotate().resize(560, 300).png().toFile('./thumbnails/' + req.file.filename);
 
-      console.log(thumbnail);
       const coords = await getCoordinates(req.file.path);
 
       const data = [
@@ -222,8 +214,6 @@ const message_put = async (req, res, next) => {
       ];
     }
 
-    console.log('message_put', data);
-
     const result = await updateMessage(data, req.user, next);
     if (result.affectedRows < 1) {
       next(httpError('No message modified', 400));
@@ -241,10 +231,8 @@ const message_put = async (req, res, next) => {
 
 // deletes message
 const message_delete = async (req, res, next) => {
-  console.log(req.params.id, req.user);
   try {
     const result = await deleteMessage(req.params.id, req.user.user_id, next);
-    console.log(result);
     if (result.affectedRows < 1) {
       next(httpError('No message deleted', 400));
       return;
@@ -271,8 +259,6 @@ const message_like = async (req, res, next) => {
       next(httpError('Invalid data', 400));
       return;
     }
-
-    console.log('message_like', req.user, req.params.id);
 
     const data = [
       req.user.user_id,
@@ -302,7 +288,6 @@ const message_search = async (req, res, next) => {
       next(httpError('No message found', 404));
       return;
     }
-    console.log(messages);
     res.json(messages);
   } catch (e) {
     console.error('message_search', e.message);
@@ -317,7 +302,6 @@ const board_select = async (req, res, next) => {
       next(httpError('No message found', 404));
       return;
     }
-    console.log(messages);
     res.json(messages);
   } catch (e) {
     console.error('board_select', e.message);

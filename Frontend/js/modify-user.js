@@ -39,7 +39,6 @@ const addPictureForm = document.querySelector('#addPictureForm');
 addPictureForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const fd = new FormData(addPictureForm);
-  console.log(fd);
   const fetchOptions = {
     method: 'POST',
     headers: {
