@@ -48,12 +48,14 @@ header {
     max-width: 300px;
     width: 100%;
 }
+
 #register {
     display: flex;
     flex-direction: column;
     max-width: 300px;
     width: 100%;
 }
+
 .form {
     display: flex;
     flex-direction: column;
@@ -81,6 +83,7 @@ input {
     box-shadow: 1px 1px 5px -3px black;
 
 }
+
 .aputeksti {
     font-size: 0.9rem;
     margin-bottom: 10px;
@@ -104,7 +107,11 @@ input {
 }
 
 @media screen and (max-width: 500px) {
-.forms {
-    flex-direction: column;
-}
+    .container {
+        margin-top: 50px;
+    }
+
+    .forms {
+        flex-direction: column;
+    }
 }
