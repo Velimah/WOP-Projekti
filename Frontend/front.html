@@ -11,19 +11,22 @@
 </head>
 <body>
 <header>
-
-
+  <h1>TVT21-M</h1>
 </header>
 <main class="container">
   <div id="vasen">
 
-    <h2>Haku</h2>
+      <h2 class="vasen-teksti">Haku</h2>
+      <p><i class="fa-solid fa-magnifying-glass"></i></p>
+
     <form id="search-form">
       <input type="text" name="message_body" placeholder="Etsi viestiä">
-      <button type="submit">Hae</button>
+      <button class="laheta-nappi" type="submit">Hae</button>
     </form>
 
-    <h2>Viestialueet</h2>
+    <h2 class="vasen-teksti">Viestialueet</h2>
+    <p><i class="fa-solid fa-list"></i></p>
+
     <form action="http://localhost:3000/message/board" method="post"
           enctype="multipart/form-data" id="board-select2">
       <select name="board_id" id="select">
@@ -34,7 +37,7 @@
         <option value="5">Tietokannat</option>
         <option value="6">Matematiikka</option>
       </select>
-      <button id="laheta-nappis" type="submit">Siirry</button>
+      <button class="laheta-nappi" type="submit">Siirry</button>
     </form>
 
   </div>
@@ -47,7 +50,7 @@
       <div id="input-container">
         <input id="kuva-nappi" type="file" name="picture" accept="image/*" placeholder="">
 
-        <select id=board-select name="board_id">
+        <select class="select" id=board-select name="board_id">
           <option value="2">Yleinen</option>
           <option value="3">Frontend</option>
           <option value="4">Backend</option>
@@ -55,7 +58,7 @@
           <option value="6">Matematiikka</option>
         </select>
 
-        <button id="laheta-nappi" type="submit">Lähetä</button>
+        <button class="laheta-nappi" type="submit">Lähetä</button>
       </div>
     </form>
 
@@ -72,19 +75,21 @@
       </div>
 
       <div class="aluelista">
-        <a class="aluelinkki" href="logout.html"><i class="fa-solid fa-right-from-bracket"></i><span class="linkkiteksti"> Kirjaudu ulos</span></a>
-      </div>
-
-      <div class="aluelista">
         <a class="aluelinkki" href="modify-user.html"><i class="fa-solid fa-gear"></i><span class="linkkiteksti"> Asetukset</span></a>
       </div>
 
-      <h2>Lisää profiilikuva</h2>
+      <div class="aluelista">
+        <a class="aluelinkki" href="logout.html"><i class="fa-solid fa-right-from-bracket"></i><span class="linkkiteksti"> Kirjaudu ulos</span></a>
+      </div>
+
+
+     <h2>Lisää profiilikuva</h2>
       <form action="http://localhost:3000/user" method="post"
             enctype="multipart/form-data" id="addPictureForm">
         <input id="asdss" type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
         <button id="asdsssdd" type="submit">Lähetä</button>
       </form>
+
     </div>
   </div>
 </main>
