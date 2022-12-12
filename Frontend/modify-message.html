@@ -6,8 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Example</title>
-    <link href="css/ui4.css" rel="stylesheet">
+    <link href="css/modify-message.css" rel="stylesheet">
 </head>
+
+<header>
+    <h1>TVT21-M</h1>
+</header>
 
 <body>
     <div class="container">
@@ -17,9 +21,10 @@
         <div class="forms">
             <div class="form-wrapper">
                 <h3>Muokkaa viestiä</h3>
-                <form id="modMessageForm" class="light-border">
-                    <input class="light-border" type="text" name="message_body" placeholder="Viesti">
-                    <button class="light-border" type="submit">Tallenna</button>
+                <form id="modMessageForm">
+                    <textarea id="tekstikentta" name="message_body" type="text" rows="4" cols="50"
+                              placeholder="Kirjoita viesti..."></textarea>
+                    <button class="edit-buttons" type="submit">Tallenna</button>
                 </form>
             </div>
         </div>
