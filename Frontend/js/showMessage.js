@@ -14,7 +14,7 @@ const message_id = parseInt(getQParam('id'));
 //selects correct html elements from page to use in message and replies
 const viestit = document.querySelector('#viestit');
 const vastaukset = document.querySelector('#vastaukset');
-
+const dialog = document.getElementById("modal");
 // loads the main message
 const loadMessage = (message) => {
 
@@ -160,8 +160,12 @@ const loadMessage = (message) => {
     };
     const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
     const json = await response.json();
-    getMessage();
-    alert(json.message);
+    const closeModal = document.getElementById("modal");
+    closeModal.addEventListener("click", () => {
+      dialog.close();
+    });
+    dialog.innerHTML = '<p>'+json.message+'</p>'
+    dialog.showModal();
   });
 
   napitKortti.appendChild(likeButton);
@@ -388,8 +392,13 @@ const loadReplies = (messages) => {
         };
         const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
         const json = await response.json();
-        getMessage();
-        alert(json.message);
+        const closeModal = document.getElementById("modal");
+        closeModal.addEventListener("click", () => {
+          dialog.close();
+        });
+        dialog.innerHTML = '<p>'+json.message+'</p>'
+        dialog.showModal();
+        getReplies();
       });
 
       napitKortti.appendChild(likeButton);
@@ -429,8 +438,12 @@ const loadReplies = (messages) => {
               fetchOptions
             );
             const json = await response.json();
-            console.log('delete response', json);
-            getMessage();
+            dialog.addEventListener("click", () => {
+              dialog.close();
+            });
+            dialog.innerHTML = '<p>'+json.message+'</p>'
+            dialog.showModal();
+            getReplies();
           } catch (e) {
             console.log(e.message);
           }
@@ -513,6 +526,11 @@ addForm.addEventListener('submit', async (evt) => {
   };
   const response = await fetch(url + '/message/' + message_id, fetchOptions);
   const json = await response.json();
-  alert(json.message);
-  location.href = "show-message.html?id=" + message_id;
+  dialog.addEventListener("click", () => {
+    dialog.close();
+  });
+  dialog.innerHTML = '<p>'+json.message+'</p>'
+  dialog.showModal();
+  getReplies();
+
 });

@@ -6,20 +6,9 @@ const viestit = document.querySelector('#viestit');
 
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
-//header username and email
-/*
-const header = document.querySelector('header');
-const headerName = document.createElement('div');
-headerName.setAttribute('id', 'header-name');
-const headerEmail = document.createElement('div');
-headerEmail.setAttribute('id', 'header-email');
 
-headerName.innerHTML = user.name;
-headerEmail.innerHTML = user.email;
+const dialog = document.getElementById("modal");
 
-header.appendChild(headerName);
-header.appendChild(headerEmail);
-*/
 
 // load all messages
 const loadMessages = (messages) => {
@@ -176,8 +165,12 @@ const loadMessages = (messages) => {
         };
         const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
         const json = await response.json();
+        dialog.addEventListener("click", () => {
+          dialog.close();
+        });
+        dialog.innerHTML = '<p>'+json.message+'</p>'
+        dialog.showModal();
         getMessages();
-        alert(json.message);
       });
 
       napitKortti.appendChild(likeButton);
@@ -231,6 +224,11 @@ const loadMessages = (messages) => {
             );
             const json = await response.json();
             console.log('delete response', json);
+            dialog.addEventListener("click", () => {
+              dialog.close();
+            });
+            dialog.innerHTML = '<p>'+json.message+'</p>'
+            dialog.showModal();
             getMessages();
           } catch (e) {
             console.log(e.message);
@@ -290,8 +288,12 @@ addMessageForm.addEventListener('submit', async (evt) => {
   };
   const response = await fetch(url + '/message', fetchOptions);
   const json = await response.json();
-  alert(json.message);
-  location.href = "front.html";
+  dialog.addEventListener("click", () => {
+    dialog.close();
+  });
+  dialog.innerHTML = '<p>'+json.message+'</p>'
+  dialog.showModal();
+  getMessages();
 });
 
 // search
@@ -316,14 +318,26 @@ searchForm.addEventListener('submit', async (evt) => {
 
   // checks if the result has an error message in json reply
   if (json.hasOwnProperty('message')) {
-    alert("Ei tuloksia");
-    location.href = "front.html";
+    dialog.addEventListener("click", () => {
+      dialog.close();
+    });
+    dialog.innerHTML = '<p>'+"Ei tuloksia"+'</p>';
+    dialog.showModal();
+    getMessages();
   } else {
     loadMessages(json);
     if (json.length === 1) {
-      alert("Löytyi " + json.length + " tulos");
+      dialog.addEventListener("click", () => {
+        dialog.close();
+      });
+      dialog.innerHTML = '<p>'+"Löytyi " + json.length + " tulos"+'</p>';
+      dialog.showModal();
     } else {
-      alert("Löytyi " + json.length + " tulosta");
+      dialog.addEventListener("click", () => {
+        dialog.close();
+      });
+      dialog.innerHTML = '<p>'+"Löytyi " + json.length + " tulosta"+'</p>';
+      dialog.showModal();
     }
   }
 });
