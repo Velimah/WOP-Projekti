@@ -21,7 +21,7 @@ const message_list_get = async (req, res, next) => {
   try {
     const messages = await getAllMessages(next);
     if (messages.length < 1) {
-      next(httpError('No messages found', 404));
+      next(httpError('Ei löytynyt viestejä', 404));
       return;
     }
     res.json(messages);
@@ -56,7 +56,7 @@ const message_post = async (req, res, next) => {
       // There are errors.
       // Error messages can be returned in an array using `errors.array()`.
       console.error('message_post validation', errors.array());
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 
@@ -78,12 +78,12 @@ const message_post = async (req, res, next) => {
 
       const result = await addMessage(data, next);
       if (result.affectedRows < 1) {
-        next(httpError('Invalid data', 400));
+        next(httpError('Tiedot väärin', 400));
         return;
       }
       if (thumbnail) {
         res.json({
-          message: 'message added',
+          message: 'Viesti lähetetty',
           message_id: result.insertId,
         });
       }
@@ -100,11 +100,11 @@ const message_post = async (req, res, next) => {
 
       const result = await addMessage(data, next);
       if (result.affectedRows < 1) {
-        next(httpError('Invalid data', 400));
+        next(httpError('Tiedot väärin', 400));
         return;
       }
       res.json({
-        message: 'message added',
+        message: 'Viesti lähetetty',
         message_id: result.insertId,
       });
     }
@@ -125,7 +125,7 @@ const message_reply = async (req, res, next) => {
       // There are errors.
       // Error messages can be returned in an array using `errors.array()`.
       console.error('message_reply validation', errors.array());
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 
@@ -147,12 +147,12 @@ const message_reply = async (req, res, next) => {
 
       const result = await addReply(data, next);
       if (result.affectedRows < 1) {
-        next(httpError('Invalid data', 400));
+        next(httpError('Tiedot väärin', 400));
         return;
       }
       if (thumbnail) {
         res.json({
-          message: 'reply added',
+          message: 'Viestiin vastattu',
           message_id: result.insertId,
         });
       }
@@ -170,11 +170,11 @@ const message_reply = async (req, res, next) => {
 
       const result = await addReply(data, next);
       if (result.affectedRows < 1) {
-        next(httpError('Invalid data', 400));
+        next(httpError('Tiedot väärin', 400));
         return;
       }
       res.json({
-        message: 'reply added',
+        message: 'Viestiin vastattu',
         message_id: result.insertId,
       });
     }
@@ -195,7 +195,7 @@ const message_put = async (req, res, next) => {
       // There are errors.
       // Error messages can be returned in an array using `errors.array()`.
       console.error('message_put validation', errors.array());
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 
@@ -216,12 +216,12 @@ const message_put = async (req, res, next) => {
 
     const result = await updateMessage(data, req.user, next);
     if (result.affectedRows < 1) {
-      next(httpError('No message modified', 400));
+      next(httpError('Viestiä ei muokattu', 400));
       return;
     }
 
     res.json({
-      message: 'message modified',
+      message: 'Viestiä muokattu',
     });
   } catch (e) {
     console.error('message_put', e.message);
@@ -234,11 +234,11 @@ const message_delete = async (req, res, next) => {
   try {
     const result = await deleteMessage(req.params.id, req.user.user_id, next);
     if (result.affectedRows < 1) {
-      next(httpError('No message deleted', 400));
+      next(httpError('Viestiä ei poistettu', 400));
       return;
     }
     res.json({
-      message: 'message deleted',
+      message: 'Viesti poistettu',
     });
   } catch (e) {
     console.error('delete', e.message);
@@ -256,7 +256,7 @@ const message_like = async (req, res, next) => {
       // There are errors.
       // Error messages can be returned in an array using `errors.array()`.
       console.error('message_like validation', errors.array());
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 
@@ -267,11 +267,11 @@ const message_like = async (req, res, next) => {
 
     const result = await likeMessage(data, next);
     if (result.affectedRows < 1) {
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
     res.json({
-      message: 'message liked',
+      message: 'Tykätty viestistä',
       message_id: result.insertId,
     });
 
@@ -285,7 +285,7 @@ const message_search = async (req, res, next) => {
   try {
     const messages = await searchMessage(`%${req.body.message_body}%`, next);
     if (messages.length < 1) {
-      next(httpError('No message found', 404));
+      next(httpError('Ei löytynyt viestejä', 404));
       return;
     }
     res.json(messages);
@@ -299,7 +299,7 @@ const board_select = async (req, res, next) => {
   try {
     const messages = await boardSelect(req.body.board_id, next);
     if (messages.length < 1) {
-      next(httpError('No message found', 404));
+      next(httpError('Ei löytynyt viestialuetta', 404));
       return;
     }
     res.json(messages);

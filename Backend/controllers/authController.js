@@ -11,13 +11,13 @@ const login = (req, res, next) => {
     console.log('info: ', info);
     console.log('err1: ', err);
     if (err || !user) {
-      next(httpError('Kirjautumiserhe', 403));
+      next(httpError('Kirjautumisvirhe', 403));
       return;
     }
     req.login(user, {session: false}, (err) => {
       if (err) {
         console.log('err2: ', err);
-        next(httpError('Kirjautmiserhe 2', 403));
+        next(httpError('Kirjautumisvirhe', 403));
         return;
       }
       const token = jwt.sign(user, 'tw34y5ktugijl');
@@ -35,7 +35,7 @@ const user_post = async (req, res, next) => {
       // There are errors.
       // Error messages can be returned in an array using `errors.array()`.
       console.error('user_post validation', errors.array());
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 
@@ -55,7 +55,7 @@ const user_post = async (req, res, next) => {
     }
 
     res.json({
-      message: 'user added',
+      message: 'Käyttäjä lisätty',
       user_id: result.insertId,
     });
   } catch (e) {

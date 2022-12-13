@@ -115,7 +115,7 @@ const likeMessage = async (data, next) => {
     return rows;
   } catch (e) {
     console.error('likeMessage', e.message);
-    next(httpError('Database error likeMessage. ALREADY LIKED?', 500));
+    next(httpError('Olet jo tykännyt!', 500));
   }
 };
 

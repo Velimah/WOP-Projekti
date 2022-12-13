@@ -10,7 +10,7 @@ const user_list_get = async (req, res, next) => {
   try {
     const users = await getAllUsers(next);
     if (users.length < 1) {
-      next(httpError('No users found', 404));
+      next(httpError('Käyttäjiä ei löytynyt', 404));
       return;
     }
     res.json(users);
@@ -24,7 +24,7 @@ const user_get = async (req, res, next) => {
   try {
     const user = await getUser(req.params.id, next);
     if (user.length < 1) {
-      next(httpError('No user found', 404));
+      next(httpError('Käyttäjää ei löytynyt', 404));
       return;
     }
     res.json(user.pop());
@@ -43,7 +43,7 @@ const user_put = async (req, res, next) => {
       // There are errors.
       // Error messages can be returned in an array using `errors.array()`.
       console.error('user_put validation', errors.array());
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 
@@ -59,12 +59,12 @@ const user_put = async (req, res, next) => {
 
     const result = await updateUser(data, next);
     if (result.affectedRows < 1) {
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 
     res.json({
-      message: 'user modified',
+      message: 'Käyttäjää muokattu',
       user_id: result.insertId,
     });
   } catch (e) {
@@ -77,11 +77,11 @@ const user_delete = async (req, res, next) => {
   try {
     const result = await deleteUser(req.params.id, next);
     if (result.affectedRows < 1) {
-      next(httpError('No user deleted', 404));
+      next(httpError('Käyttäjää ei poistettu', 404));
       return;
     }
     res.json({
-      message: 'user deleted',
+      message: 'Käyttäjä poistettu',
     });
   } catch (e) {
     console.error('user_delete', e.message);
@@ -104,7 +104,7 @@ const user_picture_update = async (req, res, next) => {
 
     if (!errors.isEmpty()) {
       console.error('user_picture_update validation', errors.array());
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 
@@ -119,12 +119,12 @@ const user_picture_update = async (req, res, next) => {
 
       const result = await addProfilePic(data, next);
       if (result.affectedRows < 1) {
-        next(httpError('Invalid data', 400));
+        next(httpError('Tiedot väärin', 400));
         return;
       }
       if (thumbnail) {
         res.json({
-          message: 'profile picture added',
+          message: 'Profiilikuva lisätty',
           user_id: result.insertId,
         });
       }
