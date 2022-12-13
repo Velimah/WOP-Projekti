@@ -24,24 +24,28 @@
     <div class="modify-user">
       <form class="form" id="modUserForm">
         <h3>Muokkaa tietoja</h3>
+
         <label for="nimi-kentta">Nimi</label>
-        <input id="nimi-kentta" minlength="3" required type="text" name="name" placeholder="Nimi">
+        <input id="nimi-kentta" required minlength="3" type="text" name="name" placeholder="Nimi">
+
         <label for="email-kentta">Sähköposti</label>
         <input id="email-kentta" required type="email" name="email" placeholder="Email">
+
         <label for="salasana-kentta">Salasana</label>
-        <input id="salasana-kentta" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password"
-               placeholder="Salasana">
+        <input id="salasana-kentta" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password" placeholder="Salasana">
         <p class="aputeksti">(Väh. 1 iso kirjain, 8 merkkiä)</p>
+
         <button class="edit-buttons" type="submit">Tallenna</button>
       </form>
     </div>
 
     <div id="change-picture">
-      <form class="form" action="http://localhost:3000/user" method="post"
-            enctype="multipart/form-data" id="addPictureForm">
+      <form class="form" action="http://localhost:3000/user" method="post" enctype="multipart/form-data" id="addPictureForm">
         <h3>Lisää profiilikuva</h3>
+
         <label for="kuva">Kuva</label>
-        <input id="kuva" type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
+        <input id="kuva" required type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
+
         <button class="edit-buttons" type="submit">Tallenna</button>
       </form>
     </div>
