@@ -166,6 +166,7 @@ const loadMessage = (message) => {
     });
     dialog.innerHTML = '<p>'+json.message+'</p>'
     dialog.showModal();
+    getReplies();
   });
 
   napitKortti.appendChild(likeButton);
@@ -215,8 +216,15 @@ const loadMessage = (message) => {
           fetchOptions
         );
         const json = await response.json();
-        console.log('delete response', json);
-        getMessage();
+
+        const closeModal = document.getElementById("modal");
+        closeModal.addEventListener("click", () => {
+          dialog.close();
+          location.href = "front.html";
+        });
+        dialog.innerHTML = '<p>'+json.message+'</p>'
+        dialog.showModal();
+
       } catch (e) {
         console.log(e.message);
       }
