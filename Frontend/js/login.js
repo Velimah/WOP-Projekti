@@ -4,6 +4,7 @@ const url = 'http://localhost:3000'; // change url when uploading to server
 // select existing html elements
 const loginForm = document.querySelector('#login-form');
 const addUserForm = document.querySelector('#add-user-form');
+const dialog = document.getElementById("modal");
 
 // login
 loginForm.addEventListener('submit', async (evt) => {
@@ -21,7 +22,12 @@ loginForm.addEventListener('submit', async (evt) => {
   const json = await response.json();
   console.log('login response', json);
   if (!json.user) {
-    alert(json.message);
+    dialog.addEventListener("click", () => {
+      dialog.close();
+    });
+    dialog.innerHTML = '<p>'+json.message+'</p>';
+    dialog.showModal();
+
   } else {
     // save token
     sessionStorage.setItem('token', json.token);
@@ -43,5 +49,9 @@ addUserForm.addEventListener('submit', async (evt) => {
   };
   const response = await fetch(url + '/auth/register', fetchOptions);
   const json = await response.json();
-  alert(json.message);
+  dialog.addEventListener("click", () => {
+    dialog.close();
+  });
+  dialog.innerHTML = '<p>'+json.message+'</p>';
+  dialog.showModal();
 });
