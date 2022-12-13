@@ -73,7 +73,7 @@ header h1 {
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
-    padding: 10px;
+    padding-top: 10px;
 }
 
 img {
@@ -85,6 +85,7 @@ img {
     max-width: 1200px;
     width: 100%;
     height: 500px;
+    margin-bottom: 10px;
 }
 
 .edit-buttons {
