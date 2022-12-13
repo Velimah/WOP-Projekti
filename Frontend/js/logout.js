@@ -16,7 +16,7 @@ const dialog = document.getElementById("modal");
       dialog.close();
       location.href = 'login.html';
     });
-    dialog.innerHTML = '<p>'+'You have logged out'+'</p>';
+    dialog.innerHTML = '<p>'+'Olet kirjautunut ulos'+'</p>';
     dialog.showModal();
   } catch (e) {
     console.log(e.message);

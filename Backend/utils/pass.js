@@ -14,13 +14,13 @@ passport.use(new Strategy(
       try {
         const [user] = await getUserLogin(params);
         if (user === undefined) {
-          return done(null, false, {message: 'Incorrect email.'});
+          return done(null, false, {message: 'Väärä sähköposti'});
         }
         if (!bcrypt.compareSync(password, user.password)) {
-          return done(null, false, {message: 'Incorrect password.'});
+          return done(null, false, {message: 'Väärä salasana'});
         }
         delete user.password;
-        return done(null, {...user}, {message: 'Logged In Successfully'}); // use spread syntax to create shallow copy to get rid of binary row type
+        return done(null, {...user}, {message: 'Olet kirjautunut sisään'}); // use spread syntax to create shallow copy to get rid of binary row type
       } catch (err) {
         return done(err);
       }
