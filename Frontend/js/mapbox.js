@@ -10,4 +10,9 @@ const map = new mapboxgl.Map({
 const addMarker = (coords) => {
   map.setCenter(coords);
   const marker = new mapboxgl.Marker().setLngLat(coords).addTo(map);
+
 };
+
+map.on('load', function () {
+  map.resize();
+});

@@ -419,7 +419,7 @@ p.viesti {
 
 dialog {
     left: 50%;
-    top: 50%;
+    top: 40%;
     transform: translate(-50%, -50%);
     position: fixed;
     width: 300px;
