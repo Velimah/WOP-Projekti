@@ -3,6 +3,7 @@ const url = 'http://localhost:3000'; // change url when uploading to server
 
 // select existing html elements
 const modUserForm = document.querySelector('#modUserForm');
+const dialog = document.getElementById("modal");
 
 // submit add user form
 modUserForm.addEventListener('submit', async (evt) => {
@@ -26,11 +27,20 @@ modUserForm.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/user', fetchOptions);
   const json = await response.json();
   if (json.error) {
-    alert(json.error.message);
+    dialog.addEventListener("click", () => {
+      dialog.close();
+      location.href = 'front.html';
+    });
+    dialog.innerHTML = '<p>'+json.error.message+'</p>';
+    dialog.showModal();
   } else {
-    alert(json.message);
+    dialog.addEventListener("click", () => {
+      dialog.close();
+      location.href = 'front.html';
+    });
+    dialog.innerHTML = '<p>'+json.message+'</p>';
+    dialog.showModal();
   }
-  location.href = 'front.html';
 });
 
 //form to add profile picture
@@ -48,6 +58,10 @@ addPictureForm.addEventListener('submit', async (evt) => {
   };
   const response = await fetch(url + '/user/picture', fetchOptions);
   const json = await response.json();
-  alert(json.message);
-  location.href = "front.html";
+  dialog.addEventListener("click", () => {
+    dialog.close();
+    location.href = 'front.html';
+  });
+  dialog.innerHTML = '<p>'+json.message+'</p>';
+  dialog.showModal();
 });

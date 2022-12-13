@@ -14,6 +14,7 @@ const message_id = getQParam('id');
 // select existing html elements
 const modForm = document.querySelector('#modMessageForm');
 const userList = document.querySelector('.add-owner');
+const dialog = document.getElementById("modal");
 
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
@@ -85,11 +86,20 @@ modForm.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/message/' + message_id, fetchOptions);
   const json = await response.json();
   if (json.error) {
-    alert(json.error.message);
+    dialog.addEventListener("click", () => {
+      dialog.close();
+      location.href = 'front.html';
+    });
+    dialog.innerHTML = '<p>'+json.error.message+'</p>';
+    dialog.showModal();
   } else {
-    alert(json.message);
+    dialog.addEventListener("click", () => {
+      dialog.close();
+      location.href = 'front.html';
+    });
+    dialog.innerHTML = '<p>'+json.message+'</p>';
+    dialog.showModal();
   }
-  location.href = 'front.html';
 });
 
 // start filling the form
