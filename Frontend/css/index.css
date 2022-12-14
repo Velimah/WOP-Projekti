@@ -306,6 +306,14 @@ input[type=file]::file-selector-button:hover {
     font-weight: bold;
 }
 
+.lahettaja-kortti-email a {
+    color: #8F00C7;
+}
+
+.lahettaja-kortti-email a:hover {
+    background: #490066;
+}
+
 .profiilikuva {
     border-radius: 20px;
     box-shadow: 0 0 5px -2px;
