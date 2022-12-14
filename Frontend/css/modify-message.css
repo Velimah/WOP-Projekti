@@ -116,4 +116,5 @@ dialog > p {
     padding: 10px;
     align-items: center;
     justify-content: center;
+    text-shadow: 0 0 3px black;
 }
