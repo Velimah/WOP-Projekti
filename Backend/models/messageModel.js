@@ -92,16 +92,10 @@ const updateMessage = async (data, user, next) => {
 
 const deleteMessage = async (messageId, user, next) => {
   try {
-    // if (user.role === 0) {
     const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ?;`,
       [messageId]);
     return rows;
-    /* } else {
-       const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? AND message.user_id = ?;`,
-         [messageId, user]);
-       return rows;
-     }
- */
+
   } catch (e) {
     console.error('deleteMessage', e.message);
     next(httpError('Database error deleteMessage', 500));
@@ -119,7 +113,6 @@ const likeMessage = async (data, next) => {
   }
 };
 
-//Message Seach WIP
 const searchMessage = async (MessageBody, next) => {
   try {
     const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.message_body, message.send_time, message.modify_time, message.picture, 

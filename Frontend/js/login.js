@@ -25,7 +25,7 @@ loginForm.addEventListener('submit', async (evt) => {
     dialog.addEventListener("click", () => {
       dialog.close();
     });
-    dialog.innerHTML = '<p>'+json.message+'</p>';
+    dialog.innerHTML = '<p>' + json.message + '</p>';
     dialog.showModal();
 
   } else {
@@ -52,6 +52,6 @@ addUserForm.addEventListener('submit', async (evt) => {
   dialog.addEventListener("click", () => {
     dialog.close();
   });
-  dialog.innerHTML = '<p>'+json.message+'</p>';
+  dialog.innerHTML = '<p>' + json.message + '</p>';
   dialog.showModal();
 });

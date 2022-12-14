@@ -115,10 +115,12 @@
         transition: background .2s ease-in-out;
         border-radius: 5px;
     }
+
     .aluelista i {
         font-size: 1.4rem;
         color: black;
     }
+
     .aluelista i:hover {
         color: #8F00C7;
     }

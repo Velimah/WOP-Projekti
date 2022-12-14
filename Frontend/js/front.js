@@ -168,7 +168,7 @@ const loadMessages = (messages) => {
         dialog.addEventListener("click", () => {
           dialog.close();
         });
-        dialog.innerHTML = '<p>'+json.message+'</p>'
+        dialog.innerHTML = '<p>' + json.message + '</p>'
         dialog.showModal();
         getMessages();
       });
@@ -227,7 +227,7 @@ const loadMessages = (messages) => {
             dialog.addEventListener("click", () => {
               dialog.close();
             });
-            dialog.innerHTML = '<p>'+json.message+'</p>'
+            dialog.innerHTML = '<p>' + json.message + '</p>'
             dialog.showModal();
             getMessages();
           } catch (e) {
@@ -291,7 +291,7 @@ addMessageForm.addEventListener('submit', async (evt) => {
   dialog.addEventListener("click", () => {
     dialog.close();
   });
-  dialog.innerHTML = '<p>'+json.message+'</p>'
+  dialog.innerHTML = '<p>' + json.message + '</p>'
   dialog.showModal();
   getMessages();
 });
@@ -321,7 +321,7 @@ searchForm.addEventListener('submit', async (evt) => {
     dialog.addEventListener("click", () => {
       dialog.close();
     });
-    dialog.innerHTML = '<p>'+"Ei tuloksia"+'</p>';
+    dialog.innerHTML = '<p>' + "Ei tuloksia" + '</p>';
     dialog.showModal();
     getMessages();
   } else {
@@ -330,13 +330,13 @@ searchForm.addEventListener('submit', async (evt) => {
       dialog.addEventListener("click", () => {
         dialog.close();
       });
-      dialog.innerHTML = '<p>'+"Löytyi " + json.length + " tulos"+'</p>';
+      dialog.innerHTML = '<p>' + "Löytyi " + json.length + " tulos" + '</p>';
       dialog.showModal();
     } else {
       dialog.addEventListener("click", () => {
         dialog.close();
       });
-      dialog.innerHTML = '<p>'+"Löytyi " + json.length + " tulosta"+'</p>';
+      dialog.innerHTML = '<p>' + "Löytyi " + json.length + " tulosta" + '</p>';
       dialog.showModal();
     }
   }

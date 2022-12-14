@@ -31,14 +31,14 @@ modUserForm.addEventListener('submit', async (evt) => {
       dialog.close();
       location.href = 'front.html';
     });
-    dialog.innerHTML = '<p>'+json.error.message+'</p>';
+    dialog.innerHTML = '<p>' + json.error.message + '</p>';
     dialog.showModal();
   } else {
     dialog.addEventListener("click", () => {
       dialog.close();
       location.href = 'front.html';
     });
-    dialog.innerHTML = '<p>'+json.message+'</p>';
+    dialog.innerHTML = '<p>' + json.message + '</p>';
     dialog.showModal();
   }
 });
@@ -62,6 +62,6 @@ addPictureForm.addEventListener('submit', async (evt) => {
     dialog.close();
     location.href = 'front.html';
   });
-  dialog.innerHTML = '<p>'+json.message+'</p>';
+  dialog.innerHTML = '<p>' + json.message + '</p>';
   dialog.showModal();
 });

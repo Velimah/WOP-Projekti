@@ -5,14 +5,14 @@ module.exports = (app, port, httpsPort) => {
   const fs = require('fs');
   app.enable('trust proxy');
 
-  const sslkey  = fs.readFileSync('/etc/pki/tls/private/ca.key');
+  const sslkey = fs.readFileSync('/etc/pki/tls/private/ca.key');
   const sslcert = fs.readFileSync('/etc/pki/tls/certs/ca.crt');
   const options = {
     key: sslkey,
     cert: sslcert
   };
 
-  app.use ((req, res, next) => {
+  app.use((req, res, next) => {
     if (req.secure) {
       next();
     } else {

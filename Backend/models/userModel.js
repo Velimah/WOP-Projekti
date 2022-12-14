@@ -28,7 +28,7 @@ const getUser = async (userId, next) => {
 const addUser = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`INSERT INTO user (name, email, password) VALUES (?, ?, ?);`,
-        data);
+      data);
     return rows;
   } catch (e) {
     console.error('addUser', e.message);
@@ -50,7 +50,7 @@ const addProfilePic = async (data, next) => {
 const updateUser = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`UPDATE user set name = ?, email = ?, password = ? WHERE user_id = ?;`,
-        data);
+      data);
     return rows;
   } catch (e) {
     console.error('updateUser', e.message);
@@ -61,7 +61,7 @@ const updateUser = async (data, next) => {
 const deleteUser = async (userId, next) => {
   try {
     const [rows] = await promisePool.execute(`DELETE FROM user where user_id = ?;`,
-        [userId]);
+      [userId]);
     return rows;
   } catch (e) {
     console.error('deleteUser', e.message);
@@ -72,8 +72,8 @@ const deleteUser = async (userId, next) => {
 const getUserLogin = async (params, next) => {
   try {
     const [rows] = await promisePool.execute(
-        'SELECT * FROM user WHERE email = ?;',
-        params);
+      'SELECT * FROM user WHERE email = ?;',
+      params);
     return rows;
   } catch (e) {
     console.error('getUserLogin', e.message);
