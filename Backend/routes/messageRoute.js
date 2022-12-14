@@ -25,7 +25,7 @@ const router = express.Router();
 router.route('/')
   .get(message_list_get)
   .post(upload.single('picture'),
-    body('message_body').isLength({min: 1}).escape(),
+    body('message_body').isLength({max: 1000}).escape(),
     message_post);
 
 router.route('/search').post(body('message_body').isLength({min: 1}).escape(),message_search);
@@ -37,10 +37,10 @@ router.route('/like/:id').post(message_like);
 router.route('/:id')
   .get(message_get)
   .delete(message_delete)
-  .put(body('message_body').isLength({min: 1}).escape(),
+  .put(body('message_body').isLength({max: 1000}).escape(),
   message_put)
   .post(upload.single('picture'),
-  body('message_body').isLength({min: 1}).escape(),
+  body('message_body').isLength({max: 1000}).escape(),
   message_reply);
 
 

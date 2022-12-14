@@ -26,7 +26,7 @@
 
     <h2 class="vasen-teksti">Viestialueet</h2>
     <p><i class="fa-solid fa-list"></i></p>
-    <form action="http://localhost:3000/message/board" method="post" enctype="multipart/form-data" id="board-select2">
+    <form method="post" enctype="multipart/form-data" id="board-select2">
       <label for="board-valikko"></label>
       <select id="board-valikko" name="board_id">
         <option value="1">Kaikki</option>
@@ -43,7 +43,7 @@
   </div>
   <div id="keski">
 
-    <form action="http://localhost:3000/message" method="post" enctype="multipart/form-data" id="addMessageForm">
+    <form method="post" enctype="multipart/form-data" id="addMessageForm">
       <label for="tekstikentta"></label>
       <textarea id="tekstikentta" name="message_body" type="text" rows="4" cols="50"
                 placeholder="Kirjoita viesti..."></textarea>

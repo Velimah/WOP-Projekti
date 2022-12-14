@@ -11,7 +11,7 @@ const getCoordinates = (imgFile) => { // imgFile = full path to uploaded image
           coordinates.push(24.74);
           coordinates.push(60.24);
           resolve(coordinates);
-        } else if (exifData.gpsGPSLongitude === undefined){
+        } else if (exifData.gps.GPSLongitude === undefined){
           coordinates.push(24.74);
           coordinates.push(60.24);
           resolve(coordinates);

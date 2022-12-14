@@ -162,7 +162,7 @@ header h1 {
     flex-direction: column;
     justify-content: center;
     margin-left: 40px;
-    padding: 20px;
+    padding: 45px 20px 20px 20px;
     top: 100px;
     overflow: auto;
     position: sticky;
