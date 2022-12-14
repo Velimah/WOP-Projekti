@@ -40,11 +40,13 @@
       <form method="post" class="form" id="add-user-form">
         <h3>Rekisteröinti</h3>
 
-        <label for="nimi-kentta">Nimi</label>
-        <input id="nimi-kentta" required minlength="3" type="text" name="name" placeholder="Nimi">
+        <label for="nimi-kentta">Nimimerkki</label>
+        <input id="nimi-kentta" required minlength="1" maxlength="20" type="text" name="name" placeholder="Nimimerkki">
+        <p class="aputeksti">(1-20 merkkiä)</p>
 
         <label for="email-kentta2">Sähköposti</label>
         <input id="email-kentta2" required type="email" name="email" placeholder="Sähköposti">
+        <p class="aputeksti">(Oikean mallinen osoite)</p>
 
         <label for="salasana-kentta2">Salasana</label>
         <input id="salasana-kentta2" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password"

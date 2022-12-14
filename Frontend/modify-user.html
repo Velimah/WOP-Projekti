@@ -27,10 +27,12 @@
         <h3>Muokkaa tietoja</h3>
 
         <label for="nimi-kentta">Nimi</label>
-        <input id="nimi-kentta" required minlength="3" type="text" name="name" placeholder="Nimi">
+        <input id="nimi-kentta" required minlength="1" maxlength="20" type="text" name="name" placeholder="Nimi">
+        <p class="aputeksti">(1-20 merkkiä)</p>
 
         <label for="email-kentta">Sähköposti</label>
         <input id="email-kentta" required type="email" name="email" placeholder="Email">
+        <p class="aputeksti">(Oikean mallinen osoite)</p>
 
         <label for="salasana-kentta">Salasana</label>
         <input id="salasana-kentta" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password"

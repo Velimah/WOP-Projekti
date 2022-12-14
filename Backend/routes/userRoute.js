@@ -17,7 +17,7 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({dest: 'uploads/', fileFilter});
 
-router.route('/').get(user_list_get).put(body('name').isLength({min: 3}).escape(),
+router.route('/').get(user_list_get).put(body('name').isLength({min: 1, max: 20}).escape(),
   body('email').isEmail(),
   body('password').matches(/(?=.*\p{Lu}).{8,}/u), user_put);
 
