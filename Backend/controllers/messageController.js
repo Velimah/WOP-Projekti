@@ -283,7 +283,6 @@ const message_like = async (req, res, next) => {
     ];
 
     const result = await likeMessage(data, next);
-    console.log(result);
     if (result.affectedRows < 1) {
       next(httpError('Tiedot väärin', 400));
       return;

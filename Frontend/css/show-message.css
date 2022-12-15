@@ -41,6 +41,11 @@
     background-color: #ffffff;
 }
 
+h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
 @media screen and (max-width: 900px) {
     .container {
         justify-content: flex-start;

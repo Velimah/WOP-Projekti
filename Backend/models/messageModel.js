@@ -145,7 +145,6 @@ const likeMessage = async (data, next) => {
     return rows;
   } catch (e) {
     try {
-      console.error('likeMessage', e.message);
       const [rows] = await promisePool.execute(`DELETE FROM likes WHERE user_id = ? AND message_id = ?;`,
         data);
       return rows;
