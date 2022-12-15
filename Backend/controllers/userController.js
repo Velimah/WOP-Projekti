@@ -73,6 +73,7 @@ const user_put = async (req, res, next) => {
   }
 };
 
+//not in use, needs to delete messages and replies attached to user as well
 const user_delete = async (req, res, next) => {
   try {
     const result = await deleteUser(req.params.id, next);

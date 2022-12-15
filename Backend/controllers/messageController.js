@@ -288,7 +288,7 @@ const message_like = async (req, res, next) => {
       return;
     }
     res.json({
-      message: 'Tykätty viestistä',
+      message: 'Tykätty tallennettu',
       message_id: result.insertId,
     });
 

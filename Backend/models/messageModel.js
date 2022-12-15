@@ -110,6 +110,7 @@ const deleteMessage = async (data, user, next) => {
   }
 };
 
+// TODO: remove like if already liked
 const likeMessage = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`INSERT INTO likes (user_id, message_id) VALUES (?, ?);`,
@@ -117,7 +118,12 @@ const likeMessage = async (data, next) => {
     return rows;
   } catch (e) {
     console.error('likeMessage', e.message);
-    next(httpError('Olet jo tykännyt!', 500));
+
+    const [rows] = await promisePool.execute(`delete from likes where user_id = ? AND message_id = ?;`,
+      data);
+    return rows;
+
+    //next(httpError('database error', 500));
   }
 };
 
