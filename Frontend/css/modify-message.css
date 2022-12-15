@@ -108,6 +108,7 @@ dialog {
     box-shadow: 0 0 10px 0;
 
 }
+
 dialog > p {
     display: flex;
     width: 300px;
@@ -116,4 +117,5 @@ dialog > p {
     padding: 10px;
     align-items: center;
     justify-content: center;
+    text-shadow: 0 0 3px black;
 }

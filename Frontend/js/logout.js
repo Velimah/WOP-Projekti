@@ -1,5 +1,5 @@
 'use strict';
-const url = 'http://localhost:3000'; // change url when uploading to server
+const url = 'https://10.114.34.66/app'; // change url when uploading to server
 
 const dialog = document.getElementById("modal");
 
@@ -16,7 +16,7 @@ const dialog = document.getElementById("modal");
       dialog.close();
       location.href = 'login.html';
     });
-    dialog.innerHTML = '<p>'+'Olet kirjautunut ulos'+'</p>';
+    dialog.innerHTML = '<p>' + 'Olet kirjautunut ulos' + '</p>';
     dialog.showModal();
   } catch (e) {
     console.log(e.message);

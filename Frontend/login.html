@@ -23,12 +23,13 @@
         <h3>Kirjautuminen</h3>
 
         <label for="email-kentta">Sähköposti</label>
-          <input id="email-kentta" required type="email" name="username" placeholder="Sähköposti"/>
+        <input id="email-kentta" required type="email" name="username" placeholder="Sähköposti"/>
 
         <label for="salasana-kentta">Salasana</label>
-          <input id="salasana-kentta" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password" placeholder="Salasana"/>
+        <input id="salasana-kentta" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password"
+               placeholder="Salasana"/>
 
-          <button class="login-buttons" type="submit">Kirjaudu sisään</button>
+        <button class="login-buttons" type="submit">Kirjaudu sisään</button>
 
       </form>
     </div>
@@ -39,15 +40,18 @@
       <form method="post" class="form" id="add-user-form">
         <h3>Rekisteröinti</h3>
 
-        <label for="nimi-kentta">Nimi</label>
-        <input id="nimi-kentta" required minlength="3" type="text" name="name" placeholder="Nimi">
+        <label for="nimi-kentta">Nimimerkki</label>
+        <input id="nimi-kentta" required minlength="1" maxlength="20" type="text" name="name" placeholder="Nimimerkki">
+        <p class="aputeksti"> (1-20 merkkiä)</p>
 
         <label for="email-kentta2">Sähköposti</label>
         <input id="email-kentta2" required type="email" name="email" placeholder="Sähköposti">
+        <p class="aputeksti"> (Oikean mallinen osoite)</p>
 
         <label for="salasana-kentta2">Salasana</label>
-        <input id="salasana-kentta2" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password" placeholder="Salasana">
-        <p class="aputeksti">(Väh. 1 iso kirjain ja 8 merkkiä)</p>
+        <input id="salasana-kentta2" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password"
+               placeholder="Salasana">
+        <p class="aputeksti"> (Väh. 1 iso kirjain ja 8 merkkiä)</p>
 
         <button class="login-buttons" type="submit">Rekisteröidy</button>
       </form>

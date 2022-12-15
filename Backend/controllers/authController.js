@@ -50,7 +50,7 @@ const user_post = async (req, res, next) => {
 
     const result = await addUser(data, next);
     if (result.affectedRows < 1) {
-      next(httpError('Invalid data', 400));
+      next(httpError('Tiedot väärin', 400));
       return;
     }
 

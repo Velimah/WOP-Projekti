@@ -5,19 +5,31 @@ const promisePool = pool.promise();
 
 const getAllMessages = async (next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, 
-                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, 
-                                                         board.name AS boardname, 
-                                                         (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
-                                                         replies.replycount
-                                                              
-                                                  FROM message
-                                                  
-                                                  JOIN user ON user.user_id = message.user_id
-                                                  JOIN board ON board.board_id = message.board_id
-                                                  LEFT JOIN replies ON message.message_id = replies.reply_id
-                                                                                                            
-                                                  ORDER BY send_time DESC;`);
+    const [rows] = await promisePool.execute(`SELECT message.message_id,
+                                                     message.user_id,
+                                                     message.board_id,
+                                                     message.reply_id,
+                                                     message.message_body,
+                                                     message.send_time,
+                                                     message.modify_time,
+                                                     message.picture,
+                                                     user.user_id AS sender,
+                                                     user.name,
+                                                     user.email,
+                                                     user.profile_picture,
+                                                     board.name AS boardname,
+                                                     (SELECT COUNT(likes.message_id)
+                                                      FROM likes
+                                                      WHERE likes.message_id = message.message_id) AS likecount,
+                                                     replies.replycount
+
+                                              FROM message
+
+                                                       JOIN user ON user.user_id = message.user_id
+                                                       JOIN board ON board.board_id = message.board_id
+                                                       LEFT JOIN replies ON message.message_id = replies.reply_id
+
+                                              ORDER BY send_time DESC;`);
     return rows;
   } catch (e) {
     console.error('getAllMessages', e.message);
@@ -27,21 +39,34 @@ const getAllMessages = async (next) => {
 
 const getMessage = async (messageId, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, message.coords, 
-                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, 
-                                                         board.name AS boardname, 
-                                                         (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
-                                                         replies.replycount
-                                                              
-                                                  FROM message
-                                                  
-                                                  JOIN user ON user.user_id = message.user_id
-                                                  JOIN board ON board.board_id = message.board_id
-                                                  LEFT JOIN replies ON message.message_id = replies.reply_id
-                                                  
-                                                  WHERE message.message_id = ?
-                                                                                                            
-                                                  ORDER BY send_time DESC;`, [messageId]);
+    const [rows] = await promisePool.execute(`SELECT message.message_id,
+                                                     message.user_id,
+                                                     message.board_id,
+                                                     message.reply_id,
+                                                     message.message_body,
+                                                     message.send_time,
+                                                     message.modify_time,
+                                                     message.picture,
+                                                     message.coords,
+                                                     user.user_id AS sender,
+                                                     user.name,
+                                                     user.email,
+                                                     user.profile_picture,
+                                                     board.name AS boardname,
+                                                     (SELECT COUNT(likes.message_id)
+                                                      FROM likes
+                                                      WHERE likes.message_id = message.message_id) AS likecount,
+                                                     replies.replycount
+
+                                              FROM message
+
+                                                       JOIN user ON user.user_id = message.user_id
+                                                       JOIN board ON board.board_id = message.board_id
+                                                       LEFT JOIN replies ON message.message_id = replies.reply_id
+
+                                              WHERE message.message_id = ?
+
+                                              ORDER BY send_time DESC;`, [messageId]);
     return rows;
   } catch (e) {
     console.error('getMessage', e.message);
@@ -51,7 +76,8 @@ const getMessage = async (messageId, next) => {
 
 const addMessage = async (data, next) => {
   try {
-    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords) VALUES (?, now(), ?, ?, ?, ?);`,
+    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords)
+                                                  VALUES (?, now(), ?, ?, ?, ?);`,
       data);
     return rows;
   } catch (e) {
@@ -62,7 +88,8 @@ const addMessage = async (data, next) => {
 
 const addReply = async (data, next) => {
   try {
-    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords, reply_id) VALUES (?, NOW(), ?, ?, ?, ?, ?);`,
+    const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords, reply_id)
+                                                  VALUES (?, NOW(), ?, ?, ?, ?, ?);`,
       data);
     return rows;
   } catch (e) {
@@ -90,53 +117,72 @@ const updateMessage = async (data, user, next) => {
   }
 };
 
-const deleteMessage = async (messageId, user, next) => {
+//deletes message/reply and all replies attached to it.
+const deleteMessage = async (data, user, next) => {
   try {
-    // if (user.role === 0) {
-    const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ?;`,
-      [messageId]);
-    return rows;
-    /* } else {
-       const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? AND message.user_id = ?;`,
-         [messageId, user]);
-       return rows;
-     }
- */
+    console.log(data, user)
+    if (user.role === 0) {
+      const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? OR message.reply_id = ?;`,
+        data);
+      return rows;
+    } else {
+      const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? OR message.reply_id = ? AND message.user_id = ?;`,
+        data);
+      return rows;
+    }
+
   } catch (e) {
     console.error('deleteMessage', e.message);
     next(httpError('Database error deleteMessage', 500));
   }
 };
 
+// TODO: remove like if already liked
 const likeMessage = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`INSERT INTO likes (user_id, message_id) VALUES (?, ?);`,
       data);
     return rows;
   } catch (e) {
-    console.error('likeMessage', e.message);
-    next(httpError('Olet jo tykännyt!', 500));
+    try {
+      const [rows] = await promisePool.execute(`DELETE FROM likes WHERE user_id = ? AND message_id = ?;`,
+        data);
+      return rows;
+    } catch (e) {
+      console.error('likeMessage', e.message);
+      next(httpError('database error', 500));
+    }
   }
 };
 
-//Message Seach WIP
 const searchMessage = async (MessageBody, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.message_body, message.send_time, message.modify_time, message.picture, 
-                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, 
-                                                         board.name AS boardname, 
-                                                         (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
-                                                         replies.replycount
-                                                              
-                                                  FROM message
-                                                  
-                                                  JOIN user ON user.user_id = message.user_id
-                                                  JOIN board ON board.board_id = message.board_id
-                                                  LEFT JOIN replies ON message.message_id = replies.reply_id
-                                                  
-                                                  WHERE message.message_body LIKE ?
-                                                                                                            
-                                                  ORDER BY send_time DESC;`,
+    const [rows] = await promisePool.execute(`SELECT message.message_id,
+                                                     message.user_id,
+                                                     message.board_id,
+                                                     message.message_body,
+                                                     message.send_time,
+                                                     message.modify_time,
+                                                     message.picture,
+                                                     user.user_id AS sender,
+                                                     user.name,
+                                                     user.email,
+                                                     user.profile_picture,
+                                                     board.name AS boardname,
+                                                     (SELECT COUNT(likes.message_id)
+                                                      FROM likes
+                                                      WHERE likes.message_id = message.message_id) AS likecount,
+                                                     replies.replycount
+
+                                              FROM message
+
+                                                       JOIN user ON user.user_id = message.user_id
+                                                       JOIN board ON board.board_id = message.board_id
+                                                       LEFT JOIN replies ON message.message_id = replies.reply_id
+
+                                              WHERE message.message_body LIKE ?
+
+                                              ORDER BY send_time DESC;`,
       [MessageBody]);
     return rows;
   } catch (e) {
@@ -147,21 +193,33 @@ const searchMessage = async (MessageBody, next) => {
 
 const boardSelect = async (MessageBody, next) => {
   try {
-    const [rows] = await promisePool.execute(`SELECT message.message_id, message.user_id, message.board_id, message.reply_id, message.message_body, message.send_time, message.modify_time, message.picture, 
-                                                         user.user_id AS sender, user.name, user.email, user.profile_picture, 
-                                                         board.name AS boardname, 
-                                                         (SELECT COUNT(likes.message_id) FROM likes WHERE likes.message_id=message.message_id) AS likecount,
-                                                         replies.replycount
-                                                              
-                                                  FROM message
-                                                  
-                                                  JOIN user ON user.user_id = message.user_id
-                                                  JOIN board ON board.board_id = message.board_id
-                                                  LEFT JOIN replies ON message.message_id = replies.reply_id
-                                                  
-                                                  WHERE message.board_id = ?
-                                                                                                            
-                                                  ORDER BY send_time DESC;`,
+    const [rows] = await promisePool.execute(`SELECT message.message_id,
+                                                     message.user_id,
+                                                     message.board_id,
+                                                     message.reply_id,
+                                                     message.message_body,
+                                                     message.send_time,
+                                                     message.modify_time,
+                                                     message.picture,
+                                                     user.user_id AS sender,
+                                                     user.name,
+                                                     user.email,
+                                                     user.profile_picture,
+                                                     board.name AS boardname,
+                                                     (SELECT COUNT(likes.message_id)
+                                                      FROM likes
+                                                      WHERE likes.message_id = message.message_id) AS likecount,
+                                                     replies.replycount
+
+                                              FROM message
+
+                                                       JOIN user ON user.user_id = message.user_id
+                                                       JOIN board ON board.board_id = message.board_id
+                                                       LEFT JOIN replies ON message.message_id = replies.reply_id
+
+                                              WHERE message.board_id = ?
+
+                                              ORDER BY send_time DESC;`,
       [MessageBody]);
     return rows;
   } catch (e) {

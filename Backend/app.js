@@ -8,7 +8,6 @@ const userRoute = require('./routes/userRoute');
 const {httpError} = require('./utils/errors');
 const passport = require('./utils/pass');
 const app = express();
-const port = 3000;
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV === 'production') {

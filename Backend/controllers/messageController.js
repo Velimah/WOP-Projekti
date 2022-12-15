@@ -232,11 +232,28 @@ const message_put = async (req, res, next) => {
 // deletes message
 const message_delete = async (req, res, next) => {
   try {
-    const result = await deleteMessage(req.params.id, req.user.user_id, next);
-    if (result.affectedRows < 1) {
-      next(httpError('Viestiä ei poistettu', 400));
-      return;
+
+    let data;
+
+    if (req.user.role === 0) {
+      data = [
+        req.params.id,
+        req.params.id,
+      ];
+    } else {
+      data = [
+        req.params.id,
+        req.params.id,
+        req.user.user_id,
+      ];
     }
+
+      const result = await deleteMessage(data, req.user, next);
+      if (result.affectedRows < 1) {
+        next(httpError('Viestiä ei poistettu', 400));
+        return;
+      }
+
     res.json({
       message: 'Viesti poistettu',
     });
@@ -271,7 +288,7 @@ const message_like = async (req, res, next) => {
       return;
     }
     res.json({
-      message: 'Tykätty viestistä',
+      message: 'Tykkäys tallennettu',
       message_id: result.insertId,
     });
 

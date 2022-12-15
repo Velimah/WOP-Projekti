@@ -1,5 +1,5 @@
 'use strict';
-const url = 'http://localhost:3000'; // change url when uploading to server
+const url = 'https://10.114.34.66/app'; // change url when uploading to server
 
 // select existing html elements
 const modUserForm = document.querySelector('#modUserForm');
@@ -31,14 +31,14 @@ modUserForm.addEventListener('submit', async (evt) => {
       dialog.close();
       location.href = 'front.html';
     });
-    dialog.innerHTML = '<p>'+json.error.message+'</p>';
+    dialog.innerHTML = '<p>' + json.error.message + '</p>';
     dialog.showModal();
   } else {
     dialog.addEventListener("click", () => {
       dialog.close();
       location.href = 'front.html';
     });
-    dialog.innerHTML = '<p>'+json.message+'</p>';
+    dialog.innerHTML = '<p>' + json.message + '</p>';
     dialog.showModal();
   }
 });
@@ -62,6 +62,6 @@ addPictureForm.addEventListener('submit', async (evt) => {
     dialog.close();
     location.href = 'front.html';
   });
-  dialog.innerHTML = '<p>'+json.message+'</p>';
+  dialog.innerHTML = '<p>' + json.message + '</p>';
   dialog.showModal();
 });

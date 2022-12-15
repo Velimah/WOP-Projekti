@@ -28,9 +28,9 @@ router.route('/')
     body('message_body').isLength({max: 1000}).escape(),
     message_post);
 
-router.route('/search').post(body('message_body').isLength({min: 1}).escape(),message_search);
+router.route('/search').post(body('message_body').isLength({min: 1}).escape(), message_search);
 
-router.route('/board').post(body('board_id').isNumeric().isLength({max: 1}),board_select);
+router.route('/board').post(body('board_id').isNumeric().isLength({max: 1}), board_select);
 
 router.route('/like/:id').post(message_like);
 
@@ -38,10 +38,10 @@ router.route('/:id')
   .get(message_get)
   .delete(message_delete)
   .put(body('message_body').isLength({max: 1000}).escape(),
-  message_put)
+    message_put)
   .post(upload.single('picture'),
-  body('message_body').isLength({max: 1000}).escape(),
-  message_reply);
+    body('message_body').isLength({max: 1000}).escape(),
+    message_reply);
 
 
 module.exports = router;

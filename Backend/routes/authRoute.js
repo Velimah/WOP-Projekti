@@ -7,7 +7,7 @@ const {body} = require('express-validator');
 router.post('/login', login);
 
 router.post('/register',
-  body('name').isLength({min: 3}).escape(),
+  body('name').isLength({min: 1, max: 20}).escape(),
   body('email').isEmail(),
   body('password').matches(/(?=.*\p{Lu}).{8,}/u),
   user_post);

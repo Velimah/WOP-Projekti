@@ -13,7 +13,8 @@
 <header>
   <h1>TVT21-M</h1>
   <div class="aluelista">
-    <a class="aluelinkki" href="front.html"><i class="fa-solid fa-house-user"></i><span class="linkkiteksti"> Etusivu</span></a>
+    <a class="aluelinkki" href="front.html"><i class="fa-solid fa-house-user"></i><span
+          class="linkkiteksti"> Etusivu</span></a>
   </div>
 </header>
 
@@ -25,15 +26,18 @@
       <form class="form" id="modUserForm">
         <h3>Muokkaa tietoja</h3>
 
-        <label for="nimi-kentta">Nimi</label>
-        <input id="nimi-kentta" required minlength="3" type="text" name="name" placeholder="Nimi">
+        <label for="nimi-kentta">Nimimerkki</label>
+        <input id="nimi-kentta" required minlength="1" maxlength="20" type="text" name="name" placeholder="Nimimerkki">
+        <p class="aputeksti"> (1-20 merkkiä)</p>
 
         <label for="email-kentta">Sähköposti</label>
         <input id="email-kentta" required type="email" name="email" placeholder="Email">
+        <p class="aputeksti"> (Oikean mallinen osoite)</p>
 
         <label for="salasana-kentta">Salasana</label>
-        <input id="salasana-kentta" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password" placeholder="Salasana">
-        <p class="aputeksti">(Väh. 1 iso kirjain, 8 merkkiä)</p>
+        <input id="salasana-kentta" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password"
+               placeholder="Salasana">
+        <p class="aputeksti"> (Väh. 1 iso kirjain, 8 merkkiä)</p>
 
         <button class="edit-buttons" type="submit">Tallenna</button>
       </form>

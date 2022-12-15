@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'http://localhost:3000'; // change url when uploading to server
+const url = 'https://10.114.34.66/app'; // change url when uploading to server
 
 const getQParam = (param) => {
   const queryString = window.location.search;
@@ -164,7 +164,7 @@ const loadMessage = (message) => {
     closeModal.addEventListener("click", () => {
       dialog.close();
     });
-    dialog.innerHTML = '<p>'+json.message+'</p>'
+    dialog.innerHTML = '<p>' + json.message + '</p>'
     dialog.showModal();
     getReplies();
   });
@@ -222,7 +222,7 @@ const loadMessage = (message) => {
           dialog.close();
           location.href = "front.html";
         });
-        dialog.innerHTML = '<p>'+json.message+'</p>'
+        dialog.innerHTML = '<p>' + json.message + '</p>'
         dialog.showModal();
 
       } catch (e) {
@@ -404,7 +404,7 @@ const loadReplies = (messages) => {
         closeModal.addEventListener("click", () => {
           dialog.close();
         });
-        dialog.innerHTML = '<p>'+json.message+'</p>'
+        dialog.innerHTML = '<p>' + json.message + '</p>'
         dialog.showModal();
         getReplies();
       });
@@ -449,7 +449,7 @@ const loadReplies = (messages) => {
             dialog.addEventListener("click", () => {
               dialog.close();
             });
-            dialog.innerHTML = '<p>'+json.message+'</p>'
+            dialog.innerHTML = '<p>' + json.message + '</p>'
             dialog.showModal();
             getReplies();
           } catch (e) {
@@ -537,7 +537,7 @@ addForm.addEventListener('submit', async (evt) => {
   dialog.addEventListener("click", () => {
     dialog.close();
   });
-  dialog.innerHTML = '<p>'+json.message+'</p>'
+  dialog.innerHTML = '<p>' + json.message + '</p>'
   dialog.showModal();
   getReplies();
 

@@ -1,5 +1,5 @@
 'use strict';
-const url = 'http://localhost:3000'; // change url when uploading to server
+const url = 'https://10.114.34.66/app'; // change url when uploading to server
 
 // select existing html elements
 const loginForm = document.querySelector('#login-form');
@@ -25,7 +25,7 @@ loginForm.addEventListener('submit', async (evt) => {
     dialog.addEventListener("click", () => {
       dialog.close();
     });
-    dialog.innerHTML = '<p>'+json.message+'</p>';
+    dialog.innerHTML = '<p>' + json.message + '</p>';
     dialog.showModal();
 
   } else {
@@ -52,6 +52,6 @@ addUserForm.addEventListener('submit', async (evt) => {
   dialog.addEventListener("click", () => {
     dialog.close();
   });
-  dialog.innerHTML = '<p>'+json.message+'</p>';
+  dialog.innerHTML = '<p>' + json.message + '</p>';
   dialog.showModal();
 });
