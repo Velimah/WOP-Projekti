@@ -58,6 +58,7 @@ const updateUser = async (data, next) => {
   }
 };
 
+//not in use, needs to delete messages and replies attached to user as well
 const deleteUser = async (userId, next) => {
   try {
     const [rows] = await promisePool.execute(`DELETE FROM user where user_id = ?;`,

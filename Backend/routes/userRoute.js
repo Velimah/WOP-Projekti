@@ -23,6 +23,7 @@ router.route('/').get(user_list_get).put(body('name').isLength({min: 1, max: 20}
 
 router.get('/token', check_token);
 
+//not in use, needs to delete messages and replies attached to user as well
 router.route('/:id').get(user_get).delete(user_delete);
 
 router.route('/picture').post(upload.single('picture'), user_picture_update);
