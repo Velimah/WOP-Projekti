@@ -90,11 +90,19 @@ const updateMessage = async (data, user, next) => {
   }
 };
 
-const deleteMessage = async (messageId, user, next) => {
+//deletes message/reply and all replies attached to it.
+const deleteMessage = async (data, user, next) => {
   try {
-    const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ?;`,
-      [messageId]);
-    return rows;
+    console.log(data, user)
+    if (user.role === 0) {
+      const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? OR message.reply_id = ?;`,
+        data);
+      return rows;
+    } else {
+      const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? OR message.reply_id = ? AND message.user_id = ?;`,
+        data);
+      return rows;
+    }
 
   } catch (e) {
     console.error('deleteMessage', e.message);
