@@ -201,6 +201,7 @@ header h1 {
     resize: none;
     font-size: 1rem;
     margin-bottom: 10px;
+    box-shadow: 0 1px 10px -5px black;
 }
 
 #input-container {
