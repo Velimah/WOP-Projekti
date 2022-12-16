@@ -64,7 +64,8 @@ const loadMessages = (messages) => {
       kuva.setAttribute('class', 'profiilikuva');
 
       // if the sender has profile pic embeds it into the message header
-      if (message.profile_picture !== "") {
+      console.log(message);
+      if (message.profile_picture !== null) {
         kuva.src = url + '/thumbnails/' + message.profile_picture;
         kuva.alt = "kuva";
       }
