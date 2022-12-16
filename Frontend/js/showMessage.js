@@ -65,7 +65,7 @@ const loadMessage = (message) => {
   const kuva = document.createElement('img');
   kuva.setAttribute('class', 'profiilikuva');
 
-  if (message.profile_picture !== "") {
+  if (message.profile_picture !== null) {
     kuva.src = url + '/thumbnails/' + message.profile_picture;
     kuva.alt = "kuva";
   }
@@ -305,7 +305,7 @@ const loadReplies = (messages) => {
       const kuva = document.createElement('img');
       kuva.setAttribute('class', 'profiilikuva');
 
-      if (message.profile_picture !== "") {
+      if (message.profile_picture !== null) {
         kuva.src = url + '/thumbnails/' + message.profile_picture;
         kuva.alt = "kuva";
       }
