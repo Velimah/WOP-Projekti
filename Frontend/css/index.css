@@ -593,7 +593,7 @@ dialog > p {
 @media screen and (max-width: 600px) {
     .lK2 {
         flex-direction: column-reverse;
-        align-items: flex-start;
+        align-items: center;
     }
     .profiilikuva {
         width: 50px;
@@ -602,19 +602,19 @@ dialog > p {
     }
     .lahettaja-kortti-nimi {
         font-weight: normal;
-        margin-right: 10px;
     }
     .lahettaja-kortti-email {
         display: none;
     }
+
     .viestikortti-palsta {
         font-weight: normal;
         margin: 0;
-        padding: 0;
+        padding: 3px;
     }
     .lahettaja-kortti-aika {
-        margin: 5px 0 0 0;
-        padding: 0 0 0 5px;
+        margin: 3px 0 0 0;
+        padding: 0;
     }
     #vasen {
         flex-direction: column;
