@@ -66,7 +66,8 @@ const getMessage = async (messageId, next) => {
 
                                               WHERE message.message_id = ?
 
-                                              ORDER BY send_time DESC;`, [messageId]);
+                                              ORDER BY send_time DESC;`,
+        [messageId]);
     return rows;
   } catch (e) {
     console.error('getMessage', e.message);
@@ -78,7 +79,7 @@ const addMessage = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords)
                                                   VALUES (?, now(), ?, ?, ?, ?);`,
-      data);
+        data);
     return rows;
   } catch (e) {
     console.error('addMessage', e.message);
@@ -90,7 +91,7 @@ const addReply = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`INSERT INTO message (message_body, send_time, user_id, board_id, picture, coords, reply_id)
                                                   VALUES (?, NOW(), ?, ?, ?, ?, ?);`,
-      data);
+        data);
     return rows;
   } catch (e) {
     console.error('addReply', e.message);
@@ -98,16 +99,15 @@ const addReply = async (data, next) => {
   }
 };
 
-
 const updateMessage = async (data, user, next) => {
   try {
     if (user.role === 0) {
       const [rows] = await promisePool.execute(`UPDATE message SET message_body = ?, modify_time = NOW() WHERE message_id = ?;`,
-        data);
+          data);
       return rows;
     } else {
       const [rows] = await promisePool.execute(`UPDATE message SET message_body = ?, modify_time = NOW() WHERE message_id = ? AND user_id = ?;`,
-        data);
+          data);
       return rows;
     }
 
@@ -120,14 +120,14 @@ const updateMessage = async (data, user, next) => {
 //deletes message/reply and all replies attached to it.
 const deleteMessage = async (data, user, next) => {
   try {
-    console.log(data, user)
+    console.log(data, user);
     if (user.role === 0) {
       const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? OR message.reply_id = ?;`,
-        data);
+          data);
       return rows;
     } else {
       const [rows] = await promisePool.execute(`DELETE FROM message WHERE message.message_id = ? OR message.reply_id = ? AND message.user_id = ?;`,
-        data);
+          data);
       return rows;
     }
 
@@ -141,12 +141,12 @@ const deleteMessage = async (data, user, next) => {
 const likeMessage = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(`INSERT INTO likes (user_id, message_id) VALUES (?, ?);`,
-      data);
+        data);
     return rows;
   } catch (e) {
     try {
       const [rows] = await promisePool.execute(`DELETE FROM likes WHERE user_id = ? AND message_id = ?;`,
-        data);
+          data);
       return rows;
     } catch (e) {
       console.error('likeMessage', e.message);
@@ -183,7 +183,7 @@ const searchMessage = async (MessageBody, next) => {
                                               WHERE message.message_body LIKE ?
 
                                               ORDER BY send_time DESC;`,
-      [MessageBody]);
+        [MessageBody]);
     return rows;
   } catch (e) {
     console.error('searchMessage', e.message);
@@ -220,7 +220,7 @@ const boardSelect = async (MessageBody, next) => {
                                               WHERE message.board_id = ?
 
                                               ORDER BY send_time DESC;`,
-      [MessageBody]);
+        [MessageBody]);
     return rows;
   } catch (e) {
     console.error('searchMessage', e.message);
