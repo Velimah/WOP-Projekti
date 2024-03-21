@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const url = 'https://10.114.34.66/app'; // change url when uploading to server
+const url = "https://10.114.34.66/app"; // change url when uploading to server
 
 const getQParam = (param) => {
   const queryString = window.location.search;
@@ -8,34 +8,33 @@ const getQParam = (param) => {
   return urlParams.get(param);
 };
 // gets user information and message id
-const user = JSON.parse(sessionStorage.getItem('user'));
-const message_id = parseInt(getQParam('id'));
+const user = JSON.parse(sessionStorage.getItem("user"));
+const message_id = parseInt(getQParam("id"));
 
 //selects correct html elements from page to use in message and replies
-const viestit = document.querySelector('#viestit');
-const vastaukset = document.querySelector('#vastaukset');
+const viestit = document.querySelector("#viestit");
+const vastaukset = document.querySelector("#vastaukset");
 const dialog = document.getElementById("modal");
 // loads the main message
 const loadMessage = (message) => {
-
   //clears the html element before adding content
-  document.getElementById('viestit').innerHTML = '';
+  document.getElementById("viestit").innerHTML = "";
 
   //message sender information section
 
-  const lahettajaKortti = document.createElement('div');
-  lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
+  const lahettajaKortti = document.createElement("div");
+  lahettajaKortti.setAttribute("class", "lahettaja-kortti");
 
-  const lahettaja = document.createElement('p');
-  lahettaja.setAttribute('class', 'lahettaja-kortti-nimi');
+  const lahettaja = document.createElement("p");
+  lahettaja.setAttribute("class", "lahettaja-kortti-nimi");
   lahettaja.innerHTML = message.name;
 
-  const email = document.createElement('p');
-  email.setAttribute('class', 'lahettaja-kortti-email');
-  email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + '</a>';
+  const email = document.createElement("p");
+  email.setAttribute("class", "lahettaja-kortti-email");
+  email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + "</a>";
 
-  const aika = document.createElement('p');
-  aika.setAttribute('class', 'lahettaja-kortti-aika');
+  const aika = document.createElement("p");
+  aika.setAttribute("class", "lahettaja-kortti-aika");
 
   //calculates minutes and hours since the message was posted
   const time1 = new Date(message.send_time);
@@ -57,24 +56,24 @@ const loadMessage = (message) => {
     aika.innerHTML = `${message.send_time.substring(0, 10)}`;
   }
 
-  const palsta = document.createElement('p');
+  const palsta = document.createElement("p");
   palsta.innerHTML = message.boardname;
-  palsta.setAttribute('class', "viestikortti-palsta");
+  palsta.setAttribute("class", "viestikortti-palsta");
 
   // if the sender has profile pic embeds it into the message header
-  const kuva = document.createElement('img');
-  kuva.setAttribute('class', 'profiilikuva');
+  const kuva = document.createElement("img");
+  kuva.setAttribute("class", "profiilikuva");
 
   if (message.profile_picture !== null) {
-    kuva.src = url + '/thumbnails/' + message.profile_picture;
+    kuva.src = url + "/thumbnails/" + message.profile_picture;
     kuva.alt = "kuva";
   }
 
   // containers for flexbox
-  const lK1 = document.createElement('div');
-  lK1.setAttribute('class', 'lK1');
-  const lK2 = document.createElement('div');
-  lK2.setAttribute('class', 'lK2');
+  const lK1 = document.createElement("div");
+  lK1.setAttribute("class", "lK1");
+  const lK2 = document.createElement("div");
+  lK2.setAttribute("class", "lK2");
 
   // combining information into flexbox containers, then into a parent element
   lK1.appendChild(lahettaja);
@@ -87,19 +86,18 @@ const loadMessage = (message) => {
 
   // message body section
 
-  const viestiKortti = document.createElement('div');
-  viestiKortti.setAttribute('class', 'viesti-kortti');
+  const viestiKortti = document.createElement("div");
+  viestiKortti.setAttribute("class", "viesti-kortti");
 
-  const viesti = document.createElement('p');
-  viesti.setAttribute('class', 'viesti');
+  const viesti = document.createElement("p");
+  viesti.setAttribute("class", "viesti");
   viesti.innerHTML = message.message_body;
 
   viestiKortti.appendChild(viesti);
 
   if (message.modify_time != null) {
-
-    const muokkausAika = document.createElement('p');
-    muokkausAika.setAttribute('class', 'viesti-kortti-muokkausaika');
+    const muokkausAika = document.createElement("p");
+    muokkausAika.setAttribute("class", "viesti-kortti-muokkausaika");
 
     const time1 = new Date(message.modify_time);
     const time2 = new Date();
@@ -121,50 +119,50 @@ const loadMessage = (message) => {
     viestiKortti.appendChild(muokkausAika);
   }
 
-  const img = document.createElement('img');
+  const img = document.createElement("img");
 
   //if the message has a picture, embeds it into the message post
   if (message.picture !== "") {
-    img.src = url + '/thumbnails/' + message.picture;
+    img.src = url + "/thumbnails/" + message.picture;
     img.alt = "kuva";
-    img.className = 'viesti-kuva';
+    img.className = "viesti-kuva";
 
-    img.addEventListener('click', () => {
-      location.href = 'single.html?id=' + message.message_id;
+    img.addEventListener("click", () => {
+      location.href = "single.html?id=" + message.message_id;
     });
   }
 
   if (message.picture !== "") {
-    const figure = document.createElement('figure').appendChild(img);
+    const figure = document.createElement("figure").appendChild(img);
     viestiKortti.appendChild(figure);
   }
 
   // message button section
 
-  const napitKortti = document.createElement('div');
-  napitKortti.setAttribute('class', 'napit-kortti');
+  const napitKortti = document.createElement("div");
+  napitKortti.setAttribute("class", "napit-kortti");
 
   // like count and like button
-  const likeButton = document.createElement('button');
-  likeButton.setAttribute('class', "message-button");
-  likeButton.innerHTML = "<i class=\"fa-regular fa-heart\"></i> " + "<p>" + message.likecount + "</p>";
+  const likeButton = document.createElement("button");
+  likeButton.setAttribute("class", "message-button");
+  likeButton.innerHTML = '<i class="fa-regular fa-heart"></i> ' + "<p>" + message.likecount + "</p>";
 
-  likeButton.addEventListener('click', async (evt) => {
+  likeButton.addEventListener("click", async (evt) => {
     evt.preventDefault();
     const fetchOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
       body: user,
     };
-    const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
+    const response = await fetch(url + "/message/like/" + message.message_id, fetchOptions);
     const json = await response.json();
     const closeModal = document.getElementById("modal");
     closeModal.addEventListener("click", () => {
       dialog.close();
     });
-    dialog.innerHTML = '<p>' + json.message + '</p>'
+    dialog.innerHTML = "<p>" + json.message + "</p>";
     dialog.showModal();
     getReplies();
   });
@@ -172,59 +170,54 @@ const loadMessage = (message) => {
   napitKortti.appendChild(likeButton);
 
   // reply count and reply button
-  const replyButton = document.createElement('button');
-  replyButton.setAttribute('class', "message-button");
+  const replyButton = document.createElement("button");
+  replyButton.setAttribute("class", "message-button");
 
   if (message.replycount === null) {
-    replyButton.innerHTML = "<i class=\"fa-regular fa-comment\"></i> " + "<p>0</p>";
+    replyButton.innerHTML = '<i class="fa-regular fa-comment"></i> ' + "<p>0</p>";
   } else {
-    replyButton.innerHTML = "<i class=\"fa-regular fa-comment\"></i> " + "<p>" + message.replycount + "</p>";
+    replyButton.innerHTML = '<i class="fa-regular fa-comment"></i> ' + "<p>" + message.replycount + "</p>";
   }
 
   napitKortti.appendChild(replyButton);
 
   // edit and delete button depending on user role
   if (user.role === 0 || user.user_id === message.sender) {
-
     // edit message
-    const modButton = document.createElement('button');
-    modButton.setAttribute('class', "message-button");
+    const modButton = document.createElement("button");
+    modButton.setAttribute("class", "message-button");
 
     modButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>';
     const href = `modify-message.html?id=${message.message_id}`;
-    modButton.addEventListener('click', function () {
+    modButton.addEventListener("click", function () {
       location.href = href;
     });
 
     napitKortti.appendChild(modButton);
 
     // delete message
-    const delButton = document.createElement('button');
-    delButton.setAttribute('class', "message-button");
+    const delButton = document.createElement("button");
+    delButton.setAttribute("class", "message-button");
 
     delButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
-    delButton.addEventListener('click', async () => {
+    delButton.addEventListener("click", async () => {
       const fetchOptions = {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
         },
       };
       try {
-        const response = await fetch(
-          url + '/message/' + message.message_id,
-          fetchOptions
-        );
+        const response = await fetch(url + "/message/" + message.message_id, fetchOptions);
         const json = await response.json();
 
         const closeModal = document.getElementById("modal");
         closeModal.addEventListener("click", () => {
           dialog.close();
-          location.href = "front.html";
+          location.href = "index.html";
         });
-        dialog.innerHTML = '<p>' + json.message + '</p>'
+        dialog.innerHTML = "<p>" + json.message + "</p>";
         dialog.showModal();
-
       } catch (e) {
         console.log(e.message);
       }
@@ -233,13 +226,13 @@ const loadMessage = (message) => {
   }
 
   // container for each complete message
-  const viestiContainer = document.createElement('div');
+  const viestiContainer = document.createElement("div");
 
   //puts the post and board id into each message (if needed for something in future)
   let messageId = `viesti-${message.message_id}`;
   let boardId = `board-${message.board_id} viesti-container`;
-  viestiContainer.setAttribute('id', messageId);
-  viestiContainer.setAttribute('class', boardId);
+  viestiContainer.setAttribute("id", messageId);
+  viestiContainer.setAttribute("class", boardId);
 
   //combines message header, message body, buttons and replies into same container
   viestiContainer.appendChild(lahettajaKortti);
@@ -253,29 +246,26 @@ const loadMessage = (message) => {
 
 // loads the replies for the message. code is almost same as above, just loops through reply_id's to find correct replies
 const loadReplies = (messages) => {
-
-  document.getElementById('vastaukset').innerHTML = '';
+  document.getElementById("vastaukset").innerHTML = "";
 
   messages.forEach((message) => {
-
     // checks for reply_id to find correct reply messages
     if (message.reply_id === message_id) {
+      //message sender information section
 
-//message sender information section
+      const lahettajaKortti = document.createElement("div");
+      lahettajaKortti.setAttribute("class", "lahettaja-kortti");
 
-      const lahettajaKortti = document.createElement('div');
-      lahettajaKortti.setAttribute('class', 'lahettaja-kortti');
-
-      const lahettaja = document.createElement('p');
-      lahettaja.setAttribute('class', 'lahettaja-kortti-nimi');
+      const lahettaja = document.createElement("p");
+      lahettaja.setAttribute("class", "lahettaja-kortti-nimi");
       lahettaja.innerHTML = message.name;
 
-      const email = document.createElement('p');
-      email.setAttribute('class', 'lahettaja-kortti-email');
-      email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + '</a>';
+      const email = document.createElement("p");
+      email.setAttribute("class", "lahettaja-kortti-email");
+      email.innerHTML = '<a href="mailto:' + message.email + '">' + message.email + "</a>";
 
-      const aika = document.createElement('p');
-      aika.setAttribute('class', 'lahettaja-kortti-aika');
+      const aika = document.createElement("p");
+      aika.setAttribute("class", "lahettaja-kortti-aika");
 
       //calculates minutes and hours since the message was posted
       const time1 = new Date(message.send_time);
@@ -297,24 +287,24 @@ const loadReplies = (messages) => {
         aika.innerHTML = `${message.send_time.substring(0, 10)}`;
       }
 
-      const palsta = document.createElement('p');
+      const palsta = document.createElement("p");
       palsta.innerHTML = message.boardname;
-      palsta.setAttribute('class', "viestikortti-palsta");
+      palsta.setAttribute("class", "viestikortti-palsta");
 
       // if the sender has profile pic embeds it into the message header
-      const kuva = document.createElement('img');
-      kuva.setAttribute('class', 'profiilikuva');
+      const kuva = document.createElement("img");
+      kuva.setAttribute("class", "profiilikuva");
 
       if (message.profile_picture !== null) {
-        kuva.src = url + '/thumbnails/' + message.profile_picture;
+        kuva.src = url + "/thumbnails/" + message.profile_picture;
         kuva.alt = "kuva";
       }
 
       // containers for flexbox
-      const lK1 = document.createElement('div');
-      lK1.setAttribute('class', 'lK1');
-      const lK2 = document.createElement('div');
-      lK2.setAttribute('class', 'lK2');
+      const lK1 = document.createElement("div");
+      lK1.setAttribute("class", "lK1");
+      const lK2 = document.createElement("div");
+      lK2.setAttribute("class", "lK2");
 
       // combining information into flexbox containers, then into a parent element
       lK1.appendChild(lahettaja);
@@ -327,19 +317,18 @@ const loadReplies = (messages) => {
 
       // message body section
 
-      const viestiKortti = document.createElement('div');
-      viestiKortti.setAttribute('class', 'viesti-kortti');
+      const viestiKortti = document.createElement("div");
+      viestiKortti.setAttribute("class", "viesti-kortti");
 
-      const viesti = document.createElement('p');
-      viesti.setAttribute('class', 'viesti');
+      const viesti = document.createElement("p");
+      viesti.setAttribute("class", "viesti");
       viesti.innerHTML = message.message_body;
 
       viestiKortti.appendChild(viesti);
 
       if (message.modify_time != null) {
-
-        const muokkausAika = document.createElement('p');
-        muokkausAika.setAttribute('class', 'viesti-kortti-muokkausaika');
+        const muokkausAika = document.createElement("p");
+        muokkausAika.setAttribute("class", "viesti-kortti-muokkausaika");
 
         const time1 = new Date(message.modify_time);
         const time2 = new Date();
@@ -361,50 +350,50 @@ const loadReplies = (messages) => {
         viestiKortti.appendChild(muokkausAika);
       }
 
-      const img = document.createElement('img');
+      const img = document.createElement("img");
 
       //if the message has a picture, embeds it into the message post
       if (message.picture !== "") {
-        img.src = url + '/thumbnails/' + message.picture;
+        img.src = url + "/thumbnails/" + message.picture;
         img.alt = "kuva";
-        img.className = 'viesti-kuva';
+        img.className = "viesti-kuva";
 
-        img.addEventListener('click', () => {
-          location.href = 'single.html?id=' + message.message_id;
+        img.addEventListener("click", () => {
+          location.href = "single.html?id=" + message.message_id;
         });
       }
 
       if (message.picture !== "") {
-        const figure = document.createElement('figure').appendChild(img);
+        const figure = document.createElement("figure").appendChild(img);
         viestiKortti.appendChild(figure);
       }
 
       // message button section
 
-      const napitKortti = document.createElement('div');
-      napitKortti.setAttribute('class', 'napit-kortti');
+      const napitKortti = document.createElement("div");
+      napitKortti.setAttribute("class", "napit-kortti");
 
-      const likeButton = document.createElement('button');
-      likeButton.setAttribute('class', "message-button");
+      const likeButton = document.createElement("button");
+      likeButton.setAttribute("class", "message-button");
 
-      likeButton.innerHTML = "<i class=\"fa-regular fa-heart\"></i> " + "<p>" + message.likecount + "</p>";
+      likeButton.innerHTML = '<i class="fa-regular fa-heart"></i> ' + "<p>" + message.likecount + "</p>";
 
-      likeButton.addEventListener('click', async (evt) => {
+      likeButton.addEventListener("click", async (evt) => {
         evt.preventDefault();
         const fetchOptions = {
-          method: 'POST',
+          method: "POST",
           headers: {
-            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            Authorization: "Bearer " + sessionStorage.getItem("token"),
           },
           body: user,
         };
-        const response = await fetch(url + '/message/like/' + message.message_id, fetchOptions);
+        const response = await fetch(url + "/message/like/" + message.message_id, fetchOptions);
         const json = await response.json();
         const closeModal = document.getElementById("modal");
         closeModal.addEventListener("click", () => {
           dialog.close();
         });
-        dialog.innerHTML = '<p>' + json.message + '</p>'
+        dialog.innerHTML = "<p>" + json.message + "</p>";
         dialog.showModal();
         getReplies();
       });
@@ -413,43 +402,39 @@ const loadReplies = (messages) => {
 
       // edit and delete button depending on user role
       if (user.role === 0 || user.user_id === message.sender) {
-
         // edit message
-        const modButton = document.createElement('button');
-        modButton.setAttribute('class', "message-button");
+        const modButton = document.createElement("button");
+        modButton.setAttribute("class", "message-button");
 
         modButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>';
 
         const href = `modify-message.html?id=${message.message_id}`;
-        modButton.addEventListener('click', function () {
+        modButton.addEventListener("click", function () {
           location.href = href;
         });
 
         napitKortti.appendChild(modButton);
 
         // delete message
-        const delButton = document.createElement('button');
-        delButton.setAttribute('class', "message-button");
+        const delButton = document.createElement("button");
+        delButton.setAttribute("class", "message-button");
 
         delButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
 
-        delButton.addEventListener('click', async () => {
+        delButton.addEventListener("click", async () => {
           const fetchOptions = {
-            method: 'DELETE',
+            method: "DELETE",
             headers: {
-              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+              Authorization: "Bearer " + sessionStorage.getItem("token"),
             },
           };
           try {
-            const response = await fetch(
-              url + '/message/' + message.message_id,
-              fetchOptions
-            );
+            const response = await fetch(url + "/message/" + message.message_id, fetchOptions);
             const json = await response.json();
             dialog.addEventListener("click", () => {
               dialog.close();
             });
-            dialog.innerHTML = '<p>' + json.message + '</p>'
+            dialog.innerHTML = "<p>" + json.message + "</p>";
             dialog.showModal();
             getReplies();
           } catch (e) {
@@ -460,13 +445,13 @@ const loadReplies = (messages) => {
       }
 
       // container for each complete message
-      const viestiContainer = document.createElement('div');
+      const viestiContainer = document.createElement("div");
 
       //puts the post and board id into each message (if needed for something in future)
       let messageId = `viesti-${message.message_id}`;
       let boardId = `board-${message.board_id} viesti-container`;
-      viestiContainer.setAttribute('id', messageId);
-      viestiContainer.setAttribute('class', boardId);
+      viestiContainer.setAttribute("id", messageId);
+      viestiContainer.setAttribute("class", boardId);
 
       //combines message header, message body, buttons and replies into same container
       viestiContainer.appendChild(lahettajaKortti);
@@ -482,13 +467,12 @@ const getMessage = async () => {
   try {
     const fetchOptions = {
       headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
     };
-    const response = await fetch(url + '/message', fetchOptions);
+    const response = await fetch(url + "/message", fetchOptions);
     const messages = await response.json();
     loadReplies(messages);
-
   } catch (e) {
     console.log(e.message);
   }
@@ -502,10 +486,10 @@ const getReplies = async () => {
   try {
     const fetchOptions = {
       headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
     };
-    const response = await fetch(url + '/message/' + message_id, fetchOptions);
+    const response = await fetch(url + "/message/" + message_id, fetchOptions);
     message = await response.json();
     loadMessage(message);
   } catch (e) {
@@ -517,28 +501,27 @@ const getReplies = async () => {
 getReplies();
 
 // form to reply to the message
-const addForm = document.querySelector('#addReplyForm');
+const addForm = document.querySelector("#addReplyForm");
 
-addForm.addEventListener('submit', async (evt) => {
+addForm.addEventListener("submit", async (evt) => {
   evt.preventDefault();
   const fd = new FormData(addForm);
 
   //sends board id to be able to use the same sql route
-  fd.append('board_id', `${message.board_id}`)
+  fd.append("board_id", `${message.board_id}`);
   const fetchOptions = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
     body: fd,
   };
-  const response = await fetch(url + '/message/' + message_id, fetchOptions);
+  const response = await fetch(url + "/message/" + message_id, fetchOptions);
   const json = await response.json();
   dialog.addEventListener("click", () => {
     dialog.close();
   });
-  dialog.innerHTML = '<p>' + json.message + '</p>'
+  dialog.innerHTML = "<p>" + json.message + "</p>";
   dialog.showModal();
   getReplies();
-
 });

@@ -1,68 +1,81 @@
 <!DOCTYPE html>
 <html lang="fi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="css/modify-user.css" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/c5e93b78b7.js" crossorigin="anonymous"></script>
-  <title>Muokkaa tietoja</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="css/modify-user.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/c5e93b78b7.js" crossorigin="anonymous"></script>
+    <title>Muokkaa tietoja</title>
+  </head>
 
-<header>
-  <h1>TVT21-M</h1>
-  <div class="aluelista">
-    <a class="aluelinkki" href="front.html"><i class="fa-solid fa-house-user"></i><span
-          class="linkkiteksti"> Etusivu</span></a>
-  </div>
-</header>
+  <header>
+    <h1>TVT21-M</h1>
+    <div class="aluelista">
+      <a class="aluelinkki" href="index.html"
+        ><i class="fa-solid fa-house-user"></i><span class="linkkiteksti"> Etusivu</span></a
+      >
+    </div>
+  </header>
 
-<body>
-<div class="container">
+  <body>
+    <div class="container">
+      <div class="forms">
+        <div class="modify-user">
+          <form class="form" id="modUserForm">
+            <h3>Muokkaa tietoja</h3>
 
-  <div class="forms">
-    <div class="modify-user">
-      <form class="form" id="modUserForm">
-        <h3>Muokkaa tietoja</h3>
+            <label for="nimi-kentta">Nimimerkki</label>
+            <input
+              id="nimi-kentta"
+              required
+              minlength="1"
+              maxlength="20"
+              type="text"
+              name="name"
+              placeholder="Nimimerkki"
+            />
+            <p class="aputeksti">(1-20 merkkiä)</p>
 
-        <label for="nimi-kentta">Nimimerkki</label>
-        <input id="nimi-kentta" required minlength="1" maxlength="20" type="text" name="name" placeholder="Nimimerkki">
-        <p class="aputeksti"> (1-20 merkkiä)</p>
+            <label for="email-kentta">Sähköposti</label>
+            <input id="email-kentta" required type="email" name="email" placeholder="Email" />
+            <p class="aputeksti">(Oikean mallinen osoite)</p>
 
-        <label for="email-kentta">Sähköposti</label>
-        <input id="email-kentta" required type="email" name="email" placeholder="Email">
-        <p class="aputeksti"> (Oikean mallinen osoite)</p>
+            <label for="salasana-kentta">Salasana</label>
+            <input
+              id="salasana-kentta"
+              required
+              pattern="(?=.*[\p{Lu}]).{8,}"
+              type="password"
+              name="password"
+              placeholder="Salasana"
+            />
+            <p class="aputeksti">(Väh. 1 iso kirjain, 8 merkkiä)</p>
 
-        <label for="salasana-kentta">Salasana</label>
-        <input id="salasana-kentta" required pattern="(?=.*[\p{Lu}]).{8,}" type="password" name="password"
-               placeholder="Salasana">
-        <p class="aputeksti"> (Väh. 1 iso kirjain, 8 merkkiä)</p>
+            <button class="edit-buttons" type="submit">Tallenna</button>
+          </form>
+        </div>
 
-        <button class="edit-buttons" type="submit">Tallenna</button>
-      </form>
+        <div id="change-picture">
+          <form class="form" method="post" enctype="multipart/form-data" id="addPictureForm">
+            <h3>Lisää profiilikuva</h3>
+
+            <label for="kuva">Kuva</label>
+            <input id="kuva" required type="file" name="picture" accept="image/*" placeholder="Valitse kuva" />
+
+            <button class="edit-buttons" type="submit">Tallenna</button>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <div id="change-picture">
-      <form class="form" method="post" enctype="multipart/form-data" id="addPictureForm">
-        <h3>Lisää profiilikuva</h3>
+    <dialog id="modal"></dialog>
 
-        <label for="kuva">Kuva</label>
-        <input id="kuva" required type="file" name="picture" accept="image/*" placeholder="Valitse kuva">
-
-        <button class="edit-buttons" type="submit">Tallenna</button>
-      </form>
-    </div>
-  </div>
-
-</div>
-
-<dialog id="modal">
-</dialog>
-
-<script src="js/check-login.js"></script>
-<script src="js/serialize.js"></script>
-<script src="js/modify-user.js"></script>
-</body>
-
+    <script src="js/check-login.js"></script>
+    <script src="js/serialize.js"></script>
+    <script src="js/modify-user.js"></script>
+  </body>
 </html>
